@@ -2,13 +2,13 @@ export default [
     {
         path: "/",
         name: "live-preview",
-        meta: { title: "Light Able Vue3 Admin & Dashboard Template | Phoenixcoded" },
+        meta: { title: "Light Able Vue3 Admin & Dashboard Template | Phoenixcoded", public: true },
         component: () => import("../views/live-preview/pages/index.vue"),
     },
     {
         path: "/landing",
         name: "landing",
-        meta: { title: "Landing Preview" },
+        meta: { title: "Landing Preview", public: true },
         component: () => import("../views/live-preview/pages/landing.vue"),
     },
     {
@@ -53,6 +53,12 @@ export default [
         name: "setting",
         meta: { title: "Setting" },
         component: () => import("../views/live-preview/ui-kit/setting.vue"),
+    },
+    {
+        path: "/roles",
+        name: "roles",
+        meta: { title: "Roles" },
+        component: () => import("../views/pages/roles.vue"),
     },
     {
         path: "/application/plans",
@@ -665,31 +671,31 @@ export default [
     {
         path: "/login-v1",
         name: "login-v1",
-        meta: { title: "Login" },
+        meta: { title: "Login", public: true },
         component: () => import("../views/live-preview/pages/auth1/login.vue"),
     },
     {
         path: "/register-v1",
         name: "register-v1",
-        meta: { title: "Register" },
+        meta: { title: "Register", public: true },
         component: () => import("../views/live-preview/pages/auth1/register.vue"),
     },
     {
         path: "/forgot-password-v1",
         name: "forgot-password-v1",
-        meta: { title: "Forgot Password" },
+        meta: { title: "Forgot Password", public: true },
         component: () => import("../views/live-preview/pages/auth1/forgot-password.vue"),
     },
     {
         path: "/reset-password-v1",
         name: "reset-password-v1",
-        meta: { title: "Reset Password" },
+        meta: { title: "Reset Password", public: true },
         component: () => import("../views/live-preview/pages/auth1/reset-password.vue"),
     },
     {
         path: "/code-verification-v1",
         name: "code-verification-v1",
-        meta: { title: "code-verification" },
+        meta: { title: "code-verification", public: true },
         component: () => import("../views/live-preview/pages/auth1/code-verification.vue"),
     },
 
@@ -697,31 +703,31 @@ export default [
     {
         path: "/login-v2",
         name: "login-v2",
-        meta: { title: "Login" },
+        meta: { title: "Login", public: true },
         component: () => import("../views/live-preview/pages/auth2/login.vue"),
     },
     {
         path: "/register-v2",
         name: "register-v2",
-        meta: { title: "Register" },
+        meta: { title: "Register", public: true },
         component: () => import("../views/live-preview/pages/auth2/register.vue"),
     },
     {
         path: "/forgot-password-v2",
         name: "forgot-password-v2",
-        meta: { title: "Forgot Password" },
+        meta: { title: "Forgot Password", public: true },
         component: () => import("../views/live-preview/pages/auth2/forgot-password.vue"),
     },
     {
         path: "/reset-password-v2",
         name: "reset-password-v2",
-        meta: { title: "Reset Password" },
+        meta: { title: "Reset Password", public: true },
         component: () => import("../views/live-preview/pages/auth2/reset-password.vue"),
     },
     {
         path: "/code-verification-v2",
         name: "code-verification-v2",
-        meta: { title: "code-verification" },
+        meta: { title: "code-verification", public: true },
         component: () => import("../views/live-preview/pages/auth2/code-verification.vue"),
     },
 
@@ -729,25 +735,25 @@ export default [
     {
         path: "/error-404",
         name: "error-404",
-        meta: { title: "404" },
+        meta: { title: "404", public: true },
         component: () => import("../views/live-preview/pages/maintenance/error-404.vue"),
     },
     {
         path: "/connection-lost",
         name: "connection-lost",
-        meta: { title: "Connection Lost" },
+        meta: { title: "Connection Lost", public: true },
         component: () => import("../views/live-preview/pages/maintenance/connection-lost.vue"),
     },
     {
         path: "/under-construction",
         name: "under-construction",
-        meta: { title: "Under Construction" },
+        meta: { title: "Under Construction", public: true },
         component: () => import("../views/live-preview/pages/maintenance/under-construction.vue"),
     },
     {
         path: "/comming-soon",
         name: "comming-soon",
-        meta: { title: "Comming Soon" },
+        meta: { title: "Comming Soon", public: true },
         component: () => import("../views/live-preview/pages/maintenance/comming-soon.vue"),
     },
 
