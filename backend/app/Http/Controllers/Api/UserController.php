@@ -27,14 +27,16 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users,username'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone_number' => ['nullable', 'string', 'max:20'],
             'password' => ['required', 'string', 'min:8'],
             'role_id' => ['nullable', 'exists:roles,id'],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
 
-        $user = User::create($validated);
+        $user = User::create($validated)->refresh();
 
         return $this->success($user, 'User created.', 201);
     }
@@ -54,7 +56,10 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => ['sometimes', 'string', 'max:255'],
+            'username' => ['sometimes', 'string', 'max:255', 'unique:users,username,'.$user->getKey().',user_id'],
             'email' => ['sometimes', 'string', 'email', 'max:255', 'unique:users,email,'.$user->getKey().',user_id'],
+            'phone_number' => ['sometimes', 'nullable', 'string', 'max:20'],
+            'is_active' => ['sometimes', 'boolean'],
             'role_id' => ['sometimes', 'nullable', 'exists:roles,id'],
         ]);
 
