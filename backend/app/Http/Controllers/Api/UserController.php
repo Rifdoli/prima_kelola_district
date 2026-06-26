@@ -54,7 +54,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => ['sometimes', 'string', 'max:255'],
-            'email' => ['sometimes', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
+            'email' => ['sometimes', 'string', 'email', 'max:255', 'unique:users,email,'.$user->getKey().',user_id'],
             'role_id' => ['sometimes', 'nullable', 'exists:roles,id'],
         ]);
 
