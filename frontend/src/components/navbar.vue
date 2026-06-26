@@ -57,8 +57,11 @@ export default {
     },
     methods: {
         async logout() {
-            await getAuthBackend().logout();
-            this.$router.push({ name: "login-v1" });
+            try {
+                await getAuthBackend().logout();
+            } finally {
+                this.$router.push({ name: "login-v1" });
+            }
         },
         handleSearch(event) {
             // console.log('handleSearch called');
@@ -601,7 +604,7 @@ export default {
                                             <span>Add account</span>
                                         </span>
                                     </a>
-                                    <a href="#" class="dropdown-item">
+                                    <a href="#" class="dropdown-item" @click.prevent="logout">
                                         <span class="d-flex align-items-center">
                                             <i class="ph-duotone ph-power"></i>
                                             <span>Logout</span>

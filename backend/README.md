@@ -26,6 +26,8 @@ Semua response berbentuk `{ "data": ..., "message": "..." }`.
 | POST   | `/api/register` | `name`, `email`, `password`, `password_confirmation`     |
 | POST   | `/api/login`    | `email`, `password`                                       |
 
+Validasi `/api/register`: `password` minimal 8 karakter dan harus cocok dengan `password_confirmation`; `email` harus unik.
+
 Contoh response (`/api/login`):
 
 ```json
@@ -63,6 +65,21 @@ Gunakan `token` di atas sebagai header `Authorization: Bearer <token>` untuk sem
 | DELETE | `/api/users/{id}` | Hapus user      |
 
 User tanpa role `admin` akan menerima `403 Forbidden` pada endpoint-endpoint di atas.
+
+## Response Error
+
+- **401 Unauthorized** — token tidak ada/tidak valid. Format bawaan Laravel: `{ "message": "Unauthenticated." }`.
+- **403 Forbidden** — token valid tapi role tidak diizinkan (mis. bukan `admin`). Mengikuti pola sukses: `{ "data": null, "message": "Forbidden. Admin access required." }`.
+- **422 Unprocessable Entity** — validasi gagal. Format bawaan Laravel, dengan field tambahan `errors` berisi daftar pesan per field:
+
+```json
+{
+  "message": "The email has already been taken.",
+  "errors": {
+    "email": ["The email has already been taken."]
+  }
+}
+```
 
 ## Menjalankan Test
 
