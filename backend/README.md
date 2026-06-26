@@ -23,22 +23,33 @@ Semua response berbentuk `{ "data": ..., "message": "..." }`.
 
 | Method | Endpoint        | Body                                                    |
 | ------ | --------------- | -------------------------------------------------------- |
-| POST   | `/api/register` | `name`, `email`, `password`, `password_confirmation`     |
+| POST   | `/api/register` | `name`, `username`, `email`, `password`, `password_confirmation`, `phone_number?` |
 | POST   | `/api/login`    | `email`, `password`                                       |
 
-Validasi `/api/register`: `password` minimal 8 karakter dan harus cocok dengan `password_confirmation`; `email` harus unik.
+Validasi `/api/register`: `password` minimal 8 karakter dan harus cocok dengan `password_confirmation`; `email` dan `username` harus unik.
 
 Contoh response (`/api/login`):
 
 ```json
 {
   "data": {
-    "user": { "id": 1, "name": "Test User", "email": "test@example.com", "role_id": 1 },
+    "user": {
+      "user_id": 1,
+      "uuid": "0284625c-2478-4baf-918c-57cef81af067",
+      "name": "Test User",
+      "username": "testuser",
+      "email": "test@example.com",
+      "role_id": 1,
+      "is_active": true,
+      "last_login_at": "2026-06-26T20:17:19.000000Z"
+    },
     "token": "1|xxxxxxxx"
   },
   "message": "Login successful."
 }
 ```
+
+Catatan: `user_id` adalah PK internal (pakai ini untuk relasi/FK di DB). `uuid` disiapkan sebagai identifier publik untuk URL/response API ke depannya. Field `password`, `remember_token`, dan `device_token` selalu disembunyikan dari response.
 
 Gunakan `token` di atas sebagai header `Authorization: Bearer <token>` untuk semua endpoint di bawah ini.
 
@@ -59,9 +70,9 @@ Gunakan `token` di atas sebagai header `Authorization: Bearer <token>` untuk sem
 | PUT    | `/api/roles/{id}` | Update role (`name`) |
 | DELETE | `/api/roles/{id}` | Hapus role      |
 | GET    | `/api/users`      | List user (dengan role) |
-| POST   | `/api/users`      | Buat user baru (`name`, `email`, `password`, `role_id?`) |
+| POST   | `/api/users`      | Buat user baru (`name`, `username`, `email`, `password`, `phone_number?`, `role_id?`) |
 | GET    | `/api/users/{id}` | Detail user     |
-| PUT    | `/api/users/{id}` | Update user (`name?`, `email?`, `role_id?`) |
+| PUT    | `/api/users/{id}` | Update user (`name?`, `username?`, `email?`, `phone_number?`, `is_active?`, `role_id?`) |
 | DELETE | `/api/users/{id}` | Hapus user      |
 
 User tanpa role `admin` akan menerima `403 Forbidden` pada endpoint-endpoint di atas.
