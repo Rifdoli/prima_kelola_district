@@ -19,6 +19,8 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $primaryKey = 'user_id';
+
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
