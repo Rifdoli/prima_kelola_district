@@ -1,84 +1,74 @@
-import firebase from 'firebase/compat/app';
-// Add the Firebase products that you want to use
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
+const API_URL = process.env.VUE_APP_API_URL || 'http://localhost:8000/api';
 
-class FirebaseAuthBackend {
-    constructor(firebaseConfig) {
-        if (firebaseConfig) {
-            // Initialize Firebase
-            firebase.initializeApp(firebaseConfig);
-            firebase.auth().onAuthStateChanged((user) => {
-                if (user) {
-                    // sessionStorage.setItem("authUser", JSON.stringify(user));
-                } else {
-                    sessionStorage.removeItem('authUser');
-                }
-            });
+class LaravelAuthBackend {
+    async _request(path, options = {}) {
+        const token = this.getToken();
+
+        const response = await fetch(`${API_URL}${path}`, {
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                ...options.headers,
+            },
+        });
+
+        const body = await response.json().catch(() => null);
+
+        if (!response.ok) {
+            throw this._handleError(body);
         }
+
+        return body;
     }
 
     /**
      * Registers the user with given details
      */
-    registerUser(username, email, password) {
-        return new Promise((resolve, reject) => {
-            // eslint-disable-next-line no-unused-vars
-            firebase.auth().createUserWithEmailAndPassword(email, password).then((res) => {
-                let user = firebase.auth().currentUser.updateProfile({
-                    displayName: username
-                });
-                resolve(user);
-            }, (error) => {
-                reject(this._handleError(error));
-            });
+    async registerUser(name, email, password, passwordConfirmation) {
+        const { data } = await this._request('/register', {
+            method: 'POST',
+            body: JSON.stringify({
+                name,
+                email,
+                password,
+                password_confirmation: passwordConfirmation,
+            }),
         });
+
+        this.setLoggedInUser(data.token, data.user);
+        return data.user;
     }
 
     /**
      * Login user with given details
      */
-    loginUser(email, password) {
-        return new Promise((resolve, reject) => {
-            firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-                var user = firebase.auth().currentUser;
-                sessionStorage.setItem("authUser", JSON.stringify(user));
-                resolve(user);
-            }, (error) => {
-                reject(this._handleError(error));
-            });
+    async loginUser(email, password) {
+        const { data } = await this._request('/login', {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
         });
-    }
 
-    /**
-     * forget Password user with given details
-     */
-    forgetPassword(email) {
-        return new Promise((resolve, reject) => {
-            firebase.auth().sendPasswordResetEmail(email, { url: window.location.protocol + "//" + window.location.host + "/login" }).then(() => {
-                resolve(true);
-            }).catch((error) => {
-                reject(this._handleError(error));
-            });
-        });
+        this.setLoggedInUser(data.token, data.user);
+        return data.user;
     }
 
     /**
      * Logout the user
      */
-    logout() {
-        return new Promise((resolve, reject) => {
-            firebase.auth().signOut().then(() => {
-                alert("logout");
-                resolve(true);
-            }).catch((error) => {
-                reject(this._handleError(error));
-            });
-        });
+    async logout() {
+        try {
+            await this._request('/logout', { method: 'POST' });
+        } finally {
+            sessionStorage.removeItem('authUser');
+            sessionStorage.removeItem('authToken');
+        }
     }
 
-    setLoggeedInUser(user) {
-        sessionStorage.setItem("authUser", JSON.stringify(user));
+    setLoggedInUser(token, user) {
+        sessionStorage.setItem('authToken', token);
+        sessionStorage.setItem('authUser', JSON.stringify(user));
     }
 
     /**
@@ -91,33 +81,38 @@ class FirebaseAuthBackend {
     }
 
     /**
-     * Handle the error
-     * @param {*} error 
+     * Returns the current auth token, if any
      */
-    _handleError(error) {
-        var errorMessage = error.message;
-        return errorMessage;
+    getToken() {
+        return sessionStorage.getItem('authToken');
+    }
+
+    /**
+     * Handle the error
+     * @param {*} body
+     */
+    _handleError(body) {
+        return (body && (body.message || Object.values(body.errors || {})[0]?.[0])) || 'Something went wrong.';
     }
 }
 
-let _fireBaseBackend = null;
+let _authBackend = null;
 
 /**
- * Initilize the backend
- * @param {*} config 
+ * Initialize the backend
  */
-const initFirebaseBackend = (config) => {
-    if (!_fireBaseBackend) {
-        _fireBaseBackend = new FirebaseAuthBackend(config);
+const initAuthBackend = () => {
+    if (!_authBackend) {
+        _authBackend = new LaravelAuthBackend();
     }
-    return _fireBaseBackend;
+    return _authBackend;
 };
 
 /**
- * Returns the firebase backend
+ * Returns the auth backend
  */
-const getFirebaseBackend = () => {
-    return _fireBaseBackend;
+const getAuthBackend = () => {
+    return _authBackend;
 };
 
-export { initFirebaseBackend, getFirebaseBackend };
+export { initAuthBackend, getAuthBackend };
