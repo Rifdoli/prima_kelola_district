@@ -7,7 +7,10 @@ import BootstrapVueNext from 'bootstrap-vue-next';
 import VueApexCharts from "vue3-apexcharts";
 import PhosphorIcons from "@phosphor-icons/vue";
 import Wizard from 'form-wizard-vue3';
+import { initAuthBackend } from './authutils';
 // import CoolLightBox from 'vue-cool-lightbox';
+
+initAuthBackend();
 
 // Packages CSS import
 import 'bootstrap/dist/css/bootstrap.css';

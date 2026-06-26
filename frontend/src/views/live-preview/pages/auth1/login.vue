@@ -1,11 +1,35 @@
 <script>
 import Rightbar from "@/components/right-bar.vue"
+import { getAuthBackend } from "@/authutils"
 
 export default {
     name: "LOGIN",
     components: {
         Rightbar
-    }
+    },
+    data() {
+        return {
+            email: "",
+            password: "",
+            error: null,
+            loading: false,
+        }
+    },
+    methods: {
+        async login() {
+            this.error = null;
+            this.loading = true;
+
+            try {
+                await getAuthBackend().loginUser(this.email, this.password);
+                this.$router.push({ name: "dashboard" });
+            } catch (error) {
+                this.error = error;
+            } finally {
+                this.loading = false;
+            }
+        },
+    },
 }
 </script>
 
@@ -22,11 +46,12 @@ export default {
                             <p class="mb-3">Don't have an Account? <router-link to="/register-v1"
                                     class="link-primary ms-1">Create Account</router-link></p>
                         </div>
+                        <div class="alert alert-danger" v-if="error">{{ error }}</div>
                         <div class="mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="Email Address">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="Email Address" v-model="email">
                         </div>
                         <div class="mb-3">
-                            <input type="password" class="form-control" id="floatingInput1" placeholder="Password">
+                            <input type="password" class="form-control" id="floatingInput1" placeholder="Password" v-model="password" @keyup.enter="login">
                         </div>
                         <div class="d-flex mt-1 justify-content-between align-items-center">
                             <div class="form-check">
@@ -38,7 +63,7 @@ export default {
                             </router-link>
                         </div>
                         <div class="d-grid mt-4">
-                            <button type="button" class="btn btn-primary">Login</button>
+                            <button type="button" class="btn btn-primary" :disabled="loading" @click="login">Login</button>
                         </div>
                         <div class="saprator my-3">
                             <span>Or continue with</span>
