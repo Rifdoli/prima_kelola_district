@@ -1,11 +1,39 @@
 <script>
 import Rightbar from "@/components/right-bar.vue"
+import { getAuthBackend } from "@/authutils"
 
 export default {
     name: "REGISTER",
     components: {
         Rightbar
-    }
+    },
+    data() {
+        return {
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            passwordConfirmation: "",
+            error: null,
+            loading: false,
+        }
+    },
+    methods: {
+        async register() {
+            this.error = null;
+            this.loading = true;
+
+            try {
+                const name = `${this.firstName} ${this.lastName}`.trim();
+                await getAuthBackend().registerUser(name, this.email, this.password, this.passwordConfirmation);
+                this.$router.push({ name: "dashboard" });
+            } catch (error) {
+                this.error = error;
+            } finally {
+                this.loading = false;
+            }
+        },
+    },
 }
 </script>
 
@@ -22,29 +50,27 @@ export default {
                             <p class="mb-3">Already have an Account? <router-link to="/login-v1"
                                     class="link-primary">Log in</router-link></p>
                         </div>
+                        <div class="alert alert-danger" v-if="error">{{ error }}</div>
                         <BRow class="row">
                             <BCol class="col-sm-6">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="First Name">
+                                    <input type="text" class="form-control" placeholder="First Name" v-model="firstName">
                                 </div>
                             </BCol>
                             <BCol class="col-sm-6">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Last Name">
+                                    <input type="text" class="form-control" placeholder="Last Name" v-model="lastName">
                                 </div>
                             </BCol>
                         </BRow>
                         <div class="mb-3">
-                            <input type="email" class="form-control" placeholder="Email Address">
+                            <input type="email" class="form-control" placeholder="Email Address" v-model="email">
                         </div>
                         <div class="mb-3">
-                            <input type="number" class="form-control" placeholder="Phone number">
+                            <input type="password" class="form-control" placeholder="Password" v-model="password">
                         </div>
                         <div class="mb-3">
-                            <input type="password" class="form-control" placeholder="Password">
-                        </div>
-                        <div class="mb-3">
-                            <input type="password" class="form-control" placeholder="Confirm Password">
+                            <input type="password" class="form-control" placeholder="Confirm Password" v-model="passwordConfirmation" @keyup.enter="register">
                         </div>
                         <div class="d-flex mt-1 justify-content-between">
                             <div class="form-check">
@@ -54,7 +80,7 @@ export default {
                             </div>
                         </div>
                         <div class="d-grid mt-4">
-                            <button type="button" class="btn btn-primary">Create Account</button>
+                            <button type="button" class="btn btn-primary" :disabled="loading" @click="register">Create Account</button>
                         </div>
                         <div class="saprator my-3">
                             <span>Or continue with</span>

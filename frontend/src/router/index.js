@@ -4,9 +4,23 @@ import appConfig from "../../app.config";
 
 
 const router = createRouter({
-    history: createWebHistory("/vue/"),
+    history: createWebHistory("/"),
     routes,
-  
+
+});
+
+router.beforeEach((to, _from, next) => {
+    if (to.meta.public) {
+        return next();
+    }
+
+    const isAuthenticated = !!sessionStorage.getItem('authToken');
+
+    if (!isAuthenticated) {
+        return next({ name: 'login-v1' });
+    }
+
+    next();
 });
 
 router.beforeResolve(async (routeTo, routeFrom, next) => {

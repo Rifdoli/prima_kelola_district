@@ -1,57 +1,37 @@
-const API_URL = process.env.VUE_APP_API_URL || 'http://localhost:8000/api';
+import api from '@/services/api';
 
 class LaravelAuthBackend {
-    async _request(path, options = {}) {
-        const token = this.getToken();
-
-        const response = await fetch(`${API_URL}${path}`, {
-            ...options,
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                ...(token ? { Authorization: `Bearer ${token}` } : {}),
-                ...options.headers,
-            },
-        });
-
-        const body = await response.json().catch(() => null);
-
-        if (!response.ok) {
-            throw this._handleError(body);
-        }
-
-        return body;
-    }
-
     /**
      * Registers the user with given details
      */
     async registerUser(name, email, password, passwordConfirmation) {
-        const { data } = await this._request('/register', {
-            method: 'POST',
-            body: JSON.stringify({
+        try {
+            const { data } = await api.post('/register', {
                 name,
                 email,
                 password,
                 password_confirmation: passwordConfirmation,
-            }),
-        });
+            });
 
-        this.setLoggedInUser(data.token, data.user);
-        return data.user;
+            this.setLoggedInUser(data.data.token, data.data.user);
+            return data.data.user;
+        } catch (error) {
+            throw this._handleError(error);
+        }
     }
 
     /**
      * Login user with given details
      */
     async loginUser(email, password) {
-        const { data } = await this._request('/login', {
-            method: 'POST',
-            body: JSON.stringify({ email, password }),
-        });
+        try {
+            const { data } = await api.post('/login', { email, password });
 
-        this.setLoggedInUser(data.token, data.user);
-        return data.user;
+            this.setLoggedInUser(data.data.token, data.data.user);
+            return data.data.user;
+        } catch (error) {
+            throw this._handleError(error);
+        }
     }
 
     /**
@@ -59,7 +39,7 @@ class LaravelAuthBackend {
      */
     async logout() {
         try {
-            await this._request('/logout', { method: 'POST' });
+            await api.post('/logout');
         } finally {
             sessionStorage.removeItem('authUser');
             sessionStorage.removeItem('authToken');
@@ -89,9 +69,10 @@ class LaravelAuthBackend {
 
     /**
      * Handle the error
-     * @param {*} body
+     * @param {*} error
      */
-    _handleError(body) {
+    _handleError(error) {
+        const body = error.response?.data;
         return (body && (body.message || Object.values(body.errors || {})[0]?.[0])) || 'Something went wrong.';
     }
 }
