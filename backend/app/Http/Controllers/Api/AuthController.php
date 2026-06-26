@@ -18,15 +18,19 @@ class AuthController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users,username'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone_number' => ['nullable', 'string', 'max:20'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
         $user = User::create([
             'name' => $validated['name'],
+            'username' => $validated['username'],
             'email' => $validated['email'],
+            'phone_number' => $validated['phone_number'] ?? null,
             'password' => Hash::make($validated['password']),
-        ]);
+        ])->refresh();
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -50,6 +54,7 @@ class AuthController extends Controller
         }
 
         $user = User::where('email', $credentials['email'])->first();
+        $user->forceFill(['last_login_at' => now()])->save();
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return $this->success([
