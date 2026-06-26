@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +12,8 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    use ApiResponse;
+
     public function register(Request $request)
     {
         $validated = $request->validate([
@@ -27,13 +30,10 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'data' => [
-                'user' => $user,
-                'token' => $token,
-            ],
-            'message' => 'Registration successful.',
-        ], 201);
+        return $this->success([
+            'user' => $user,
+            'token' => $token,
+        ], 'Registration successful.', 201);
     }
 
     public function login(Request $request)
@@ -52,30 +52,21 @@ class AuthController extends Controller
         $user = User::where('email', $credentials['email'])->first();
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'data' => [
-                'user' => $user,
-                'token' => $token,
-            ],
-            'message' => 'Login successful.',
-        ]);
+        return $this->success([
+            'user' => $user,
+            'token' => $token,
+        ], 'Login successful.');
     }
 
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json([
-            'data' => null,
-            'message' => 'Logout successful.',
-        ]);
+        return $this->success(null, 'Logout successful.');
     }
 
     public function me(Request $request)
     {
-        return response()->json([
-            'data' => $request->user(),
-            'message' => 'Authenticated user retrieved.',
-        ]);
+        return $this->success($request->user(), 'Authenticated user retrieved.');
     }
 }
