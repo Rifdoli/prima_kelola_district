@@ -1,6 +1,7 @@
 <script>
 import simplebar from "simplebar-vue";
 import rightBar from "./right-bar.vue";
+import { getAuthBackend } from "@/authutils";
 
 export default {
     name: "NAVBAR",
@@ -55,6 +56,10 @@ export default {
         document.removeEventListener('keydown', this.handleKeyDown);
     },
     methods: {
+        async logout() {
+            await getAuthBackend().logout();
+            this.$router.push({ name: "login-v1" });
+        },
         handleSearch(event) {
             // console.log('handleSearch called');
             // Prevent the default action (e.g., browser search)
@@ -261,7 +266,7 @@ export default {
                         <i class="ph-duotone ph-lock-key"></i>
                         <span>Lock Screen</span>
                     </a>
-                    <a href="#!" class="dropdown-item">
+                    <a href="#!" class="dropdown-item" @click.prevent="logout">
                         <i class="ph-duotone ph-power"></i>
                         <span>Logout</span>
                     </a>
