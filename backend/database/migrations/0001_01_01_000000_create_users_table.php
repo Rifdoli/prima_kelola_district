@@ -13,12 +13,46 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('user_id');
+            $table->uuid('uuid')->unique();
+            $table->string('username')->unique();
             $table->string('name');
+            $table->string('nik', 16)->nullable()->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('phone_number', 20)->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamp('last_update_password')->nullable();
+            $table->timestamp('last_login_at')->nullable();
+            $table->timestamp('password_valid_until')->nullable();
+            $table->boolean('is_ldap')->default(false);
+            $table->boolean('is_active')->default(true);
+
+            // FK ke tabel organizations menyusul di issue terpisah (tabel belum ada).
+            $table->unsignedBigInteger('organization_id')->nullable();
+
+            $table->foreignId('parent_user_id')->nullable();
+
+            $table->boolean('allow_be_login')->default(false);
+            $table->string('photo')->nullable();
+            $table->text('device_token')->nullable();
+            $table->string('telegram_id')->nullable();
+            $table->string('mfa_type', 20)->nullable();
+            $table->timestamp('last_verify_mfa_at')->nullable();
+            $table->string('tag')->nullable();
+
+            $table->foreignId('created_by')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->foreignId('updated_by')->nullable();
+            $table->timestamp('updated_at')->nullable();
+
+            $table->foreignId('role_id')->nullable();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('parent_user_id')->references('user_id')->on('users')->nullOnDelete();
+            $table->foreign('created_by')->references('user_id')->on('users')->nullOnDelete();
+            $table->foreign('updated_by')->references('user_id')->on('users')->nullOnDelete();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
