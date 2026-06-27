@@ -22,6 +22,10 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * Only the FK constraint is dropped here - the `role_id` column itself
+     * belongs to create_users_table (see up()), so a full rollback removes
+     * it via dropIfExists('users') there, not here.
      */
     public function down(): void
     {
