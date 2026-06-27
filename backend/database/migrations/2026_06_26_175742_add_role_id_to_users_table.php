@@ -8,11 +8,15 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * The `role_id` column itself now lives in create_users_table (for
+     * correct physical column order) - this migration only adds the FK
+     * constraint, since it must run after the `roles` table exists.
      */
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('role_id')->nullable()->after('user_id')->constrained()->nullOnDelete();
+            $table->foreign('role_id')->references('id')->on('roles')->nullOnDelete();
         });
     }
 
@@ -22,7 +26,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('role_id');
+            $table->dropForeign(['role_id']);
         });
     }
 };
