@@ -48,6 +48,9 @@ class Role extends Model
 
     public function users(): HasMany
     {
-        return $this->hasMany(User::class);
+        // Keys passed explicitly: with $primaryKey = 'role_id', Eloquent's
+        // default foreign-key guess would be `role_role_id`, not `role_id`
+        // (same reason User::role() passes them explicitly).
+        return $this->hasMany(User::class, 'role_id', 'role_id');
     }
 }
