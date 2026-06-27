@@ -13,7 +13,7 @@ php artisan migrate --seed
 php artisan serve
 ```
 
-Seeder membuat role `admin`/`user`, dan satu user admin: `test@example.com` / `password`.
+Seeder membuat 5 role berjenjang (SUPERADMIN s/d ADMIN DISTRICT, lihat Bagian Role di bawah), dan satu user SUPERADMIN: `test@example.com` / `password`.
 
 ## Endpoint API
 
@@ -60,24 +60,34 @@ Gunakan `token` di atas sebagai header `Authorization: Bearer <token>` untuk sem
 | GET    | `/api/user`   | Data user yang sedang login |
 | POST   | `/api/logout` | Logout, revoke token     |
 
-### User & Role Management (perlu login + role `admin`)
+### User & Role Management (perlu login + role SUPERADMIN)
 
 | Method | Endpoint          | Keterangan      |
 | ------ | ----------------- | --------------- |
 | GET    | `/api/roles`      | List role       |
-| POST   | `/api/roles`      | Buat role baru (`name`) |
+| POST   | `/api/roles`      | Buat role baru (`name`, `sname`, `description?`, `is_active?`) |
 | GET    | `/api/roles/{id}` | Detail role     |
-| PUT    | `/api/roles/{id}` | Update role (`name`) |
+| PUT    | `/api/roles/{id}` | Update role (`name?`, `description?`, `is_active?`) |
 | DELETE | `/api/roles/{id}` | Hapus role      |
-
-Catatan: setiap role punya `slug` (mis. `admin`, `user`) yang dibuat otomatis dari `name` **sekali saja** saat role dibuat, dan tidak bisa diubah lagi lewat `PUT`. Otorisasi admin (middleware `EnsureUserIsAdmin`) memeriksa `slug`, bukan `name` — jadi mengganti `name` (kapitalisasi, terjemahan, dll) tidak akan mengunci akses admin.
 | GET    | `/api/users`      | List user (dengan role) |
 | POST   | `/api/users`      | Buat user baru (`name`, `username`, `email`, `password`, `phone_number?`, `role_id?`) |
 | GET    | `/api/users/{id}` | Detail user     |
 | PUT    | `/api/users/{id}` | Update user (`name?`, `username?`, `email?`, `phone_number?`, `is_active?`, `role_id?`) |
 | DELETE | `/api/users/{id}` | Hapus user      |
 
-User tanpa role `admin` akan menerima `403 Forbidden` pada endpoint-endpoint di atas.
+Setiap role punya `sname` — identifier stabil untuk otorisasi (mis. `admin_sup`), **berbeda dengan `name`** yang hanya label tampilan (mis. `SUPERADMIN`). `sname` diisi sekali saat role dibuat (lewat `POST /api/roles`) dan **tidak bisa diubah** lagi lewat `PUT`. Middleware `EnsureUserIsAdmin` memeriksa `sname === 'admin_sup'` — jadi mengganti `name` (kapitalisasi, terjemahan, dll) tidak akan mengunci akses admin.
+
+Role yang di-seed secara default:
+
+| name | sname | description |
+| --- | --- | --- |
+| SUPERADMIN | `admin_sup` | User Pengelola Utama Aplikasi |
+| ADMIN NASIONAL | `admin_nas` | User Utama Nasional |
+| ADMIN AREA | `admin_are` | User Utama Area |
+| ADMIN REGIONAL | `admin_reg` | User Utama Regional |
+| ADMIN DISTRICT | `admin_dis` | User Utama District |
+
+Hanya role dengan `sname = admin_sup` (SUPERADMIN) yang punya akses ke endpoint-endpoint di atas. Role lain & user tanpa role akan menerima `403 Forbidden`.
 
 ## Response Error
 

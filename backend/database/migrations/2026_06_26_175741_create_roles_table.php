@@ -12,9 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->id();
+            $table->id('role_id');
+            $table->uuid('uuid')->unique();
             $table->string('name')->unique();
-            $table->timestamps();
+            $table->string('sname', 50)->unique();
+            $table->string('description')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->foreignId('created_by')->nullable()
+                ->constrained('users', 'user_id')->nullOnDelete();
+            $table->timestamp('created_at')->nullable();
+            $table->foreignId('updated_by')->nullable()
+                ->constrained('users', 'user_id')->nullOnDelete();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
