@@ -12,8 +12,17 @@ export default {
         return {
             users: [],
             roles: [],
-            newUser: { name: "", username: "", email: "", password: "", phone_number: "", role_id: "" },
-            editingUser: null,
+            search: "",
+            showFilter: false,
+            filter: { role_id: "", active: "", ldap: "" },
+            form: {
+                user_id: null, name: "", username: "", email: "",
+                password: "", phone_number: "", role_id: "", is_active: true,
+            },
+            viewRow: null,
+            showAdd: false,
+            showEdit: false,
+            showView: false,
             error: null,
             loading: false,
         }
@@ -21,6 +30,37 @@ export default {
     mounted() {
         this.fetchUsers();
         this.fetchRoles();
+    },
+    computed: {
+        filteredUsers() {
+            let rows = this.users;
+
+            if (this.filter.role_id) {
+                rows = rows.filter(u => String(u.role_id) === String(this.filter.role_id));
+            }
+            if (this.filter.active === "active") {
+                rows = rows.filter(u => u.is_active);
+            } else if (this.filter.active === "inactive") {
+                rows = rows.filter(u => !u.is_active);
+            }
+            if (this.filter.ldap === "yes") {
+                rows = rows.filter(u => u.is_ldap);
+            } else if (this.filter.ldap === "no") {
+                rows = rows.filter(u => !u.is_ldap);
+            }
+
+            const q = this.search.trim().toLowerCase();
+            if (q) {
+                rows = rows.filter(u =>
+                    [
+                        u.username, u.name, u.role?.name,
+                        u.is_ldap ? "ldap yes" : "no",
+                        u.is_active ? "active yes" : "inactive no",
+                    ].join(" ").toLowerCase().includes(q)
+                );
+            }
+            return rows;
+        }
     },
     methods: {
         async fetchUsers() {
@@ -39,39 +79,65 @@ export default {
                 const { data } = await api.get('/roles');
                 this.roles = data.data;
             } catch (error) {
-                // ignore; the role dropdown will just be empty
+                // ignore; the role dropdown/filter will just be empty
             }
         },
+        openAdd() {
+            this.error = null;
+            this.form = {
+                user_id: null, name: "", username: "", email: "",
+                password: "", phone_number: "", role_id: "", is_active: true,
+            };
+            this.showAdd = true;
+        },
+        openEdit(user) {
+            this.error = null;
+            this.form = { ...user, role_id: user.role_id ?? "" };
+            this.showEdit = true;
+        },
+        openView(user) {
+            this.viewRow = user;
+            this.showView = true;
+        },
         async createUser() {
-            if (!this.newUser.name || !this.newUser.username || !this.newUser.email || !this.newUser.password) return;
+            if (!this.form.name || !this.form.username || !this.form.email || !this.form.password) {
+                this.error = 'Name, username, email, and password are required.';
+                return;
+            }
             try {
-                await api.post('/users', this.newUser);
-                this.newUser = { name: "", username: "", email: "", password: "", phone_number: "", role_id: "" };
+                await api.post('/users', {
+                    name: this.form.name,
+                    username: this.form.username,
+                    email: this.form.email,
+                    password: this.form.password,
+                    phone_number: this.form.phone_number,
+                    role_id: this.form.role_id || null,
+                });
+                this.showAdd = false;
                 this.fetchUsers();
             } catch (error) {
                 this.error = error.response?.data?.message || 'Failed to create user.';
             }
         },
-        startEdit(user) {
-            this.editingUser = { ...user, role_id: user.role_id ?? "" };
-        },
         async saveEdit() {
             try {
-                await api.put(`/users/${this.editingUser.user_id}`, {
-                    name: this.editingUser.name,
-                    username: this.editingUser.username,
-                    email: this.editingUser.email,
-                    phone_number: this.editingUser.phone_number,
-                    is_active: this.editingUser.is_active,
-                    role_id: this.editingUser.role_id || null,
+                // password is intentionally NOT sent on update (backend rejects it).
+                await api.put(`/users/${this.form.user_id}`, {
+                    name: this.form.name,
+                    username: this.form.username,
+                    email: this.form.email,
+                    phone_number: this.form.phone_number,
+                    is_active: this.form.is_active,
+                    role_id: this.form.role_id || null,
                 });
-                this.editingUser = null;
+                this.showEdit = false;
                 this.fetchUsers();
             } catch (error) {
                 this.error = error.response?.data?.message || 'Failed to update user.';
             }
         },
         async deleteUser(user) {
+            if (!confirm(`Delete user "${user.username}"?`)) return;
             try {
                 await api.delete(`/users/${user.user_id}`);
                 this.fetchUsers();
@@ -88,94 +154,108 @@ export default {
         <pageheader title="Users" pageTitle="User & Role Management" />
         <BRow>
             <div class="col-sm-12">
-                <div class="alert alert-danger" v-if="error">{{ error }}</div>
-                <div class="card">
-                    <div class="card-body">
-                        <form class="d-flex mb-3 gap-2 flex-wrap" @submit.prevent="createUser">
-                            <input type="text" class="form-control" placeholder="Name"
-                                v-model="newUser.name">
-                            <input type="text" class="form-control" placeholder="Username"
-                                v-model="newUser.username">
-                            <input type="email" class="form-control" placeholder="Email"
-                                v-model="newUser.email">
-                            <input type="password" class="form-control" placeholder="Password (min 8)"
-                                v-model="newUser.password">
-                            <input type="text" class="form-control" placeholder="Phone"
-                                v-model="newUser.phone_number">
-                            <select class="form-control" v-model="newUser.role_id">
-                                <option value="">— pilih role —</option>
-                                <option v-for="role in roles" :key="role.role_id" :value="role.role_id">
-                                    {{ role.name }}
-                                </option>
-                            </select>
-                            <button type="submit" class="btn btn-primary">Add User</button>
-                        </form>
-
+                <div class="alert alert-danger" v-if="error && !showAdd && !showEdit">{{ error }}</div>
+                <div class="card table-card">
+                    <div class="card-header">
+                        <div class="d-sm-flex align-items-center justify-content-between">
+                            <h5 class="mb-3 mb-sm-0">User Management</h5>
+                            <div class="d-flex flex-wrap gap-2">
+                                <input type="text" class="form-control" style="min-width: 220px"
+                                    placeholder="Search..." v-model="search">
+                                <button class="btn btn-outline-secondary" @click="showFilter = !showFilter">
+                                    <i class="ti ti-filter f-18"></i> Filter
+                                </button>
+                                <button class="btn btn-primary" @click="openAdd">
+                                    <i class="ti ti-plus f-18"></i> Add User
+                                </button>
+                            </div>
+                        </div>
+                        <div v-if="showFilter" class="mt-3">
+                            <div class="row g-2">
+                                <div class="col-sm-4">
+                                    <label class="form-label mb-1">Role</label>
+                                    <select class="form-control" v-model="filter.role_id">
+                                        <option value="">Semua</option>
+                                        <option v-for="role in roles" :key="role.role_id" :value="role.role_id">
+                                            {{ role.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label mb-1">Status</label>
+                                    <select class="form-control" v-model="filter.active">
+                                        <option value="">Semua</option>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label mb-1">LDAP</label>
+                                    <select class="form-control" v-model="filter.ldap">
+                                        <option value="">Semua</option>
+                                        <option value="yes">Ya</option>
+                                        <option value="no">Tidak</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body pt-3">
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover table-bordered align-middle">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
+                                        <th style="width: 60px">#</th>
                                         <th>Username</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
+                                        <th>Nama</th>
+                                        <th>Organisasi</th>
                                         <th>Role</th>
+                                        <th>LDAP</th>
                                         <th>Active</th>
                                         <th class="text-end">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="user in users" :key="user.user_id">
-                                        <td>{{ user.user_id }}</td>
+                                    <tr v-for="(user, index) in filteredUsers" :key="user.user_id">
+                                        <td>{{ index + 1 }}</td>
+                                        <td>{{ user.username }}</td>
+                                        <td>{{ user.name }}</td>
+                                        <!-- TODO: tampilkan nama organisasi setelah modul Organizations dibuat -->
+                                        <td>-</td>
+                                        <td>{{ user.role?.name }}</td>
                                         <td>
-                                            <input v-if="editingUser && editingUser.user_id === user.user_id"
-                                                type="text" class="form-control" v-model="editingUser.name">
-                                            <span v-else>{{ user.name }}</span>
+                                            <span v-if="user.is_ldap" class="badge bg-light-success">Ya</span>
+                                            <span v-else class="badge bg-light-secondary">Tidak</span>
                                         </td>
                                         <td>
-                                            <input v-if="editingUser && editingUser.user_id === user.user_id"
-                                                type="text" class="form-control" v-model="editingUser.username">
-                                            <span v-else>{{ user.username }}</span>
+                                            <span v-if="user.is_active" class="badge bg-light-success">Active</span>
+                                            <span v-else class="badge bg-light-danger">Inactive</span>
                                         </td>
                                         <td>
-                                            <input v-if="editingUser && editingUser.user_id === user.user_id"
-                                                type="email" class="form-control" v-model="editingUser.email">
-                                            <span v-else>{{ user.email }}</span>
-                                        </td>
-                                        <td>
-                                            <input v-if="editingUser && editingUser.user_id === user.user_id"
-                                                type="text" class="form-control" v-model="editingUser.phone_number">
-                                            <span v-else>{{ user.phone_number }}</span>
-                                        </td>
-                                        <td>
-                                            <select v-if="editingUser && editingUser.user_id === user.user_id"
-                                                class="form-control" v-model="editingUser.role_id">
-                                                <option value="">— pilih role —</option>
-                                                <option v-for="role in roles" :key="role.role_id" :value="role.role_id">
-                                                    {{ role.name }}
-                                                </option>
-                                            </select>
-                                            <span v-else>{{ user.role?.name }}</span>
-                                        </td>
-                                        <td>
-                                            <input v-if="editingUser && editingUser.user_id === user.user_id"
-                                                type="checkbox" v-model="editingUser.is_active">
-                                            <span v-else>{{ user.is_active ? 'Yes' : 'No' }}</span>
-                                        </td>
-                                        <td class="text-end">
-                                            <template v-if="editingUser && editingUser.user_id === user.user_id">
-                                                <button class="btn btn-sm btn-success me-1" @click="saveEdit">Save</button>
-                                                <button class="btn btn-sm btn-secondary" @click="editingUser = null">Cancel</button>
-                                            </template>
-                                            <template v-else>
-                                                <button class="btn btn-sm btn-primary me-1" @click="startEdit(user)">Edit</button>
-                                                <button class="btn btn-sm btn-danger" @click="deleteUser(user)">Delete</button>
-                                            </template>
+                                            <ul class="list-inline mb-0 text-end">
+                                                <li class="list-inline-item m-0">
+                                                    <a href="#" class="avtar avtar-s btn btn-warning"
+                                                        @click.prevent="openView(user)">
+                                                        <i class="ti ti-eye f-18"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item m-0">
+                                                    <a href="#" class="avtar avtar-s btn btn-primary"
+                                                        @click.prevent="openEdit(user)">
+                                                        <i class="ti ti-pencil f-18"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item m-0">
+                                                    <a href="#" class="avtar avtar-s btn bg-white btn-link-danger"
+                                                        @click.prevent="deleteUser(user)">
+                                                        <i class="ti ti-trash f-18"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </td>
                                     </tr>
-                                    <tr v-if="!loading && users.length === 0">
-                                        <td colspan="8" class="text-center text-muted">No users yet.</td>
+                                    <tr v-if="!loading && filteredUsers.length === 0">
+                                        <td colspan="8" class="text-center text-muted">No users found.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -184,5 +264,93 @@ export default {
                 </div>
             </div>
         </BRow>
+
+        <!-- Add User -->
+        <BModal v-model="showAdd" title="Add User" hide-footer>
+            <div class="alert alert-danger" v-if="error">{{ error }}</div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Username</label>
+                <input type="text" class="form-control" v-model="form.username">
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Name</label>
+                <input type="text" class="form-control" v-model="form.name">
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Email</label>
+                <input type="email" class="form-control" v-model="form.email">
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Password (min 8)</label>
+                <input type="password" class="form-control" v-model="form.password">
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Phone</label>
+                <input type="text" class="form-control" v-model="form.phone_number">
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Role</label>
+                <select class="form-control" v-model="form.role_id">
+                    <option value="">— pilih role —</option>
+                    <option v-for="role in roles" :key="role.role_id" :value="role.role_id">{{ role.name }}</option>
+                </select>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-link-secondary" @click="showAdd = false">Cancel</button>
+                <button class="btn btn-primary" @click="createUser">Save</button>
+            </div>
+        </BModal>
+
+        <!-- Edit User -->
+        <BModal v-model="showEdit" title="Edit User" hide-footer>
+            <div class="alert alert-danger" v-if="error">{{ error }}</div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Username</label>
+                <input type="text" class="form-control" v-model="form.username">
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Name</label>
+                <input type="text" class="form-control" v-model="form.name">
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Email</label>
+                <input type="email" class="form-control" v-model="form.email">
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Phone</label>
+                <input type="text" class="form-control" v-model="form.phone_number">
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Role</label>
+                <select class="form-control" v-model="form.role_id">
+                    <option value="">— pilih role —</option>
+                    <option v-for="role in roles" :key="role.role_id" :value="role.role_id">{{ role.name }}</option>
+                </select>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="editUserActive" v-model="form.is_active">
+                <label class="form-check-label" for="editUserActive">Active</label>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-link-secondary" @click="showEdit = false">Cancel</button>
+                <button class="btn btn-primary" @click="saveEdit">Save</button>
+            </div>
+        </BModal>
+
+        <!-- View User -->
+        <BModal v-model="showView" title="User Detail" hide-footer>
+            <div v-if="viewRow">
+                <p class="mb-2"><strong>Username:</strong> {{ viewRow.username }}</p>
+                <p class="mb-2"><strong>Nama:</strong> {{ viewRow.name }}</p>
+                <p class="mb-2"><strong>Email:</strong> {{ viewRow.email }}</p>
+                <p class="mb-2"><strong>Phone:</strong> {{ viewRow.phone_number || '-' }}</p>
+                <p class="mb-2"><strong>Role:</strong> {{ viewRow.role?.name || '-' }}</p>
+                <p class="mb-2"><strong>LDAP:</strong> {{ viewRow.is_ldap ? 'Ya' : 'Tidak' }}</p>
+                <p class="mb-2"><strong>Active:</strong> {{ viewRow.is_active ? 'Yes' : 'No' }}</p>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-link-secondary" @click="showView = false">Close</button>
+            </div>
+        </BModal>
     </Layout>
 </template>
