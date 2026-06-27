@@ -61,12 +61,10 @@ export default [
         component: () => import("../views/pages/roles.vue"),
     },
     {
-        // TODO(Task 3, issue #17): ganti component ini ke views/pages/users.vue
-        // begitu halaman User Management sungguhan dibuat.
         path: "/users",
         name: "users",
-        meta: { title: "User Management" },
-        component: () => import("../views/pages/placeholder.vue"),
+        meta: { title: "Users" },
+        component: () => import("../views/pages/users.vue"),
     },
     {
         path: "/assessment/self",
