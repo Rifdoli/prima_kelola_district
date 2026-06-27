@@ -61,6 +61,44 @@ export default [
         component: () => import("../views/pages/roles.vue"),
     },
     {
+        // TODO(Task 3, issue #17): ganti component ini ke views/pages/users.vue
+        // begitu halaman User Management sungguhan dibuat.
+        path: "/users",
+        name: "users",
+        meta: { title: "User Management" },
+        component: () => import("../views/pages/placeholder.vue"),
+    },
+    {
+        path: "/assessment/self",
+        name: "assessment-self",
+        meta: { title: "Self Assessment" },
+        component: () => import("../views/pages/placeholder.vue"),
+    },
+    {
+        path: "/assessment/on-desk",
+        name: "assessment-on-desk",
+        meta: { title: "On Desk Assessment" },
+        component: () => import("../views/pages/placeholder.vue"),
+    },
+    {
+        path: "/assessment/on-site",
+        name: "assessment-on-site",
+        meta: { title: "On Site Assessment" },
+        component: () => import("../views/pages/placeholder.vue"),
+    },
+    {
+        path: "/organizations",
+        name: "organizations",
+        meta: { title: "Organization Management" },
+        component: () => import("../views/pages/placeholder.vue"),
+    },
+    {
+        path: "/locations",
+        name: "locations",
+        meta: { title: "Location Management" },
+        component: () => import("../views/pages/placeholder.vue"),
+    },
+    {
         path: "/application/plans",
         name: "Apps Plans",
         meta: { title: "Apps Plans" },
