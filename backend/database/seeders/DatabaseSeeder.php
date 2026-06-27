@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'role_id' => Role::where('name', 'admin')->first()?->id,
+            'role_id' => Role::where('sname', 'admin_sup')->first()?->role_id,
         ]);
     }
 }

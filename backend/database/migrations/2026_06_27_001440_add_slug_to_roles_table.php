@@ -13,12 +13,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('roles', function (Blueprint $table) {
-            $table->string('slug')->nullable()->unique()->after('name');
+            $table->string('sname', 50)->nullable()->unique()->after('name');
         });
 
-        // Backfill: slug jadi versi stabil dari name pada saat ini, supaya
+        // Backfill: sname jadi versi stabil dari name pada saat ini, supaya
         // role lama tidak kehilangan identitas walau name sempat diubah.
-        DB::table('roles')->whereNull('slug')->update(['slug' => DB::raw('lower(name)')]);
+        DB::table('roles')->whereNull('sname')->update(['sname' => DB::raw('lower(name)')]);
     }
 
     /**
@@ -27,7 +27,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('roles', function (Blueprint $table) {
-            $table->dropColumn('slug');
+            $table->dropColumn('sname');
         });
     }
 };

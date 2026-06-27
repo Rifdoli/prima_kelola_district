@@ -31,7 +31,7 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'phone_number' => ['nullable', 'string', 'max:20'],
             'password' => ['required', 'string', 'min:8'],
-            'role_id' => ['nullable', 'exists:roles,id'],
+            'role_id' => ['nullable', 'exists:roles,role_id'],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
@@ -60,7 +60,7 @@ class UserController extends Controller
             'email' => ['sometimes', 'string', 'email', 'max:255', 'unique:users,email,'.$user->getKey().',user_id'],
             'phone_number' => ['sometimes', 'nullable', 'string', 'max:20'],
             'is_active' => ['sometimes', 'boolean'],
-            'role_id' => ['sometimes', 'nullable', 'exists:roles,id'],
+            'role_id' => ['sometimes', 'nullable', 'exists:roles,role_id'],
         ]);
 
         $user->update($validated);
