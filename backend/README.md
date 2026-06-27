@@ -69,6 +69,8 @@ Gunakan `token` di atas sebagai header `Authorization: Bearer <token>` untuk sem
 | GET    | `/api/roles/{id}` | Detail role     |
 | PUT    | `/api/roles/{id}` | Update role (`name`) |
 | DELETE | `/api/roles/{id}` | Hapus role      |
+
+Catatan: setiap role punya `slug` (mis. `admin`, `user`) yang dibuat otomatis dari `name` **sekali saja** saat role dibuat, dan tidak bisa diubah lagi lewat `PUT`. Otorisasi admin (middleware `EnsureUserIsAdmin`) memeriksa `slug`, bukan `name` — jadi mengganti `name` (kapitalisasi, terjemahan, dll) tidak akan mengunci akses admin.
 | GET    | `/api/users`      | List user (dengan role) |
 | POST   | `/api/users`      | Buat user baru (`name`, `username`, `email`, `password`, `phone_number?`, `role_id?`) |
 | GET    | `/api/users/{id}` | Detail user     |
