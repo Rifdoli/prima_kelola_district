@@ -88,7 +88,7 @@ export default [
         path: "/organizations",
         name: "organizations",
         meta: { title: "Organization Management", group: "Administration" },
-        component: () => import("../views/pages/placeholder.vue"),
+        component: () => import("../views/pages/organizations.vue"),
     },
     {
         path: "/locations",
