@@ -1,198 +1,277 @@
-# Issue: Halaman Organization Management (Frontend CRUD)
+# Issue: Organization Management — Filter & Tombol Move (Frontend)
 
-> **Untuk implementor (junior / AI):** Kerjakan **berurutan** dari Tahap 1. Semua perubahan ada di folder `frontend/` — **tidak ada perubahan backend** (API-nya sudah jadi). **Tiru pola dari file referensi** yang path-nya disebut; jangan mengarang pola baru. Setiap tahap punya checklist **Definition of Done (DoD)**. Jika ragu, **berhenti dan tanya**.
+> **Untuk implementor (junior / AI):** Kerjakan **berurutan** dari Tahap 1. **Semua perubahan ada di satu file**: [frontend/src/views/pages/organizations.vue](frontend/src/views/pages/organizations.vue) — **tidak ada perubahan backend** (API `move` sudah jadi) dan **tidak ada file komponen yang diubah**. **Tiru pola dari file referensi** yang path-nya disebut; jangan mengarang pola baru. Setiap tahap punya checklist **Definition of Done (DoD)**. Jika ragu, **berhenti dan tanya**.
 
 ---
 
 ## 0. Konteks & Ruang Lingkup
 
-Backend modul Organizations **sudah selesai dan ter-seed** (78 organisasi: 1 National, 4 Area, 12 Regional, 61 District). Yang belum ada adalah **halaman frontend-nya** — route `/organizations` saat ini masih menampilkan halaman placeholder. Tugas issue ini: bikin halaman CRUD-nya memakai struktur tabel admin yang sudah dipakai di halaman Users & Roles.
+Halaman **Organization Management** (`/organizations`) sudah jadi: menampilkan tabel 78 organisasi dengan Add / Edit / View / Delete (lihat [organizations.vue](frontend/src/views/pages/organizations.vue) yang sekarang). Issue ini menambahkan **dua fitur** ke halaman itu:
+
+1. **Filter** — tombol "Filter" yang membuka modal untuk menyaring tabel berdasar **Organization Type** dan **Status (Active/Inactive)**.
+2. **Tombol Move** — aksi baru di kolom Actions tiap baris untuk **memindahkan organisasi ke induk (parent) lain**, berupa modal berisi dropdown pilihan parent baru.
+
+Keduanya **sudah pernah ditulis sebagai Tahap 6 (Move) & Tahap 7 (Filter) opsional** di issue halaman Organizations sebelumnya — sekarang dikerjakan sebagai issue tersendiri.
+
+### File yang DIUBAH (hanya satu)
+- [frontend/src/views/pages/organizations.vue](frontend/src/views/pages/organizations.vue) — semua pekerjaan ada di sini.
 
 ### File REFERENSI (tiru polanya — JANGAN diubah)
-- [frontend/src/views/pages/users.vue](frontend/src/views/pages/users.vue) — **template utama yang ditiru**: pakai `AdminDataTable` + `RowActions` + `BModal` untuk Add/Edit/View/Filter, fetch via `api`.
-- [frontend/src/views/pages/roles.vue](frontend/src/views/pages/roles.vue) — versi lebih sederhana (field lebih sedikit), berguna sebagai pembanding.
-- [frontend/src/components/common/AdminDataTable.vue](frontend/src/components/common/AdminDataTable.vue) — komponen tabel (search, pagination, sort, slot kolom). **Pelajari cara kerja slot kolomnya** (lihat Tahap 3).
-- [frontend/src/components/common/RowActions.vue](frontend/src/components/common/RowActions.vue) — tombol aksi view/edit/delete (emit `@view`/`@edit`/`@delete`).
+- [frontend/src/views/pages/users.vue](frontend/src/views/pages/users.vue) — **contoh lengkap pola Filter**: data `filter`, computed `filteredUsers`, modal Filter, method `resetFilter`, dan `:rows="filteredUsers"`. Tiru persis untuk Filter di sini.
+- [frontend/src/components/common/RowActions.vue](frontend/src/components/common/RowActions.vue) — komponen tombol aksi. **Punya slot `#extra`** (`<slot name="extra" :row="row">`) — **di situlah** tombol Move dipasang. **Jangan** menambah `'move'` ke prop `actions`; `actionMap` di komponen ini hanya kenal view/edit/delete, jadi pakai slot `#extra` agar tidak perlu mengubah komponen.
 - [frontend/src/services/api.js](frontend/src/services/api.js) — axios instance (base URL + token otomatis). Pakai ini untuk semua request.
 
 ### Yang TIDAK boleh dikerjakan
-- Tidak mengubah backend (controller/model/migration/route).
-- Tidak mengubah file referensi di atas.
-- Tidak menampilkan kolom `id` atau `uuid` di tabel (prinsip yang sama dengan halaman Users/Roles — nomor urut pakai `#` dari `AdminDataTable`).
+- Tidak mengubah backend (controller/model/migration/route) — endpoint `move` **sudah ada**.
+- Tidak mengubah file komponen ([RowActions.vue](frontend/src/components/common/RowActions.vue), [AdminDataTable.vue](frontend/src/components/common/AdminDataTable.vue)) atau file referensi.
+- Tidak mengubah modal Edit untuk menambah pindah-parent — **pindah parent KHUSUS lewat tombol Move** (modal tersendiri). Edit tetap tidak menyentuh parent.
 
 ---
 
 ## 1. Kontrak API (sudah tersedia — JANGAN bikin endpoint baru)
 
-Semua endpoint butuh login admin (token sudah otomatis dilampirkan oleh [api.js](frontend/src/services/api.js)). Bentuk response selalu `{ data, message }`.
+Untuk Filter **tidak ada endpoint baru** — penyaringan dilakukan **di sisi frontend** terhadap data yang sudah di-`fetch` (pola identik dengan `users.vue`). Tipe organisasi sudah tersedia dari `this.types` (hasil `GET /organization-types`, sudah di-fetch oleh halaman).
+
+Untuk Move, satu endpoint:
 
 | Aksi | Request | Catatan |
 |---|---|---|
-| List organisasi | `GET /organizations` | tiap item sudah membawa relasi `type` (objek `organization_types`) dan `parent` (objek organisasi induk, bisa `null`). |
-| List tipe | `GET /organization-types` | untuk isi dropdown **Organization Type**. Tiap item: `{ organization_type_id, name, level, ... }`. |
-| Tambah | `POST /organizations` | body: `name` (wajib), `sname` (wajib, unik), `organization_type_id` (wajib), `parent_organization_id` (boleh `null` = root), opsional `timezone`, `is_active`, `notes`. |
-| Edit | `PUT /organizations/{id}` | body: `name`, `sname`, `organization_type_id`, `is_active`, `timezone`, `notes`. **`parent_organization_id` TIDAK diterima di sini** (pindah induk pakai endpoint `move`, lihat Tahap 6 opsional). |
-| Hapus | `DELETE /organizations/{id}` | jika organisasi punya keturunan → **422**. Untuk hapus beserta seluruh sub-pohonnya, kirim query `?cascade=true`. Lihat Tahap 5. |
+| Pindah induk | `POST /organizations/{id}/move` | body: `{ "parent_organization_id": <id \| null> }`. `null` = jadikan organisasi root (tanpa induk). |
 
-> **Beda penting dengan Roles:** di Organizations, `sname` **boleh diubah** saat edit (backend menerimanya). Di Roles `sname` immutable — jangan terbawa pola itu.
+**Aturan & error endpoint `move` (status 422 dengan pesan di `error.response.data.message`):**
+- Memindahkan organisasi **ke dirinya sendiri** → 422 `"An organization cannot be moved under itself."`
+- Memindahkan organisasi **ke salah satu keturunannya sendiri** (akan membuat siklus) → 422 `"An organization cannot be moved under one of its own descendants."`
+- Sukses → response `{ data, message: "Organization moved." }`, `data` sudah memuat relasi `type` & `parent` yang baru.
+
+> **Penting:** frontend **tidak perlu** menghitung sendiri mana keturunan mana bukan. Tampilkan semua organisasi di dropdown (kecuali dirinya sendiri, lihat Tahap 5), lalu **andalkan 422 dari backend** untuk kasus siklus — tampilkan pesannya ke user. Pola ini sama dengan cara Delete menangani 422 cascade di halaman ini.
 
 **DoD Tahap 1**
-- [ ] Sudah paham 5 endpoint di atas (tidak ada yang perlu dibuat; semua sudah ada).
+- [ ] Paham: Filter = murni frontend (tidak ada request baru); Move = satu request `POST .../move` yang bisa balas 422.
 
 ---
 
-## 2. Buat file halaman & sambungkan route
+## 2. Filter — state & computed
 
-1. Buat file baru `frontend/src/views/pages/organizations.vue` (mulai dengan menyalin struktur [users.vue](frontend/src/views/pages/users.vue), lalu sesuaikan).
-2. Di [frontend/src/router/routes.js](frontend/src/router/routes.js), cari entri route `path: "/organizations"` — saat ini `component`-nya `placeholder.vue`. Ganti menjadi:
+Di [organizations.vue](frontend/src/views/pages/organizations.vue), tiru **persis** pola `filter` dari [users.vue](frontend/src/views/pages/users.vue).
+
+1. Tambahkan ke `data()`:
    ```js
-   component: () => import("../views/pages/organizations.vue"),
+   showFilter: false,
+   filter: { organization_type_id: "", active: "" },
    ```
-   Biarkan `meta: { title: "Organization Management", group: "Administration" }` apa adanya (breadcrumb sudah benar).
-3. Link sidebar **sudah ada** (menu Administration → Organization Management) — tidak perlu menyentuh sidebar.
+2. Tambahkan blok `computed` (kalau belum ada `computed` di file ini, buat baru):
+   ```js
+   computed: {
+       filteredOrganizations() {
+           let rows = this.organizations;
+
+           if (this.filter.organization_type_id) {
+               rows = rows.filter(o =>
+                   String(o.organization_type_id) === String(this.filter.organization_type_id));
+           }
+           if (this.filter.active === "active") {
+               rows = rows.filter(o => o.is_active);
+           } else if (this.filter.active === "inactive") {
+               rows = rows.filter(o => !o.is_active);
+           }
+
+           return rows;
+       }
+   },
+   ```
+3. Tambahkan method `resetFilter`:
+   ```js
+   resetFilter() {
+       this.filter = { organization_type_id: "", active: "" };
+   },
+   ```
 
 **DoD Tahap 2**
-- [ ] Buka `/organizations` di browser → halaman baru muncul (boleh masih kosong), bukan lagi placeholder "dalam pengembangan".
+- [ ] `filteredOrganizations` ada dan mengembalikan `this.organizations` apa adanya saat kedua filter kosong.
 
 ---
 
-## 3. Tabel: kolom & cara mengisi sel relasi
+## 3. Filter — sambungkan ke tabel & tombol
 
-`pageheader`: `title="Organization Management"`, `pageTitle="Administration"`.
-
-Definisikan `columns` di `data()`:
-```js
-columns: [
-    { key: "name", label: "Name", sortable: true },
-    { key: "sname", label: "Short Name", sortable: true },
-    { key: "type.name", label: "Organization Type", sortable: true },
-    { key: "parent.name", label: "Organization Parent", sortable: true },
-],
-```
-Kolom `#` dan `Actions` **otomatis** disediakan `AdminDataTable` — jangan dimasukkan ke `columns`.
-
-### GOTCHA slot kolom relasi (WAJIB dibaca)
-`AdminDataTable` mengubah titik (`.`) pada `key` menjadi strip (`-`) untuk nama slot (lihat method `slotName` di [AdminDataTable.vue](frontend/src/components/common/AdminDataTable.vue)). Jadi:
-- `key: "type.name"` → slotnya **`#cell-type-name`**
-- `key: "parent.name"` → slotnya **`#cell-parent-name`**
-
-Sediakan slot ini supaya nilai relasi tampil benar dan aman saat `parent` bernilai `null`:
-```html
-<template #cell-type-name="{ row }">{{ row.type?.name }}</template>
-<template #cell-parent-name="{ row }">{{ row.parent?.name || '-' }}</template>
-```
-
-Set search lintas kolom (termasuk relasi) di `AdminDataTable`:
-```html
-<AdminDataTable title="Organization Table" :columns="columns" :rows="organizations" :loading="loading"
-    :search-keys="['name', 'sname', 'type.name', 'parent.name']">
-```
+1. Ganti sumber baris tabel dari `organizations` ke hasil filter:
+   ```html
+   <AdminDataTable title="Organization Table" :columns="columns" :rows="filteredOrganizations" :loading="loading"
+       :search-keys="['name', 'sname', 'type.name', 'parent.name']">
+   ```
+   > Search bawaan `AdminDataTable` tetap berlaku **di atas** hasil filter (sama seperti users.vue) — tidak perlu utak-atik search.
+2. Di slot `#header-actions`, tambahkan tombol Filter **sebelum** tombol Add (tiru users.vue):
+   ```html
+   <template #header-actions>
+       <button class="btn btn-outline-secondary" @click="showFilter = true">
+           <i class="ti ti-filter f-18"></i> Filter
+       </button>
+       <button class="btn btn-primary" @click="openAdd">
+           <i class="ti ti-plus f-18"></i> Add Organization
+       </button>
+   </template>
+   ```
 
 **DoD Tahap 3**
-- [ ] Tabel menampilkan 78 organisasi dengan kolom `#`, Name, Short Name, Organization Type, Organization Parent, Actions.
-- [ ] Organisasi root (TELKOM INFRASTUKTUR INDONESIA) menampilkan parent `-` (bukan error/blank).
-- [ ] Ketik "regional" / "jateng" di search → tabel terfilter; sorting kolom berfungsi.
+- [ ] Tombol "Filter" tampil di kanan atas tabel, di sebelah "Add Organization".
+- [ ] Tabel masih menampilkan 78 organisasi seperti semula (karena filter masih kosong).
 
 ---
 
-## 4. Fetch data & Add/Edit/View (modal)
+## 4. Filter — modal
 
-Tiru langsung pola `users.vue`:
-- `mounted()`: panggil `fetchOrganizations()` dan `fetchTypes()`.
-- `fetchOrganizations()` → `GET /organizations` → simpan ke `this.organizations`.
-- `fetchTypes()` → `GET /organization-types` → simpan ke `this.types` (untuk dropdown).
-- `form` di `data()`: `{ organization_id: null, name: "", sname: "", organization_type_id: "", parent_organization_id: "", is_active: true }`.
+Tambahkan modal Filter (tiru struktur modal Filter di users.vue, tapi field-nya **Organization Type** & **Status**). Letakkan bersama modal-modal lain di dalam `<Layout>`:
 
-### Modal Add (`POST /organizations`)
-Field form:
-- **Name** → `form.name`
-- **Short Name** → `form.sname`
-- **Organization Type** → `<select v-model="form.organization_type_id">` di-loop dari `this.types` (`:value="t.organization_type_id"`, tampilkan `t.name`).
-- **Organization Parent** → `<select v-model="form.parent_organization_id">` di-loop dari `this.organizations`. Sediakan opsi pertama `<option value="">— None (root) —</option>`. Kirim `null` jika kosong.
-- **Active** → checkbox `form.is_active`.
+```html
+<!-- Filter -->
+<BModal v-model="showFilter" title="Filter" hide-footer>
+    <div class="mb-2">
+        <label class="form-label mb-1">Organization Type</label>
+        <select class="form-control" v-model="filter.organization_type_id">
+            <option value="">Semua</option>
+            <option v-for="type in types" :key="type.organization_type_id" :value="type.organization_type_id">
+                {{ type.name }}
+            </option>
+        </select>
+    </div>
+    <div class="mb-2">
+        <label class="form-label mb-1">Status</label>
+        <select class="form-control" v-model="filter.active">
+            <option value="">Semua</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+        </select>
+    </div>
+    <div class="text-end">
+        <button class="btn btn-link-secondary" @click="resetFilter">Reset</button>
+        <button class="btn btn-primary" @click="showFilter = false">Apply</button>
+    </div>
+</BModal>
+```
 
-Validasi minimal di frontend: `name`, `sname`, `organization_type_id` wajib. Setelah sukses, tutup modal & `fetchOrganizations()`.
+> Dropdown type memakai `this.types` yang **sudah** di-fetch halaman (`fetchTypes()` di `mounted()`). Tidak perlu fetch baru.
 
-### Modal Edit (`PUT /organizations/{id}`)
-Sama dengan Add **kecuali**: **jangan tampilkan dropdown Parent** (backend tidak menerima `parent_organization_id` di update; ganti induk = fitur terpisah Tahap 6). `sname` boleh diedit. Kirim: `name`, `sname`, `organization_type_id`, `is_active`.
+**DoD Tahap 4**
+- [ ] Pilih Organization Type "Regional" di filter → tabel hanya menampilkan 12 organisasi Regional.
+- [ ] Pilih Status "Inactive" → hanya organisasi non-aktif yang tampil (jika tidak ada, tabel kosong — itu benar).
+- [ ] Kombinasi Type + Status bekerja bersamaan (AND).
+- [ ] Tombol **Reset** mengosongkan kedua filter → tabel kembali penuh.
+- [ ] Search bar tetap berfungsi di atas hasil filter.
 
-### Modal View (read-only)
-Tampilkan: Name, Short Name, Organization Type (`viewRow.type?.name`), Organization Parent (`viewRow.parent?.name || '-'`), Active.
+---
 
-Pasang `RowActions` di slot `#actions` persis seperti users.vue:
+## 5. Move — tombol di kolom Actions
+
+Pakai slot `#extra` dari [RowActions.vue](frontend/src/components/common/RowActions.vue) (komponen sudah menyediakannya — **jangan ubah komponennya**). Di slot `#actions` pada `AdminDataTable`, ubah pemakaian `RowActions` menjadi:
+
 ```html
 <template #actions="{ row }">
-    <RowActions :row="row" @view="openView" @edit="openEdit" @delete="deleteOrganization" />
+    <RowActions :row="row" @view="openView" @edit="openEdit" @delete="deleteOrganization">
+        <template #extra="{ row }">
+            <li class="list-inline-item m-0">
+                <a href="#" class="text-info" @click.prevent="openMove(row)" title="Move">
+                    <i class="ti ti-arrows-right-left f-20"></i>
+                </a>
+            </li>
+        </template>
+    </RowActions>
 </template>
 ```
 
-**DoD Tahap 4**
-- [ ] Add organisasi baru (mis. District di bawah salah satu Regional) → muncul di tabel dengan parent benar.
-- [ ] Edit name/short name/type/active → tersimpan & ter-refresh.
-- [ ] View menampilkan detail lengkap.
-
----
-
-## 5. Hapus dengan penanganan cascade (PENTING)
-
-`DELETE /organizations/{id}` akan **gagal 422** bila organisasi punya keturunan. Tangani begini di `deleteOrganization(org)`:
-
-1. `confirm("Delete organization \"<name>\"?")`. Jika batal, stop.
-2. Coba `DELETE /organizations/{id}`.
-3. Jika berhasil → `fetchOrganizations()`.
-4. Jika error **status 422** (artinya punya keturunan) → tampilkan `confirm` kedua memakai pesan dari `error.response.data.message` (mis. "This organization has N descendant organization(s)…"). Jika user setuju → ulangi request dengan query cascade: `DELETE /organizations/{id}?cascade=true`, lalu `fetchOrganizations()`.
-
-Contoh inti:
-```js
-async deleteOrganization(org) {
-    if (!confirm(`Delete organization "${org.name}"?`)) return;
-    try {
-        await api.delete(`/organizations/${org.organization_id}`);
-        this.fetchOrganizations();
-    } catch (error) {
-        if (error.response?.status === 422) {
-            const msg = error.response.data.message + "\n\nLanjut hapus beserta seluruh sub-organisasinya?";
-            if (confirm(msg)) {
-                await api.delete(`/organizations/${org.organization_id}?cascade=true`);
-                this.fetchOrganizations();
-            }
-        } else {
-            this.error = error.response?.data?.message || 'Failed to delete organization.';
-        }
-    }
-}
-```
+> Struktur `<li class="list-inline-item m-0"><a ...><i class="... f-20"></i></a></li>` sengaja disamakan dengan markup tombol bawaan di RowActions agar ikon Move sejajar rapi dengan view/edit/delete.
 
 **DoD Tahap 5**
-- [ ] Hapus organisasi **leaf** (District tanpa anak) → langsung terhapus.
-- [ ] Hapus organisasi yang **punya anak** (mis. sebuah Regional) → muncul konfirmasi kedua; jika disetujui, organisasi + seluruh keturunannya terhapus dan tabel ter-update.
+- [ ] Tiap baris kini punya 4 ikon aksi: view (mata), edit (pensil), delete (tong sampah), **move (panah)**.
+- [ ] Klik ikon Move membuka modal (diisi di Tahap 6) — belum harus berfungsi penuh di tahap ini.
 
 ---
 
-## 6. (OPSIONAL) Pindah induk via endpoint `move`
+## 6. Move — modal & logika submit
 
-Mengganti induk organisasi tidak lewat Edit, tapi lewat `POST /organizations/{id}/move` dengan body `{ "parent_organization_id": <id|null> }`. Backend menolak (422) bila tujuan = dirinya sendiri atau keturunannya sendiri.
+1. Tambahkan ke `data()`:
+   ```js
+   showMove: false,
+   moveRow: null,        // organisasi yang sedang dipindah
+   moveParentId: "",     // pilihan parent baru ("" = jadikan root/null)
+   ```
+2. Tambahkan **computed** untuk daftar pilihan parent (semua organisasi **kecuali dirinya sendiri**). Pakai computed, **jangan** `v-for`+`v-if` pada satu `<option>` — di Vue 3 `v-if` dievaluasi sebelum `v-for` sehingga tidak bisa membaca variabel loop:
+   ```js
+   // taruh di blok computed yang sama dengan filteredOrganizations
+   moveParentOptions() {
+       if (!this.moveRow) return this.organizations;
+       return this.organizations.filter(
+           o => o.organization_id !== this.moveRow.organization_id);
+   },
+   ```
+3. Tambahkan method:
+   ```js
+   openMove(organization) {
+       this.error = null;
+       this.moveRow = organization;
+       // default ke parent saat ini supaya user lihat posisi sekarang
+       this.moveParentId = organization.parent_organization_id ?? "";
+       this.showMove = true;
+   },
+   async submitMove() {
+       try {
+           await api.post(`/organizations/${this.moveRow.organization_id}/move`, {
+               parent_organization_id: this.moveParentId || null,
+           });
+           this.showMove = false;
+           this.fetchOrganizations();
+       } catch (error) {
+           // 422 = pindah ke diri sendiri / keturunan sendiri (siklus)
+           this.error = error.response?.data?.message || 'Failed to move organization.';
+       }
+   },
+   ```
+4. Tambahkan modal Move (bersama modal lain). Dropdown parent di-loop dari computed `moveParentOptions` (sudah membuang dirinya sendiri), plus opsi root:
+   ```html
+   <!-- Move Organization -->
+   <BModal v-model="showMove" title="Move Organization" hide-footer>
+       <div class="alert alert-danger" v-if="error">{{ error }}</div>
+       <div v-if="moveRow">
+           <p class="mb-2">
+               Memindahkan: <strong>{{ moveRow.name }}</strong>
+               (induk sekarang: {{ moveRow.parent?.name || '— root —' }})
+           </p>
+           <div class="mb-2">
+               <label class="form-label mb-1">Induk baru</label>
+               <select class="form-control" v-model="moveParentId">
+                   <option value="">— None (root) —</option>
+                   <option v-for="org in moveParentOptions" :key="org.organization_id" :value="org.organization_id">
+                       {{ org.name }}
+                   </option>
+               </select>
+           </div>
+       </div>
+       <div class="text-end">
+           <button class="btn btn-link-secondary" @click="showMove = false">Cancel</button>
+           <button class="btn btn-primary" @click="submitMove">Move</button>
+       </div>
+   </BModal>
+   ```
 
-Jika ada waktu, tambahkan tombol/aksi "Move" yang membuka modal berisi dropdown parent baru, lalu panggil endpoint tersebut. **Opsional** — sepakati dulu sebelum mengerjakan; tidak wajib untuk menutup issue ini.
+> Dropdown sengaja **hanya** membuang dirinya sendiri (kasus paling jelas). Kasus "induk baru = keturunan sendiri" dibiarkan tetap muncul di dropdown dan **ditangkap oleh 422** dari backend lalu pesannya ditampilkan di alert — ini sederhana dan tetap aman (lihat catatan Tahap 1).
+
+**DoD Tahap 6**
+- [ ] Move organisasi **leaf** (mis. sebuah District) ke Regional lain → setelah submit, kolom "Organization Parent" baris itu berubah jadi induk baru.
+- [ ] Coba Move sebuah organisasi ke **dirinya sendiri**: tidak bisa dipilih karena tidak muncul di dropdown.
+- [ ] Coba Move sebuah **Regional** ke salah satu **District di bawahnya** (keturunan) → muncul alert merah berisi pesan dari backend ("...cannot be moved under one of its own descendants."), data tidak berubah.
+- [ ] Move sebuah organisasi ke opsi **"— None (root) —"** → organisasi jadi root, kolom parent menampilkan `-`.
 
 ---
 
-## 7. (OPSIONAL) Filter modal
+## 7. Verifikasi akhir (manual, di browser)
 
-Seperti di `users.vue`, boleh tambahkan tombol **Filter** + modal untuk menyaring berdasar **Organization Type** dan/atau **Active**. Polanya sama persis (data `filter`, computed `filteredOrganizations`, modal Filter, method `resetFilter`). **Opsional.**
-
----
-
-## 8. Verifikasi akhir (manual)
-
-- [ ] `/organizations` menampilkan 78 organisasi dengan 4 kolom data + `#` + Actions.
-- [ ] Search, sort, pagination jalan.
-- [ ] Add / Edit / View / Delete (termasuk skenario cascade) berfungsi end-to-end.
-- [ ] Breadcrumb: `Home > Administration > Organization Management`.
-- [ ] Tidak ada `id`/`uuid` yang bocor di tampilan tabel.
+- [ ] Login admin → buka `/organizations`.
+- [ ] **Filter:** Type "Regional" → 12 baris; tambah Status "Active" → menyaring lagi; Reset → kembali 78.
+- [ ] **Search + Filter** jalan bersamaan (filter dulu, search mempersempit hasil).
+- [ ] **Move:** pindah satu District ke Regional lain (sukses), coba pindah ke keturunan sendiri (422 tertangani & pesan tampil), pindah ke root (parent jadi `-`).
+- [ ] Tidak ada error di console browser (kecuali 422 yang memang sengaja diuji — itu ter-handle, bukan crash).
+- [ ] Tidak ada perubahan di file selain [organizations.vue](frontend/src/views/pages/organizations.vue).
 
 ---
 
-## Pertanyaan terbuka (konfirmasi bila relevan)
-1. Perlu kolom **Active/Status** di tabel? Spesifikasi awal hanya 4 kolom data (Name, Short Name, Type, Parent). Default: ikuti spesifikasi (Active hanya di form/modal, tidak di tabel).
-2. Fitur **Move** (Tahap 6) dan **Filter** (Tahap 7) masuk issue ini atau dipisah? Default: opsional / dipisah.
+## Catatan untuk reviewer
+- Filter murni client-side (konsisten dengan `users.vue`); jika dataset tumbuh sangat besar, nanti bisa dipindah ke server-side — **di luar lingkup issue ini**.
+- Tombol Move memakai slot `#extra` agar `RowActions.vue` tidak perlu disentuh; bila kelak banyak halaman butuh aksi "move", pertimbangkan menambah entry `move` ke `actionMap` komponen — **juga di luar lingkup issue ini**.
