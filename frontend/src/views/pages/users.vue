@@ -153,12 +153,12 @@ export default {
 
 <template>
     <Layout>
-        <pageheader title="Users" pageTitle="User & Role Management" />
+        <pageheader title="User Management" pageTitle="Administration" />
         <BRow>
             <div class="col-sm-12">
                 <div class="alert alert-danger" v-if="error && !showAdd && !showEdit">{{ error }}</div>
 
-                <AdminDataTable title="User Management" :columns="columns" :rows="filteredUsers" :loading="loading"
+                <AdminDataTable title="User Table" :columns="columns" :rows="filteredUsers" :loading="loading"
                     :search-keys="['username', 'name', 'role.name']">
                     <template #header-actions>
                         <button class="btn btn-outline-secondary" @click="showFilter = true">
