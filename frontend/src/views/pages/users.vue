@@ -16,7 +16,7 @@ export default {
             roles: [],
             organizations: [],
             showFilter: false,
-            filter: { role_id: "", active: "", ldap: "" },
+            filter: { role_id: "", organization_id: "", active: "", ldap: "" },
             columns: [
                 { key: "username", label: "Username", sortable: true },
                 { key: "name", label: "Nama", sortable: true },
@@ -49,6 +49,9 @@ export default {
 
             if (this.filter.role_id) {
                 rows = rows.filter(u => String(u.role_id) === String(this.filter.role_id));
+            }
+            if (this.filter.organization_id) {
+                rows = rows.filter(u => String(u.organization_id) === String(this.filter.organization_id));
             }
             if (this.filter.active === "active") {
                 rows = rows.filter(u => u.is_active);
@@ -151,7 +154,7 @@ export default {
             }
         },
         resetFilter() {
-            this.filter = { role_id: "", active: "", ldap: "" };
+            this.filter = { role_id: "", organization_id: "", active: "", ldap: "" };
         },
         async deleteUser(user) {
             if (!confirm(`Delete user "${user.username}"?`)) return;
@@ -319,6 +322,15 @@ export default {
                     <option value="">Semua</option>
                     <option v-for="role in roles" :key="role.role_id" :value="role.role_id">
                         {{ role.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Organisasi</label>
+                <select class="form-control" v-model="filter.organization_id">
+                    <option value="">Semua</option>
+                    <option v-for="org in organizations" :key="org.organization_id" :value="org.organization_id">
+                        {{ org.name }}
                     </option>
                 </select>
             </div>
