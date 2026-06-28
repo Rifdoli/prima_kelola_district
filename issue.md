@@ -1,277 +1,329 @@
-# Issue: Organization Management — Filter & Tombol Move (Frontend)
+# Issue: Dummy User Seeder & Penambahan Field pada Form Add User
 
-> **Untuk implementor (junior / AI):** Kerjakan **berurutan** dari Tahap 1. **Semua perubahan ada di satu file**: [frontend/src/views/pages/organizations.vue](frontend/src/views/pages/organizations.vue) — **tidak ada perubahan backend** (API `move` sudah jadi) dan **tidak ada file komponen yang diubah**. **Tiru pola dari file referensi** yang path-nya disebut; jangan mengarang pola baru. Setiap tahap punya checklist **Definition of Done (DoD)**. Jika ragu, **berhenti dan tanya**.
+> **Untuk implementor (junior programmer / model AI):** Ikuti tahapan di bawah **berurutan**. Setiap tahap punya checklist dan contoh kode. Jangan mengubah file di luar yang disebutkan. Setelah selesai, jalankan langkah verifikasi di bagian akhir.
 
----
+## Konteks Singkat (baca dulu)
 
-## 0. Konteks & Ruang Lingkup
+Stack:
+- **Backend**: Laravel (folder [backend/](backend/)). Primary key tabel pakai nama custom (`user_id`, `role_id`, `organization_id`, `organization_type_id`), **bukan** `id`.
+- **Frontend**: Vue (folder [frontend/](frontend/)). Halaman user management ada di [frontend/src/views/pages/users.vue](frontend/src/views/pages/users.vue).
 
-Halaman **Organization Management** (`/organizations`) sudah jadi: menampilkan tabel 78 organisasi dengan Add / Edit / View / Delete (lihat [organizations.vue](frontend/src/views/pages/organizations.vue) yang sekarang). Issue ini menambahkan **dua fitur** ke halaman itu:
+Relasi penting:
+- `organizations` punya `organization_type_id` → `organization_types` (punya kolom `level`: National=1, Area=2, Regional=3, District=4).
+- `users` punya `role_id` → `roles`, dan `organization_id` → `organizations`.
 
-1. **Filter** — tombol "Filter" yang membuka modal untuk menyaring tabel berdasar **Organization Type** dan **Status (Active/Inactive)**.
-2. **Tombol Move** — aksi baru di kolom Actions tiap baris untuk **memindahkan organisasi ke induk (parent) lain**, berupa modal berisi dropdown pilihan parent baru.
+**Pemetaan tipe organisasi → role** (sumber: [RoleSeeder.php](backend/database/seeders/RoleSeeder.php) & [OrganizationTypeSeeder.php](backend/database/seeders/OrganizationTypeSeeder.php)):
 
-Keduanya **sudah pernah ditulis sebagai Tahap 6 (Move) & Tahap 7 (Filter) opsional** di issue halaman Organizations sebelumnya — sekarang dikerjakan sebagai issue tersendiri.
-
-### File yang DIUBAH (hanya satu)
-- [frontend/src/views/pages/organizations.vue](frontend/src/views/pages/organizations.vue) — semua pekerjaan ada di sini.
-
-### File REFERENSI (tiru polanya — JANGAN diubah)
-- [frontend/src/views/pages/users.vue](frontend/src/views/pages/users.vue) — **contoh lengkap pola Filter**: data `filter`, computed `filteredUsers`, modal Filter, method `resetFilter`, dan `:rows="filteredUsers"`. Tiru persis untuk Filter di sini.
-- [frontend/src/components/common/RowActions.vue](frontend/src/components/common/RowActions.vue) — komponen tombol aksi. **Punya slot `#extra`** (`<slot name="extra" :row="row">`) — **di situlah** tombol Move dipasang. **Jangan** menambah `'move'` ke prop `actions`; `actionMap` di komponen ini hanya kenal view/edit/delete, jadi pakai slot `#extra` agar tidak perlu mengubah komponen.
-- [frontend/src/services/api.js](frontend/src/services/api.js) — axios instance (base URL + token otomatis). Pakai ini untuk semua request.
-
-### Yang TIDAK boleh dikerjakan
-- Tidak mengubah backend (controller/model/migration/route) — endpoint `move` **sudah ada**.
-- Tidak mengubah file komponen ([RowActions.vue](frontend/src/components/common/RowActions.vue), [AdminDataTable.vue](frontend/src/components/common/AdminDataTable.vue)) atau file referensi.
-- Tidak mengubah modal Edit untuk menambah pindah-parent — **pindah parent KHUSUS lewat tombol Move** (modal tersendiri). Edit tetap tidak menyentuh parent.
+| Tipe Organisasi | level | sname role | Nama role     |
+|-----------------|-------|------------|---------------|
+| National        | 1     | `admin_nas`| ADMIN NASIONAL|
+| Area            | 2     | `admin_are`| ADMIN AREA    |
+| Regional        | 3     | `admin_reg`| ADMIN REGIONAL|
+| District        | 4     | `admin_dis`| ADMIN DISTRICT|
 
 ---
 
-## 1. Kontrak API (sudah tersedia — JANGAN bikin endpoint baru)
+## BAGIAN 1 — Seeder User Dummy
 
-Untuk Filter **tidak ada endpoint baru** — penyaringan dilakukan **di sisi frontend** terhadap data yang sudah di-`fetch` (pola identik dengan `users.vue`). Tipe organisasi sudah tersedia dari `this.types` (hasil `GET /organization-types`, sudah di-fetch oleh halaman).
+### Tujuan
+Untuk **setiap organisasi**, buat **2 user dummy**, dan **kedua user memakai role yang sama dengan tipe organisasinya sendiri** (lihat tabel pemetaan di atas).
 
-Untuk Move, satu endpoint:
+Contoh hasil yang diharapkan:
 
-| Aksi | Request | Catatan |
-|---|---|---|
-| Pindah induk | `POST /organizations/{id}/move` | body: `{ "parent_organization_id": <id \| null> }`. `null` = jadikan organisasi root (tanpa induk). |
+| User | Role | Organisasi |
+|------|------|------------|
+| User A | ADMIN NASIONAL | TELKOM INFRASTUKTUR INDONESIA |
+| User B | ADMIN NASIONAL | TELKOM INFRASTUKTUR INDONESIA |
+| User C | ADMIN AREA | AREA I - SUMATERA |
+| User D | ADMIN AREA | AREA I - SUMATERA |
+| … | ADMIN AREA | … sampai AREA IV - PAMASUKA (masing-masing 2 user) |
+| User X | ADMIN REGIONAL | REGIONAL SUMBAGUT |
+| User XX | ADMIN REGIONAL | REGIONAL SUMBAGUT |
+| … | ADMIN REGIONAL | … sampai REGIONAL MALUKU PAPUA (masing-masing 2 user) |
+| User Y | ADMIN DISTRICT | BANDA ACEH |
+| User YY | ADMIN DISTRICT | BANDA ACEH |
+| … | ADMIN DISTRICT | … sampai JAYAPURA (masing-masing 2 user) |
 
-**Aturan & error endpoint `move` (status 422 dengan pesan di `error.response.data.message`):**
-- Memindahkan organisasi **ke dirinya sendiri** → 422 `"An organization cannot be moved under itself."`
-- Memindahkan organisasi **ke salah satu keturunannya sendiri** (akan membuat siklus) → 422 `"An organization cannot be moved under one of its own descendants."`
-- Sukses → response `{ data, message: "Organization moved." }`, `data` sudah memuat relasi `type` & `parent` yang baru.
+Jadi: **tidak ada kasus khusus** — semua organisasi (National, Area, Regional, District) sama-sama dapat **tepat 2 user** dengan role sesuai tipenya.
 
-> **Penting:** frontend **tidak perlu** menghitung sendiri mana keturunan mana bukan. Tampilkan semua organisasi di dropdown (kecuali dirinya sendiri, lihat Tahap 5), lalu **andalkan 422 dari backend** untuk kasus siklus — tampilkan pesannya ke user. Pola ini sama dengan cara Delete menangani 422 cascade di halaman ini.
+Semua field diisi **acak (random)**: `username`, `name`, `nik`, `email`, `phone_number`, `password`, `is_ldap`, `is_active`.
 
-**DoD Tahap 1**
-- [ ] Paham: Filter = murni frontend (tidak ada request baru); Move = satu request `POST .../move` yang bisa balas 422.
+### Tahapan
 
----
+**1.1 — Tambahkan state random ke [UserFactory.php](backend/database/factories/UserFactory.php)**
 
-## 2. Filter — state & computed
+Saat ini factory belum mengisi `nik`, `phone_number`, `is_ldap`, `is_active`. Lengkapi `definition()` agar mengisi semua field random tersebut. NIK diisi **6 angka random** dan harus unik (kolom `nik` di DB `unique`).
 
-Di [organizations.vue](frontend/src/views/pages/organizations.vue), tiru **persis** pola `filter` dari [users.vue](frontend/src/views/pages/users.vue).
-
-1. Tambahkan ke `data()`:
-   ```js
-   showFilter: false,
-   filter: { organization_type_id: "", active: "" },
-   ```
-2. Tambahkan blok `computed` (kalau belum ada `computed` di file ini, buat baru):
-   ```js
-   computed: {
-       filteredOrganizations() {
-           let rows = this.organizations;
-
-           if (this.filter.organization_type_id) {
-               rows = rows.filter(o =>
-                   String(o.organization_type_id) === String(this.filter.organization_type_id));
-           }
-           if (this.filter.active === "active") {
-               rows = rows.filter(o => o.is_active);
-           } else if (this.filter.active === "inactive") {
-               rows = rows.filter(o => !o.is_active);
-           }
-
-           return rows;
-       }
-   },
-   ```
-3. Tambahkan method `resetFilter`:
-   ```js
-   resetFilter() {
-       this.filter = { organization_type_id: "", active: "" };
-   },
-   ```
-
-**DoD Tahap 2**
-- [ ] `filteredOrganizations` ada dan mengembalikan `this.organizations` apa adanya saat kedua filter kosong.
-
----
-
-## 3. Filter — sambungkan ke tabel & tombol
-
-1. Ganti sumber baris tabel dari `organizations` ke hasil filter:
-   ```html
-   <AdminDataTable title="Organization Table" :columns="columns" :rows="filteredOrganizations" :loading="loading"
-       :search-keys="['name', 'sname', 'type.name', 'parent.name']">
-   ```
-   > Search bawaan `AdminDataTable` tetap berlaku **di atas** hasil filter (sama seperti users.vue) — tidak perlu utak-atik search.
-2. Di slot `#header-actions`, tambahkan tombol Filter **sebelum** tombol Add (tiru users.vue):
-   ```html
-   <template #header-actions>
-       <button class="btn btn-outline-secondary" @click="showFilter = true">
-           <i class="ti ti-filter f-18"></i> Filter
-       </button>
-       <button class="btn btn-primary" @click="openAdd">
-           <i class="ti ti-plus f-18"></i> Add Organization
-       </button>
-   </template>
-   ```
-
-**DoD Tahap 3**
-- [ ] Tombol "Filter" tampil di kanan atas tabel, di sebelah "Add Organization".
-- [ ] Tabel masih menampilkan 78 organisasi seperti semula (karena filter masih kosong).
-
----
-
-## 4. Filter — modal
-
-Tambahkan modal Filter (tiru struktur modal Filter di users.vue, tapi field-nya **Organization Type** & **Status**). Letakkan bersama modal-modal lain di dalam `<Layout>`:
-
-```html
-<!-- Filter -->
-<BModal v-model="showFilter" title="Filter" hide-footer>
-    <div class="mb-2">
-        <label class="form-label mb-1">Organization Type</label>
-        <select class="form-control" v-model="filter.organization_type_id">
-            <option value="">Semua</option>
-            <option v-for="type in types" :key="type.organization_type_id" :value="type.organization_type_id">
-                {{ type.name }}
-            </option>
-        </select>
-    </div>
-    <div class="mb-2">
-        <label class="form-label mb-1">Status</label>
-        <select class="form-control" v-model="filter.active">
-            <option value="">Semua</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-        </select>
-    </div>
-    <div class="text-end">
-        <button class="btn btn-link-secondary" @click="resetFilter">Reset</button>
-        <button class="btn btn-primary" @click="showFilter = false">Apply</button>
-    </div>
-</BModal>
+```php
+public function definition(): array
+{
+    return [
+        'uuid' => Str::uuid(),
+        'username' => fake()->unique()->userName(),
+        'name' => fake()->name(),
+        'nik' => fake()->unique()->numerify('######'), // 6 angka random
+        'email' => fake()->unique()->safeEmail(),
+        'email_verified_at' => now(),
+        'phone_number' => fake()->numerify('08##########'),
+        'password' => static::$password ??= Hash::make('password'),
+        'is_ldap' => fake()->boolean(),
+        'is_active' => fake()->boolean(90), // ~90% aktif
+        'remember_token' => Str::random(10),
+    ];
+}
 ```
 
-> Dropdown type memakai `this.types` yang **sudah** di-fetch halaman (`fetchTypes()` di `mounted()`). Tidak perlu fetch baru.
+> Catatan: jangan hapus baris `static::$password ??= Hash::make('password')` — itu agar semua dummy punya password sama (`password`) supaya mudah login saat testing.
 
-**DoD Tahap 4**
-- [ ] Pilih Organization Type "Regional" di filter → tabel hanya menampilkan 12 organisasi Regional.
-- [ ] Pilih Status "Inactive" → hanya organisasi non-aktif yang tampil (jika tidak ada, tabel kosong — itu benar).
-- [ ] Kombinasi Type + Status bekerja bersamaan (AND).
-- [ ] Tombol **Reset** mengosongkan kedua filter → tabel kembali penuh.
-- [ ] Search bar tetap berfungsi di atas hasil filter.
+**1.2 — Buat file seeder baru `DummyUserSeeder.php`**
 
----
+Lokasi: `backend/database/seeders/DummyUserSeeder.php`.
 
-## 5. Move — tombol di kolom Actions
+Logika:
+1. Petakan `level` tipe organisasi ke `sname` role (sesuai tabel di atas), lalu ambil `role_id` tiap level.
+2. Ambil semua organisasi beserta `type` (eager load `with('type')`).
+3. Untuk tiap organisasi: buat **2 user** via factory, **keduanya** dengan `organization_id` = `$org->organization_id` dan `role_id` sesuai `level` organisasi itu sendiri.
 
-Pakai slot `#extra` dari [RowActions.vue](frontend/src/components/common/RowActions.vue) (komponen sudah menyediakannya — **jangan ubah komponennya**). Di slot `#actions` pada `AdminDataTable`, ubah pemakaian `RowActions` menjadi:
+Contoh implementasi:
 
-```html
-<template #actions="{ row }">
-    <RowActions :row="row" @view="openView" @edit="openEdit" @delete="deleteOrganization">
-        <template #extra="{ row }">
-            <li class="list-inline-item m-0">
-                <a href="#" class="text-info" @click.prevent="openMove(row)" title="Move">
-                    <i class="ti ti-arrows-right-left f-20"></i>
-                </a>
-            </li>
-        </template>
-    </RowActions>
-</template>
+```php
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Organization;
+use App\Models\Role;
+use App\Models\User;
+use Illuminate\Database\Seeder;
+
+class DummyUserSeeder extends Seeder
+{
+    /**
+     * Pemetaan level tipe organisasi -> sname role.
+     * Sesuai RoleSeeder & OrganizationTypeSeeder.
+     */
+    private const LEVEL_TO_ROLE_SNAME = [
+        1 => 'admin_nas',
+        2 => 'admin_are',
+        3 => 'admin_reg',
+        4 => 'admin_dis',
+    ];
+
+    public function run(): void
+    {
+        // sname role -> role_id
+        $roleIdBySname = Role::pluck('role_id', 'sname');
+
+        // level -> role_id
+        $roleIdByLevel = [];
+        foreach (self::LEVEL_TO_ROLE_SNAME as $level => $sname) {
+            $roleIdByLevel[$level] = $roleIdBySname[$sname] ?? null;
+        }
+
+        $organizations = Organization::with('type')->get();
+
+        foreach ($organizations as $org) {
+            $level = $org->type?->level;
+            if ($level === null || empty($roleIdByLevel[$level])) {
+                continue;
+            }
+
+            // 2 user, keduanya pakai role sesuai tipe organisasi itu sendiri.
+            User::factory()->count(2)->create([
+                'organization_id' => $org->organization_id,
+                'role_id' => $roleIdByLevel[$level],
+            ]);
+        }
+    }
+}
 ```
 
-> Struktur `<li class="list-inline-item m-0"><a ...><i class="... f-20"></i></a></li>` sengaja disamakan dengan markup tombol bawaan di RowActions agar ikon Move sejajar rapi dengan view/edit/delete.
+**1.3 — Daftarkan seeder di [DatabaseSeeder.php](backend/database/seeders/DatabaseSeeder.php)**
 
-**DoD Tahap 5**
-- [ ] Tiap baris kini punya 4 ikon aksi: view (mata), edit (pensil), delete (tong sampah), **move (panah)**.
-- [ ] Klik ikon Move membuka modal (diisi di Tahap 6) — belum harus berfungsi penuh di tahap ini.
+Panggil `DummyUserSeeder` **setelah** `OrganizationSeeder` (karena butuh data organisasi & role sudah ada), dan setelah pembuatan `Test User`:
 
----
+```php
+$this->call(RoleSeeder::class);
+$this->call(OrganizationTypeSeeder::class);
+$this->call(OrganizationSeeder::class);
 
-## 6. Move — modal & logika submit
+User::factory()->create([
+    'name' => 'Test User',
+    'email' => 'test@example.com',
+    'role_id' => Role::where('sname', 'admin_sup')->first()?->role_id,
+]);
 
-1. Tambahkan ke `data()`:
-   ```js
-   showMove: false,
-   moveRow: null,        // organisasi yang sedang dipindah
-   moveParentId: "",     // pilihan parent baru ("" = jadikan root/null)
-   ```
-2. Tambahkan **computed** untuk daftar pilihan parent (semua organisasi **kecuali dirinya sendiri**). Pakai computed, **jangan** `v-for`+`v-if` pada satu `<option>` — di Vue 3 `v-if` dievaluasi sebelum `v-for` sehingga tidak bisa membaca variabel loop:
-   ```js
-   // taruh di blok computed yang sama dengan filteredOrganizations
-   moveParentOptions() {
-       if (!this.moveRow) return this.organizations;
-       return this.organizations.filter(
-           o => o.organization_id !== this.moveRow.organization_id);
-   },
-   ```
-3. Tambahkan method:
-   ```js
-   openMove(organization) {
-       this.error = null;
-       this.moveRow = organization;
-       // default ke parent saat ini supaya user lihat posisi sekarang
-       this.moveParentId = organization.parent_organization_id ?? "";
-       this.showMove = true;
-   },
-   async submitMove() {
-       try {
-           await api.post(`/organizations/${this.moveRow.organization_id}/move`, {
-               parent_organization_id: this.moveParentId || null,
-           });
-           this.showMove = false;
-           this.fetchOrganizations();
-       } catch (error) {
-           // 422 = pindah ke diri sendiri / keturunan sendiri (siklus)
-           this.error = error.response?.data?.message || 'Failed to move organization.';
-       }
-   },
-   ```
-4. Tambahkan modal Move (bersama modal lain). Dropdown parent di-loop dari computed `moveParentOptions` (sudah membuang dirinya sendiri), plus opsi root:
-   ```html
-   <!-- Move Organization -->
-   <BModal v-model="showMove" title="Move Organization" hide-footer>
-       <div class="alert alert-danger" v-if="error">{{ error }}</div>
-       <div v-if="moveRow">
-           <p class="mb-2">
-               Memindahkan: <strong>{{ moveRow.name }}</strong>
-               (induk sekarang: {{ moveRow.parent?.name || '— root —' }})
-           </p>
-           <div class="mb-2">
-               <label class="form-label mb-1">Induk baru</label>
-               <select class="form-control" v-model="moveParentId">
-                   <option value="">— None (root) —</option>
-                   <option v-for="org in moveParentOptions" :key="org.organization_id" :value="org.organization_id">
-                       {{ org.name }}
-                   </option>
-               </select>
-           </div>
-       </div>
-       <div class="text-end">
-           <button class="btn btn-link-secondary" @click="showMove = false">Cancel</button>
-           <button class="btn btn-primary" @click="submitMove">Move</button>
-       </div>
-   </BModal>
-   ```
+$this->call(DummyUserSeeder::class);
+```
 
-> Dropdown sengaja **hanya** membuang dirinya sendiri (kasus paling jelas). Kasus "induk baru = keturunan sendiri" dibiarkan tetap muncul di dropdown dan **ditangkap oleh 422** dari backend lalu pesannya ditampilkan di alert — ini sederhana dan tetap aman (lihat catatan Tahap 1).
+> Penting: `DatabaseSeeder` memakai `WithoutModelEvents`, jadi event `creating` di model User (yang auto-generate `uuid`) **tidak jalan**. Karena itu factory **wajib** mengisi `uuid` sendiri (sudah ada di factory, jangan dihapus).
 
-**DoD Tahap 6**
-- [ ] Move organisasi **leaf** (mis. sebuah District) ke Regional lain → setelah submit, kolom "Organization Parent" baris itu berubah jadi induk baru.
-- [ ] Coba Move sebuah organisasi ke **dirinya sendiri**: tidak bisa dipilih karena tidak muncul di dropdown.
-- [ ] Coba Move sebuah **Regional** ke salah satu **District di bawahnya** (keturunan) → muncul alert merah berisi pesan dari backend ("...cannot be moved under one of its own descendants."), data tidak berubah.
-- [ ] Move sebuah organisasi ke opsi **"— None (root) —"** → organisasi jadi root, kolom parent menampilkan `-`.
+**1.4 — Jalankan & cek**
+
+```bash
+cd backend
+php artisan migrate:fresh --seed
+```
+
+Pastikan tidak ada error. Lalu cek jumlah user: harus ada **2 user per organisasi** (semua tipe) + 1 Test User. Contoh: jika ada 78 organisasi → 78 × 2 = 156 user dummy + 1 Test User = 157.
 
 ---
 
-## 7. Verifikasi akhir (manual, di browser)
+## BAGIAN 2 — Tambah Field pada Form "Add User"
 
-- [ ] Login admin → buka `/organizations`.
-- [ ] **Filter:** Type "Regional" → 12 baris; tambah Status "Active" → menyaring lagi; Reset → kembali 78.
-- [ ] **Search + Filter** jalan bersamaan (filter dulu, search mempersempit hasil).
-- [ ] **Move:** pindah satu District ke Regional lain (sukses), coba pindah ke keturunan sendiri (422 tertangani & pesan tampil), pindah ke root (parent jadi `-`).
-- [ ] Tidak ada error di console browser (kecuali 422 yang memang sengaja diuji — itu ter-handle, bukan crash).
-- [ ] Tidak ada perubahan di file selain [organizations.vue](frontend/src/views/pages/organizations.vue).
+### Tujuan
+Pada form Add User di [users.vue](frontend/src/views/pages/users.vue), tambahkan input:
+1. **NIK** (text)
+2. **is_LDAP** (checkbox)
+3. **Organisasi** (dropdown, ambil dari API `/organizations`)
+
+Plus update **backend** agar menerima & menyimpan field-field tersebut.
+
+### Tahapan
+
+**2.1 — Backend: izinkan field baru di [UserController.php](backend/app/Http/Controllers/Api/UserController.php) method `store()`**
+
+Tambahkan validasi untuk `nik`, `is_ldap`, `organization_id`:
+
+```php
+$validated = $request->validate([
+    'name' => ['required', 'string', 'max:255'],
+    'username' => ['required', 'string', 'max:255', 'unique:users,username'],
+    'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+    'nik' => ['nullable', 'string', 'max:16', 'unique:users,nik'],
+    'phone_number' => ['nullable', 'string', 'max:20'],
+    'password' => ['required', 'string', 'min:8'],
+    'is_ldap' => ['sometimes', 'boolean'],
+    'role_id' => ['nullable', 'exists:roles,role_id'],
+    'organization_id' => ['nullable', 'exists:organizations,organization_id'],
+]);
+```
+
+> `nik`, `is_ldap`, `organization_id` sudah ada di `#[Fillable]` model [User.php](backend/app/Models/User.php), jadi `User::create($validated)` otomatis menyimpannya. Tidak perlu ubah model.
+
+> (Opsional, kalau ingin konsisten) tambahkan juga `nik`, `is_ldap`, `organization_id` ke validasi method `update()` dengan aturan `sometimes`. Untuk issue ini fokus ke `store()` saja sudah cukup.
+
+**2.2 — Frontend: ambil daftar organisasi**
+
+Di [users.vue](frontend/src/views/pages/users.vue), tambahkan:
+- state `organizations: []` di `data()`.
+- method `fetchOrganizations()` yang memanggil `api.get('/organizations')`.
+- panggil method itu di `mounted()` (sejajar `fetchUsers()` dan `fetchRoles()`).
+
+```js
+// di data()
+organizations: [],
+
+// method baru (pola sama seperti fetchRoles)
+async fetchOrganizations() {
+    try {
+        const { data } = await api.get('/organizations');
+        this.organizations = data.data;
+    } catch (error) {
+        // abaikan; dropdown organisasi akan kosong
+    }
+},
+
+// di mounted()
+this.fetchOrganizations();
+```
+
+**2.3 — Frontend: tambahkan field ke object `form`**
+
+Di `data().form` dan di `openAdd()` (keduanya harus konsisten), tambahkan `nik`, `is_ldap`, `organization_id`:
+
+```js
+form: {
+    user_id: null, name: "", username: "", email: "",
+    password: "", phone_number: "", role_id: "", is_active: true,
+    nik: "", is_ldap: false, organization_id: "",
+},
+```
+
+Lakukan penambahan yang sama di dalam `openAdd()` (yang me-reset `this.form`).
+
+**2.4 — Frontend: tambahkan input di modal "Add User"**
+
+Di dalam `<BModal v-model="showAdd" ...>` (sekitar baris 194–227), tambahkan 3 blok input. Letakkan **NIK** setelah Email, **Organisasi** setelah Role, dan **is_LDAP** sebagai checkbox sebelum tombol Save:
+
+```html
+<!-- NIK -->
+<div class="mb-2">
+    <label class="form-label mb-1">NIK</label>
+    <input type="text" class="form-control" v-model="form.nik" maxlength="16">
+</div>
+
+<!-- Organisasi -->
+<div class="mb-2">
+    <label class="form-label mb-1">Organisasi</label>
+    <select class="form-control" v-model="form.organization_id">
+        <option value="">— pilih organisasi —</option>
+        <option v-for="org in organizations" :key="org.organization_id" :value="org.organization_id">
+            {{ org.name }}
+        </option>
+    </select>
+</div>
+
+<!-- is_LDAP -->
+<div class="form-check mb-2">
+    <input class="form-check-input" type="checkbox" id="addUserLdap" v-model="form.is_ldap">
+    <label class="form-check-label" for="addUserLdap">LDAP</label>
+</div>
+```
+
+**2.5 — Frontend: kirim field baru di `createUser()`**
+
+Update payload `api.post('/users', {...})` agar menyertakan field baru:
+
+```js
+await api.post('/users', {
+    name: this.form.name,
+    username: this.form.username,
+    email: this.form.email,
+    password: this.form.password,
+    nik: this.form.nik || null,
+    phone_number: this.form.phone_number,
+    is_ldap: this.form.is_ldap,
+    role_id: this.form.role_id || null,
+    organization_id: this.form.organization_id || null,
+});
+```
 
 ---
 
-## Catatan untuk reviewer
-- Filter murni client-side (konsisten dengan `users.vue`); jika dataset tumbuh sangat besar, nanti bisa dipindah ke server-side — **di luar lingkup issue ini**.
-- Tombol Move memakai slot `#extra` agar `RowActions.vue` tidak perlu disentuh; bila kelak banyak halaman butuh aksi "move", pertimbangkan menambah entry `move` ke `actionMap` komponen — **juga di luar lingkup issue ini**.
+## Verifikasi (wajib dilakukan setelah implementasi)
+
+**Bagian 1 (seeder):**
+1. `cd backend && php artisan migrate:fresh --seed` → tidak ada error.
+2. Cek di DB / tinker bahwa tiap organisasi punya user dengan `role_id` & `organization_id` benar:
+   ```bash
+   php artisan tinker
+   >>> \App\Models\User::with('role','organization.type')->get()->groupBy('organization_id')->map->count();
+   ```
+   Setiap organisasi (semua tipe) = 2 user, dengan `role` sesuai tipe organisasinya.
+3. Pastikan field `nik`, `phone_number`, `is_ldap`, `is_active` terisi (tidak null) dan `nik` berupa 6 angka.
+
+**Bagian 2 (form Add User):**
+1. Jalankan backend (`php artisan serve`) & frontend (`npm run serve` di folder `frontend`).
+2. Buka halaman User Management → klik **Add User**.
+3. Pastikan muncul input **NIK**, dropdown **Organisasi**, dan checkbox **LDAP**.
+4. Isi semua field, Save → user baru muncul di tabel, dan di DB kolom `nik`, `is_ldap`, `organization_id` tersimpan benar.
+5. Coba simpan NIK yang sama dua kali → backend menolak (error unique), tidak crash.
+
+---
+
+## Ringkasan File yang Disentuh
+
+| File | Aksi |
+|------|------|
+| [backend/database/factories/UserFactory.php](backend/database/factories/UserFactory.php) | Tambah field random (`nik`, `phone_number`, `is_ldap`, `is_active`) |
+| `backend/database/seeders/DummyUserSeeder.php` | **Buat baru** — seeder user dummy per organisasi |
+| [backend/database/seeders/DatabaseSeeder.php](backend/database/seeders/DatabaseSeeder.php) | Daftarkan `DummyUserSeeder` |
+| [backend/app/Http/Controllers/Api/UserController.php](backend/app/Http/Controllers/Api/UserController.php) | Tambah validasi `nik`, `is_ldap`, `organization_id` di `store()` |
+| [frontend/src/views/pages/users.vue](frontend/src/views/pages/users.vue) | Tambah state organisasi, field form, input NIK/Organisasi/LDAP, payload `createUser()` |
+
+## Catatan / Hal yang Tidak Boleh Dilakukan
+- **Jangan** menampilkan/menghapus kolom `sname` (dipakai logika di backend).
+- **Jangan** mengirim `password` saat update user (backend menolaknya — lihat komentar di `saveEdit()`).
+- **Jangan** mengubah primary key model atau struktur tabel di luar yang diminta.
+- Pertahankan baris auto-isi `uuid` di factory; tanpa itu seeder akan gagal (karena `WithoutModelEvents`).
