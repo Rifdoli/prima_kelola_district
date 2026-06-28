@@ -14,6 +14,7 @@ export default {
         return {
             users: [],
             roles: [],
+            organizations: [],
             showFilter: false,
             filter: { role_id: "", active: "", ldap: "" },
             columns: [
@@ -27,6 +28,7 @@ export default {
             form: {
                 user_id: null, name: "", username: "", email: "",
                 password: "", phone_number: "", role_id: "", is_active: true,
+                nik: "", is_ldap: false, organization_id: "",
             },
             viewRow: null,
             showAdd: false,
@@ -39,6 +41,7 @@ export default {
     mounted() {
         this.fetchUsers();
         this.fetchRoles();
+        this.fetchOrganizations();
     },
     computed: {
         filteredUsers() {
@@ -81,11 +84,20 @@ export default {
                 // ignore; the role dropdown/filter will just be empty
             }
         },
+        async fetchOrganizations() {
+            try {
+                const { data } = await api.get('/organizations');
+                this.organizations = data.data;
+            } catch (error) {
+                // ignore; the organization dropdown will just be empty
+            }
+        },
         openAdd() {
             this.error = null;
             this.form = {
                 user_id: null, name: "", username: "", email: "",
                 password: "", phone_number: "", role_id: "", is_active: true,
+                nik: "", is_ldap: false, organization_id: "",
             };
             this.showAdd = true;
         },
@@ -109,8 +121,11 @@ export default {
                     username: this.form.username,
                     email: this.form.email,
                     password: this.form.password,
+                    nik: this.form.nik || null,
                     phone_number: this.form.phone_number,
+                    is_ldap: this.form.is_ldap,
                     role_id: this.form.role_id || null,
+                    organization_id: this.form.organization_id || null,
                 });
                 this.showAdd = false;
                 this.fetchUsers();
@@ -206,6 +221,10 @@ export default {
                 <input type="email" class="form-control" v-model="form.email">
             </div>
             <div class="mb-2">
+                <label class="form-label mb-1">NIK</label>
+                <input type="text" class="form-control" v-model="form.nik" maxlength="16">
+            </div>
+            <div class="mb-2">
                 <label class="form-label mb-1">Password (min 8)</label>
                 <input type="password" class="form-control" v-model="form.password">
             </div>
@@ -219,6 +238,19 @@ export default {
                     <option value="">— pilih role —</option>
                     <option v-for="role in roles" :key="role.role_id" :value="role.role_id">{{ role.name }}</option>
                 </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Organisasi</label>
+                <select class="form-control" v-model="form.organization_id">
+                    <option value="">— pilih organisasi —</option>
+                    <option v-for="org in organizations" :key="org.organization_id" :value="org.organization_id">
+                        {{ org.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="addUserLdap" v-model="form.is_ldap">
+                <label class="form-check-label" for="addUserLdap">LDAP</label>
             </div>
             <div class="text-end">
                 <button class="btn btn-link-secondary" @click="showAdd = false">Cancel</button>

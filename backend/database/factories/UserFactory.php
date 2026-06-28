@@ -28,9 +28,13 @@ class UserFactory extends Factory
             'uuid' => Str::uuid(),
             'username' => fake()->unique()->userName(),
             'name' => fake()->name(),
+            'nik' => fake()->unique()->numerify('######'),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'phone_number' => fake()->numerify('08##########'),
             'password' => static::$password ??= Hash::make('password'),
+            'is_ldap' => fake()->boolean(),
+            'is_active' => fake()->boolean(90),
             'remember_token' => Str::random(10),
         ];
     }
