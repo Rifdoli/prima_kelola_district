@@ -28,6 +28,11 @@ export default {
             showAdd: false,
             showEdit: false,
             showView: false,
+            showFilter: false,
+            filter: { organization_type_id: "", active: "" },
+            showMove: false,
+            moveRow: null,
+            moveParentId: "",
             error: null,
             loading: false,
         }
@@ -35,6 +40,28 @@ export default {
     mounted() {
         this.fetchOrganizations();
         this.fetchTypes();
+    },
+    computed: {
+        filteredOrganizations() {
+            let rows = this.organizations;
+
+            if (this.filter.organization_type_id) {
+                rows = rows.filter(o =>
+                    String(o.organization_type_id) === String(this.filter.organization_type_id));
+            }
+            if (this.filter.active === "active") {
+                rows = rows.filter(o => o.is_active);
+            } else if (this.filter.active === "inactive") {
+                rows = rows.filter(o => !o.is_active);
+            }
+
+            return rows;
+        },
+        moveParentOptions() {
+            if (!this.moveRow) return this.organizations;
+            return this.organizations.filter(
+                o => o.organization_id !== this.moveRow.organization_id);
+        },
     },
     methods: {
         async fetchOrganizations() {
@@ -130,6 +157,27 @@ export default {
                 }
             }
         },
+        resetFilter() {
+            this.filter = { organization_type_id: "", active: "" };
+        },
+        openMove(organization) {
+            this.error = null;
+            this.moveRow = organization;
+            this.moveParentId = organization.parent_organization_id ?? "";
+            this.showMove = true;
+        },
+        async submitMove() {
+            try {
+                await api.post(`/organizations/${this.moveRow.organization_id}/move`, {
+                    parent_organization_id: this.moveParentId || null,
+                });
+                this.showMove = false;
+                this.fetchOrganizations();
+            } catch (error) {
+                // 422 = pindah ke diri sendiri / keturunan sendiri (siklus)
+                this.error = error.response?.data?.message || 'Failed to move organization.';
+            }
+        },
     },
 }
 </script>
@@ -139,11 +187,14 @@ export default {
         <pageheader title="Organization Management" pageTitle="Administration" />
         <BRow>
             <div class="col-sm-12">
-                <div class="alert alert-danger" v-if="error && !showAdd && !showEdit">{{ error }}</div>
+                <div class="alert alert-danger" v-if="error && !showAdd && !showEdit && !showMove">{{ error }}</div>
 
-                <AdminDataTable title="Organization Table" :columns="columns" :rows="organizations" :loading="loading"
+                <AdminDataTable title="Organization Table" :columns="columns" :rows="filteredOrganizations" :loading="loading"
                     :search-keys="['name', 'sname', 'type.name', 'parent.name']">
                     <template #header-actions>
+                        <button class="btn btn-outline-secondary" @click="showFilter = true">
+                            <i class="ti ti-filter f-18"></i> Filter
+                        </button>
                         <button class="btn btn-primary" @click="openAdd">
                             <i class="ti ti-plus f-18"></i> Add Organization
                         </button>
@@ -155,7 +206,15 @@ export default {
                         {{ row.parent?.name || '-' }}
                     </template>
                     <template #actions="{ row }">
-                        <RowActions :row="row" @view="openView" @edit="openEdit" @delete="deleteOrganization" />
+                        <RowActions :row="row" @view="openView" @edit="openEdit" @delete="deleteOrganization">
+                            <template #extra="{ row }">
+                                <li class="list-inline-item m-0">
+                                    <a href="#" class="text-info" @click.prevent="openMove(row)" title="Move">
+                                        <i class="ti ti-arrows-right-left f-20"></i>
+                                    </a>
+                                </li>
+                            </template>
+                        </RowActions>
                     </template>
                 </AdminDataTable>
             </div>
@@ -241,6 +300,55 @@ export default {
             </div>
             <div class="text-end">
                 <button class="btn btn-link-secondary" @click="showView = false">Close</button>
+            </div>
+        </BModal>
+
+        <!-- Filter -->
+        <BModal v-model="showFilter" title="Filter" hide-footer>
+            <div class="mb-2">
+                <label class="form-label mb-1">Organization Type</label>
+                <select class="form-control" v-model="filter.organization_type_id">
+                    <option value="">Semua</option>
+                    <option v-for="type in types" :key="type.organization_type_id" :value="type.organization_type_id">
+                        {{ type.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Status</label>
+                <select class="form-control" v-model="filter.active">
+                    <option value="">Semua</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-link-secondary" @click="resetFilter">Reset</button>
+                <button class="btn btn-primary" @click="showFilter = false">Apply</button>
+            </div>
+        </BModal>
+
+        <!-- Move Organization -->
+        <BModal v-model="showMove" title="Move Organization" hide-footer>
+            <div class="alert alert-danger" v-if="error">{{ error }}</div>
+            <div v-if="moveRow">
+                <p class="mb-2">
+                    Memindahkan: <strong>{{ moveRow.name }}</strong>
+                    (induk sekarang: {{ moveRow.parent?.name || '— root —' }})
+                </p>
+                <div class="mb-2">
+                    <label class="form-label mb-1">Induk baru</label>
+                    <select class="form-control" v-model="moveParentId">
+                        <option value="">— None (root) —</option>
+                        <option v-for="org in moveParentOptions" :key="org.organization_id" :value="org.organization_id">
+                            {{ org.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-link-secondary" @click="showMove = false">Cancel</button>
+                <button class="btn btn-primary" @click="submitMove">Move</button>
             </div>
         </BModal>
     </Layout>
