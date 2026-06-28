@@ -21,7 +21,7 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        return $this->success(Organization::with('type', 'parent')->get());
+        return $this->success(Organization::with('type', 'parent')->orderBy('organization_id')->get());
     }
 
     /**
