@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\OrganizationController;
+use App\Http\Controllers\Api\OrganizationTypeController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -15,5 +17,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('admin')->group(function () {
         Route::apiResource('roles', RoleController::class);
         Route::apiResource('users', UserController::class);
+        Route::apiResource('organization-types', OrganizationTypeController::class)
+            ->parameters(['organization-types' => 'organizationType']);
+        Route::apiResource('organizations', OrganizationController::class);
     });
 });
