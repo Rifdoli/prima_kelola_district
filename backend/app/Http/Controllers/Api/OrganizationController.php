@@ -80,15 +80,25 @@ class OrganizationController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * Deleting an organization that has descendants removes the entire
+     * subtree. To guard against an accidental mass delete (e.g. deleting a
+     * top-level org would wipe everything under it), the caller must opt in
+     * with `cascade=true` whenever descendants exist.
      */
-    public function destroy(Organization $organization)
+    public function destroy(Request $request, Organization $organization)
     {
-        if ($organization->children()->exists()) {
-            return $this->error('Cannot delete an organization that still has child organizations.', 422);
+        $descendantCount = $this->mapping->descendantCount($organization);
+
+        if ($descendantCount > 0 && ! $request->boolean('cascade')) {
+            return $this->error(
+                "This organization has {$descendantCount} descendant organization(s). Pass cascade=true to delete it together with its entire subtree.",
+                422
+            );
         }
 
-        $organization->delete();
+        $deleted = $this->mapping->deleteSubtree($organization);
 
-        return $this->success(null, 'Organization deleted.');
+        return $this->success(null, "Organization deleted ({$deleted} total).");
     }
 }

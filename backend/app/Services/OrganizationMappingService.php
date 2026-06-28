@@ -52,20 +52,41 @@ class OrganizationMappingService
     }
 
     /**
-     * Remove closure rows for an organization being deleted.
+     * Count how many descendants an organization has, excluding itself.
      *
-     * The `organization_mapping` FKs are `cascadeOnDelete`, so the database
-     * already removes every row touching this node once the organization
-     * row itself is deleted. This method exists only so callers don't have
-     * to know that detail — it is intentionally a no-op.
-     *
-     * Callers are responsible for rejecting deletes of organizations that
-     * still have children (see OrganizationController::destroy) - this
-     * service does not enforce that policy.
+     * Used by callers to warn before a cascading delete.
      */
-    public function deleteNode(Organization $organization): void
+    public function descendantCount(Organization $organization): int
     {
-        // Intentionally empty - see docblock above.
+        return DB::table('organization_mapping')
+            ->where('ancestor_id', $organization->organization_id)
+            ->where('descendant_id', '!=', $organization->organization_id)
+            ->count();
+    }
+
+    /**
+     * Delete an organization together with its entire subtree.
+     *
+     * The whole subtree (the node itself plus every descendant) is resolved
+     * from the closure table, then deleted in one statement. Removing the
+     * organization rows automatically clears their closure rows - the
+     * `ancestor_id`/`descendant_id` FKs are `cascadeOnDelete` - including the
+     * links that tied the subtree to ancestors above it. Any user whose
+     * `organization_id` pointed at a deleted org is set to null (that FK is
+     * `nullOnDelete`).
+     *
+     * Returns the number of organizations deleted.
+     */
+    public function deleteSubtree(Organization $organization): int
+    {
+        return DB::transaction(function () use ($organization) {
+            $subtreeIds = DB::table('organization_mapping')
+                ->where('ancestor_id', $organization->organization_id)
+                ->pluck('descendant_id')
+                ->all();
+
+            return Organization::whereIn('organization_id', $subtreeIds)->delete();
+        });
     }
 
     /**
