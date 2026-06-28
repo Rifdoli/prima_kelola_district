@@ -10,6 +10,9 @@ export default {
     computed: {
         title() {
             return this.$route.meta.title || "Coming Soon"
+        },
+        group() {
+            return this.$route.meta.group || "PRIMA"
         }
     }
 }
@@ -17,7 +20,7 @@ export default {
 
 <template>
     <Layout>
-        <pageheader :title="title" pageTitle="PRIMA" />
+        <pageheader :title="title" :pageTitle="group" />
         <div class="card">
             <div class="card-body text-center text-muted py-5">
                 {{ title }} — halaman dalam pengembangan.

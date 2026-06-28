@@ -120,12 +120,12 @@ export default {
 
 <template>
     <Layout>
-        <pageheader title="Roles" pageTitle="User & Role Management" />
+        <pageheader title="Role Management" pageTitle="Administration" />
         <BRow>
             <div class="col-sm-12">
                 <div class="alert alert-danger" v-if="error && !showAdd && !showEdit">{{ error }}</div>
 
-                <AdminDataTable title="Role Management" :columns="columns" :rows="filteredRoles" :loading="loading">
+                <AdminDataTable title="Role Table" :columns="columns" :rows="filteredRoles" :loading="loading">
                     <template #header-actions>
                         <button class="btn btn-outline-secondary" @click="showFilter = true">
                             <i class="ti ti-filter f-18"></i> Filter
