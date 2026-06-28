@@ -8,6 +8,7 @@ use App\Services\OrganizationMappingService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use InvalidArgumentException;
 
 class OrganizationController extends Controller
 {
@@ -57,10 +58,33 @@ class OrganizationController extends Controller
     }
 
     /**
+     * Move the organization (and its entire subtree) under a new parent.
+     *
+     * This is a separate endpoint from update() on purpose: re-parenting
+     * has its own validation (the anti-cycle check) and rewrites the
+     * closure table for the whole subtree, which is a meaningfully
+     * different operation from editing the organization's own fields.
+     */
+    public function move(Request $request, Organization $organization)
+    {
+        $validated = $request->validate([
+            'parent_organization_id' => ['nullable', 'exists:organizations,organization_id'],
+        ]);
+
+        try {
+            $this->mapping->moveNode($organization, $validated['parent_organization_id'] ?? null);
+        } catch (InvalidArgumentException $e) {
+            return $this->error($e->getMessage(), 422);
+        }
+
+        return $this->success($organization->refresh()->load('type', 'parent'), 'Organization moved.');
+    }
+
+    /**
      * Update the specified resource in storage.
      *
-     * `parent_organization_id` is intentionally not accepted here - moving
-     * an organization to a new parent is not supported yet (see issue #22).
+     * `parent_organization_id` is intentionally not accepted here - use the
+     * dedicated move() endpoint to re-parent an organization.
      */
     public function update(Request $request, Organization $organization)
     {

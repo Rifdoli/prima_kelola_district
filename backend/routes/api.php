@@ -20,5 +20,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('organization-types', OrganizationTypeController::class)
             ->parameters(['organization-types' => 'organizationType']);
         Route::apiResource('organizations', OrganizationController::class);
+        Route::post('organizations/{organization}/move', [OrganizationController::class, 'move']);
     });
 });
