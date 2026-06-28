@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return $this->success(User::with('role')->orderBy('user_id')->get());
+        return $this->success(User::with('role', 'organization')->orderBy('user_id')->get());
     }
 
     /**
@@ -49,7 +49,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return $this->success($user->load('role'));
+        return $this->success($user->load('role', 'organization'));
     }
 
     /**
@@ -68,7 +68,7 @@ class UserController extends Controller
 
         $user->update($validated);
 
-        return $this->success($user->load('role'), 'User updated.');
+        return $this->success($user->load('role', 'organization'), 'User updated.');
     }
 
     /**

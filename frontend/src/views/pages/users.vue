@@ -174,7 +174,7 @@ export default {
                 <div class="alert alert-danger" v-if="error && !showAdd && !showEdit">{{ error }}</div>
 
                 <AdminDataTable title="User Table" :columns="columns" :rows="filteredUsers" :loading="loading"
-                    :search-keys="['username', 'name', 'role.name']">
+                    :search-keys="['username', 'name', 'role.name', 'organization.name']">
                     <template #header-actions>
                         <button class="btn btn-outline-secondary" @click="showFilter = true">
                             <i class="ti ti-filter f-18"></i> Filter
@@ -183,9 +183,8 @@ export default {
                             <i class="ti ti-plus f-18"></i> Add User
                         </button>
                     </template>
-                    <template #cell-organisasi>
-                        <!-- TODO: tampilkan nama organisasi setelah modul Organizations dibuat -->
-                        -
+                    <template #cell-organisasi="{ row }">
+                        {{ row.organization?.name || '-' }}
                     </template>
                     <template #cell-role-name="{ row }">
                         {{ row.role?.name }}
@@ -300,7 +299,9 @@ export default {
                 <p class="mb-2"><strong>Username:</strong> {{ viewRow.username }}</p>
                 <p class="mb-2"><strong>Nama:</strong> {{ viewRow.name }}</p>
                 <p class="mb-2"><strong>Email:</strong> {{ viewRow.email }}</p>
+                <p class="mb-2"><strong>NIK:</strong> {{ viewRow.nik || '-' }}</p>
                 <p class="mb-2"><strong>Phone:</strong> {{ viewRow.phone_number || '-' }}</p>
+                <p class="mb-2"><strong>Organisasi:</strong> {{ viewRow.organization?.name || '-' }}</p>
                 <p class="mb-2"><strong>Role:</strong> {{ viewRow.role?.name || '-' }}</p>
                 <p class="mb-2"><strong>LDAP:</strong> {{ viewRow.is_ldap ? 'Ya' : 'Tidak' }}</p>
                 <p class="mb-2"><strong>Active:</strong> {{ viewRow.is_active ? 'Yes' : 'No' }}</p>
