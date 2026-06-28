@@ -1,0 +1,28 @@
+Buatkan issue.md, berisi planning untuk nanti di impelemntasikan oleh junior programmer atau model AI yang lebih rendah:
+
+Isi dari planning-nya adalah sebagai berikut:
+1. Perbaiki tabel user management dan tabel role management di UI
+- Jangan tampilkan id, masing2 row, hal ini sangat tidak baik mengekspose id di UI, jangan gunakan header kolom id, tapi gunakan saja #, dan ini berurutan dari row pertama masuk ke row terakhir, kalo terdapat delete row, maka # akan udpate sesuai urutan barisnya/row
+- Gunakan design table seperyi pada halaman course-teacher-list.html, tambahkan both border sehingga terlihat jelas batas antar data baris dan kolom
+- Untuk kolom action gunakan icon pensil untuk update, icon mata untuk view detail dan icon trash untuk delete, kamu dapat melihat contoh di page user-list, bagaiman terdapat icon pensil dengan bg biru sebagai delete, dan trash merah bg putih sebagai delete, nanti untuk mata bisa menggunakan bg orange
+- kemudian add roles dan add user bisa menggunakan design add teacher course-teacher-list.html
+- kemudian filter bisa menggunakan design apply teacher list
+- kemudian komponen search bisa melakukan pencarian di semua kolom sehingga ter filter dengan baik, contoh ketika ketik admin pada search maka roles yg terdapat kata admin, baik itu super admin, admin area dll akan otomatis ter-search
+- Pada tabel user management, tampilkan di tabel adalah
+1. #
+2. Username
+3. Nama
+4. Organisasi
+5. Role
+6. LDAP
+7. Active
+8. Actions
+- Pada tabel role management, tampilkan di tabel adalah
+1. #
+2. Nama
+3. Description
+4. Active
+5. Actions
+Jangan tampilkan sname, karena sname di BE juga digunakan dalam penentuan beberapa case limitasi user
+
+Jelaskan tahapan-tahapan yang harus dilakukan untuk mengimplementasikan fitur ini. Nanti yang akan mengimplementasikan adalah junior programmer atau model AI yang lebih rendah.

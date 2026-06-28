@@ -1,19 +1,25 @@
 <script>
 import Layout from "@/layout/main.vue"
 import pageheader from "@/components/page-header.vue"
+import AdminDataTable from "@/components/common/AdminDataTable.vue"
+import RowActions from "@/components/common/RowActions.vue"
 import api from "@/services/api"
 
 export default {
     name: "ROLES",
     components: {
-        Layout, pageheader
+        Layout, pageheader, AdminDataTable, RowActions
     },
     data() {
         return {
             roles: [],
-            search: "",
             showFilter: false,
             filter: { active: "" },
+            columns: [
+                { key: "name", label: "Nama", sortable: true },
+                { key: "description", label: "Description", sortable: true },
+                { key: "is_active", label: "Active", sortable: true },
+            ],
             form: { role_id: null, name: "", sname: "", description: "", is_active: true },
             viewRow: null,
             showAdd: false,
@@ -29,19 +35,10 @@ export default {
     computed: {
         filteredRoles() {
             let rows = this.roles;
-
             if (this.filter.active === "active") {
                 rows = rows.filter(r => r.is_active);
             } else if (this.filter.active === "inactive") {
                 rows = rows.filter(r => !r.is_active);
-            }
-
-            const q = this.search.trim().toLowerCase();
-            if (q) {
-                rows = rows.filter(r =>
-                    [r.name, r.description, r.is_active ? "active yes" : "inactive no"]
-                        .join(" ").toLowerCase().includes(q)
-                );
             }
             return rows;
         }
@@ -105,6 +102,9 @@ export default {
                 this.error = error.response?.data?.message || 'Failed to update role.';
             }
         },
+        resetFilter() {
+            this.filter = { active: "" };
+        },
         async deleteRole(role) {
             if (!confirm(`Delete role "${role.name}"?`)) return;
             try {
@@ -124,86 +124,24 @@ export default {
         <BRow>
             <div class="col-sm-12">
                 <div class="alert alert-danger" v-if="error && !showAdd && !showEdit">{{ error }}</div>
-                <div class="card table-card">
-                    <div class="card-header">
-                        <div class="d-sm-flex align-items-center justify-content-between">
-                            <h5 class="mb-3 mb-sm-0">Role Management</h5>
-                            <div class="d-flex flex-wrap gap-2">
-                                <input type="text" class="form-control" style="min-width: 220px"
-                                    placeholder="Search..." v-model="search">
-                                <button class="btn btn-outline-secondary" @click="showFilter = !showFilter">
-                                    <i class="ti ti-filter f-18"></i> Filter
-                                </button>
-                                <button class="btn btn-primary" @click="openAdd">
-                                    <i class="ti ti-plus f-18"></i> Add Role
-                                </button>
-                            </div>
-                        </div>
-                        <div v-if="showFilter" class="mt-3">
-                            <div class="row g-2">
-                                <div class="col-sm-4">
-                                    <label class="form-label mb-1">Status</label>
-                                    <select class="form-control" v-model="filter.active">
-                                        <option value="">Semua</option>
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body pt-3">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered align-middle">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 60px">#</th>
-                                        <th>Nama</th>
-                                        <th>Description</th>
-                                        <th>Active</th>
-                                        <th class="text-end">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(role, index) in filteredRoles" :key="role.role_id">
-                                        <td>{{ index + 1 }}</td>
-                                        <td>{{ role.name }}</td>
-                                        <td>{{ role.description }}</td>
-                                        <td>
-                                            <span v-if="role.is_active" class="badge bg-light-success">Active</span>
-                                            <span v-else class="badge bg-light-danger">Inactive</span>
-                                        </td>
-                                        <td>
-                                            <ul class="list-inline mb-0 text-end">
-                                                <li class="list-inline-item m-0">
-                                                    <a href="#" class="avtar avtar-s btn btn-warning"
-                                                        @click.prevent="openView(role)">
-                                                        <i class="ti ti-eye f-18"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item m-0">
-                                                    <a href="#" class="avtar avtar-s btn btn-primary"
-                                                        @click.prevent="openEdit(role)">
-                                                        <i class="ti ti-pencil f-18"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item m-0">
-                                                    <a href="#" class="avtar avtar-s btn bg-white btn-link-danger"
-                                                        @click.prevent="deleteRole(role)">
-                                                        <i class="ti ti-trash f-18"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr v-if="!loading && filteredRoles.length === 0">
-                                        <td colspan="5" class="text-center text-muted">No roles found.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+
+                <AdminDataTable title="Role Management" :columns="columns" :rows="filteredRoles" :loading="loading">
+                    <template #header-actions>
+                        <button class="btn btn-outline-secondary" @click="showFilter = true">
+                            <i class="ti ti-filter f-18"></i> Filter
+                        </button>
+                        <button class="btn btn-primary" @click="openAdd">
+                            <i class="ti ti-plus f-18"></i> Add Role
+                        </button>
+                    </template>
+                    <template #cell-is_active="{ row }">
+                        <span v-if="row.is_active" class="badge bg-light-success">Active</span>
+                        <span v-else class="badge bg-light-danger">Inactive</span>
+                    </template>
+                    <template #actions="{ row }">
+                        <RowActions :row="row" :actions="['view', 'edit', 'delete']" @view="openView" @edit="openEdit" @delete="deleteRole" />
+                    </template>
+                </AdminDataTable>
             </div>
         </BRow>
 
@@ -262,6 +200,22 @@ export default {
             </div>
             <div class="text-end">
                 <button class="btn btn-link-secondary" @click="showView = false">Close</button>
+            </div>
+        </BModal>
+
+        <!-- Filter -->
+        <BModal v-model="showFilter" title="Filter" hide-footer>
+            <div class="mb-2">
+                <label class="form-label mb-1">Status</label>
+                <select class="form-control" v-model="filter.active">
+                    <option value="">Semua</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-link-secondary" @click="resetFilter">Reset</button>
+                <button class="btn btn-primary" @click="showFilter = false">Apply</button>
             </div>
         </BModal>
     </Layout>
