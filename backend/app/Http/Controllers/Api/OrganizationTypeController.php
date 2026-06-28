@@ -16,7 +16,7 @@ class OrganizationTypeController extends Controller
      */
     public function index()
     {
-        return $this->success(OrganizationType::all());
+        return $this->success(OrganizationType::orderBy('organization_type_id')->get());
     }
 
     /**

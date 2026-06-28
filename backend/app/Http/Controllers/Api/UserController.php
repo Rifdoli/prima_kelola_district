@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return $this->success(User::with('role')->get());
+        return $this->success(User::with('role')->orderBy('user_id')->get());
     }
 
     /**
