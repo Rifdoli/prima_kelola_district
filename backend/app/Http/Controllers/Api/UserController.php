@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return $this->success(User::with('role')->orderBy('user_id')->get());
+        return $this->success(User::with('role', 'organization')->orderBy('user_id')->get());
     }
 
     /**
@@ -29,9 +29,12 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users,username'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'nik' => ['nullable', 'string', 'max:16', 'unique:users,nik'],
             'phone_number' => ['nullable', 'string', 'max:20'],
             'password' => ['required', 'string', 'min:8'],
+            'is_ldap' => ['sometimes', 'boolean'],
             'role_id' => ['nullable', 'exists:roles,role_id'],
+            'organization_id' => ['nullable', 'exists:organizations,organization_id'],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
@@ -46,7 +49,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return $this->success($user->load('role'));
+        return $this->success($user->load('role', 'organization'));
     }
 
     /**
@@ -65,7 +68,7 @@ class UserController extends Controller
 
         $user->update($validated);
 
-        return $this->success($user->load('role'), 'User updated.');
+        return $this->success($user->load('role', 'organization'), 'User updated.');
     }
 
     /**

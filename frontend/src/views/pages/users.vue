@@ -14,8 +14,9 @@ export default {
         return {
             users: [],
             roles: [],
+            organizations: [],
             showFilter: false,
-            filter: { role_id: "", active: "", ldap: "" },
+            filter: { role_id: "", organization_id: "", active: "", ldap: "" },
             columns: [
                 { key: "username", label: "Username", sortable: true },
                 { key: "name", label: "Nama", sortable: true },
@@ -27,6 +28,7 @@ export default {
             form: {
                 user_id: null, name: "", username: "", email: "",
                 password: "", phone_number: "", role_id: "", is_active: true,
+                nik: "", is_ldap: false, organization_id: "",
             },
             viewRow: null,
             showAdd: false,
@@ -39,6 +41,7 @@ export default {
     mounted() {
         this.fetchUsers();
         this.fetchRoles();
+        this.fetchOrganizations();
     },
     computed: {
         filteredUsers() {
@@ -46,6 +49,9 @@ export default {
 
             if (this.filter.role_id) {
                 rows = rows.filter(u => String(u.role_id) === String(this.filter.role_id));
+            }
+            if (this.filter.organization_id) {
+                rows = rows.filter(u => String(u.organization_id) === String(this.filter.organization_id));
             }
             if (this.filter.active === "active") {
                 rows = rows.filter(u => u.is_active);
@@ -81,11 +87,20 @@ export default {
                 // ignore; the role dropdown/filter will just be empty
             }
         },
+        async fetchOrganizations() {
+            try {
+                const { data } = await api.get('/organizations');
+                this.organizations = data.data;
+            } catch (error) {
+                // ignore; the organization dropdown will just be empty
+            }
+        },
         openAdd() {
             this.error = null;
             this.form = {
                 user_id: null, name: "", username: "", email: "",
                 password: "", phone_number: "", role_id: "", is_active: true,
+                nik: "", is_ldap: false, organization_id: "",
             };
             this.showAdd = true;
         },
@@ -109,8 +124,11 @@ export default {
                     username: this.form.username,
                     email: this.form.email,
                     password: this.form.password,
+                    nik: this.form.nik || null,
                     phone_number: this.form.phone_number,
+                    is_ldap: this.form.is_ldap,
                     role_id: this.form.role_id || null,
+                    organization_id: this.form.organization_id || null,
                 });
                 this.showAdd = false;
                 this.fetchUsers();
@@ -136,7 +154,7 @@ export default {
             }
         },
         resetFilter() {
-            this.filter = { role_id: "", active: "", ldap: "" };
+            this.filter = { role_id: "", organization_id: "", active: "", ldap: "" };
         },
         async deleteUser(user) {
             if (!confirm(`Delete user "${user.username}"?`)) return;
@@ -159,7 +177,7 @@ export default {
                 <div class="alert alert-danger" v-if="error && !showAdd && !showEdit">{{ error }}</div>
 
                 <AdminDataTable title="User Table" :columns="columns" :rows="filteredUsers" :loading="loading"
-                    :search-keys="['username', 'name', 'role.name']">
+                    :search-keys="['username', 'name', 'role.name', 'organization.name']">
                     <template #header-actions>
                         <button class="btn btn-outline-secondary" @click="showFilter = true">
                             <i class="ti ti-filter f-18"></i> Filter
@@ -168,9 +186,8 @@ export default {
                             <i class="ti ti-plus f-18"></i> Add User
                         </button>
                     </template>
-                    <template #cell-organisasi>
-                        <!-- TODO: tampilkan nama organisasi setelah modul Organizations dibuat -->
-                        -
+                    <template #cell-organisasi="{ row }">
+                        {{ row.organization?.name || '-' }}
                     </template>
                     <template #cell-role-name="{ row }">
                         {{ row.role?.name }}
@@ -206,6 +223,10 @@ export default {
                 <input type="email" class="form-control" v-model="form.email">
             </div>
             <div class="mb-2">
+                <label class="form-label mb-1">NIK</label>
+                <input type="text" class="form-control" v-model="form.nik" maxlength="16">
+            </div>
+            <div class="mb-2">
                 <label class="form-label mb-1">Password (min 8)</label>
                 <input type="password" class="form-control" v-model="form.password">
             </div>
@@ -219,6 +240,19 @@ export default {
                     <option value="">— pilih role —</option>
                     <option v-for="role in roles" :key="role.role_id" :value="role.role_id">{{ role.name }}</option>
                 </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Organisasi</label>
+                <select class="form-control" v-model="form.organization_id">
+                    <option value="">— pilih organisasi —</option>
+                    <option v-for="org in organizations" :key="org.organization_id" :value="org.organization_id">
+                        {{ org.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="addUserLdap" v-model="form.is_ldap">
+                <label class="form-check-label" for="addUserLdap">LDAP</label>
             </div>
             <div class="text-end">
                 <button class="btn btn-link-secondary" @click="showAdd = false">Cancel</button>
@@ -268,7 +302,9 @@ export default {
                 <p class="mb-2"><strong>Username:</strong> {{ viewRow.username }}</p>
                 <p class="mb-2"><strong>Nama:</strong> {{ viewRow.name }}</p>
                 <p class="mb-2"><strong>Email:</strong> {{ viewRow.email }}</p>
+                <p class="mb-2"><strong>NIK:</strong> {{ viewRow.nik || '-' }}</p>
                 <p class="mb-2"><strong>Phone:</strong> {{ viewRow.phone_number || '-' }}</p>
+                <p class="mb-2"><strong>Organisasi:</strong> {{ viewRow.organization?.name || '-' }}</p>
                 <p class="mb-2"><strong>Role:</strong> {{ viewRow.role?.name || '-' }}</p>
                 <p class="mb-2"><strong>LDAP:</strong> {{ viewRow.is_ldap ? 'Ya' : 'Tidak' }}</p>
                 <p class="mb-2"><strong>Active:</strong> {{ viewRow.is_active ? 'Yes' : 'No' }}</p>
@@ -286,6 +322,15 @@ export default {
                     <option value="">Semua</option>
                     <option v-for="role in roles" :key="role.role_id" :value="role.role_id">
                         {{ role.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Organisasi</label>
+                <select class="form-control" v-model="filter.organization_id">
+                    <option value="">Semua</option>
+                    <option v-for="org in organizations" :key="org.organization_id" :value="org.organization_id">
+                        {{ org.name }}
                     </option>
                 </select>
             </div>
