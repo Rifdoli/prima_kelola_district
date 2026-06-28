@@ -1,20 +1,29 @@
 <script>
 import Layout from "@/layout/main.vue"
 import pageheader from "@/components/page-header.vue"
+import AdminDataTable from "@/components/common/AdminDataTable.vue"
+import RowActions from "@/components/common/RowActions.vue"
 import api from "@/services/api"
 
 export default {
     name: "USERS",
     components: {
-        Layout, pageheader
+        Layout, pageheader, AdminDataTable, RowActions,
     },
     data() {
         return {
             users: [],
             roles: [],
-            search: "",
             showFilter: false,
             filter: { role_id: "", active: "", ldap: "" },
+            columns: [
+                { key: "username", label: "Username", sortable: true },
+                { key: "name", label: "Nama", sortable: true },
+                { key: "organisasi", label: "Organisasi", sortable: false },
+                { key: "role.name", label: "Role", sortable: true },
+                { key: "is_ldap", label: "LDAP", sortable: true },
+                { key: "is_active", label: "Active", sortable: true },
+            ],
             form: {
                 user_id: null, name: "", username: "", email: "",
                 password: "", phone_number: "", role_id: "", is_active: true,
@@ -49,16 +58,6 @@ export default {
                 rows = rows.filter(u => !u.is_ldap);
             }
 
-            const q = this.search.trim().toLowerCase();
-            if (q) {
-                rows = rows.filter(u =>
-                    [
-                        u.username, u.name, u.role?.name,
-                        u.is_ldap ? "ldap yes" : "no",
-                        u.is_active ? "active yes" : "inactive no",
-                    ].join(" ").toLowerCase().includes(q)
-                );
-            }
             return rows;
         }
     },
@@ -136,6 +135,9 @@ export default {
                 this.error = error.response?.data?.message || 'Failed to update user.';
             }
         },
+        resetFilter() {
+            this.filter = { role_id: "", active: "", ldap: "" };
+        },
         async deleteUser(user) {
             if (!confirm(`Delete user "${user.username}"?`)) return;
             try {
@@ -155,113 +157,36 @@ export default {
         <BRow>
             <div class="col-sm-12">
                 <div class="alert alert-danger" v-if="error && !showAdd && !showEdit">{{ error }}</div>
-                <div class="card table-card">
-                    <div class="card-header">
-                        <div class="d-sm-flex align-items-center justify-content-between">
-                            <h5 class="mb-3 mb-sm-0">User Management</h5>
-                            <div class="d-flex flex-wrap gap-2">
-                                <input type="text" class="form-control" style="min-width: 220px"
-                                    placeholder="Search..." v-model="search">
-                                <button class="btn btn-outline-secondary" @click="showFilter = !showFilter">
-                                    <i class="ti ti-filter f-18"></i> Filter
-                                </button>
-                                <button class="btn btn-primary" @click="openAdd">
-                                    <i class="ti ti-plus f-18"></i> Add User
-                                </button>
-                            </div>
-                        </div>
-                        <div v-if="showFilter" class="mt-3">
-                            <div class="row g-2">
-                                <div class="col-sm-4">
-                                    <label class="form-label mb-1">Role</label>
-                                    <select class="form-control" v-model="filter.role_id">
-                                        <option value="">Semua</option>
-                                        <option v-for="role in roles" :key="role.role_id" :value="role.role_id">
-                                            {{ role.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="form-label mb-1">Status</label>
-                                    <select class="form-control" v-model="filter.active">
-                                        <option value="">Semua</option>
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="form-label mb-1">LDAP</label>
-                                    <select class="form-control" v-model="filter.ldap">
-                                        <option value="">Semua</option>
-                                        <option value="yes">Ya</option>
-                                        <option value="no">Tidak</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body pt-3">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered align-middle">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 60px">#</th>
-                                        <th>Username</th>
-                                        <th>Nama</th>
-                                        <th>Organisasi</th>
-                                        <th>Role</th>
-                                        <th>LDAP</th>
-                                        <th>Active</th>
-                                        <th class="text-end">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(user, index) in filteredUsers" :key="user.user_id">
-                                        <td>{{ index + 1 }}</td>
-                                        <td>{{ user.username }}</td>
-                                        <td>{{ user.name }}</td>
-                                        <!-- TODO: tampilkan nama organisasi setelah modul Organizations dibuat -->
-                                        <td>-</td>
-                                        <td>{{ user.role?.name }}</td>
-                                        <td>
-                                            <span v-if="user.is_ldap" class="badge bg-light-success">Ya</span>
-                                            <span v-else class="badge bg-light-secondary">Tidak</span>
-                                        </td>
-                                        <td>
-                                            <span v-if="user.is_active" class="badge bg-light-success">Active</span>
-                                            <span v-else class="badge bg-light-danger">Inactive</span>
-                                        </td>
-                                        <td>
-                                            <ul class="list-inline mb-0 text-end">
-                                                <li class="list-inline-item m-0">
-                                                    <a href="#" class="avtar avtar-s btn btn-warning"
-                                                        @click.prevent="openView(user)">
-                                                        <i class="ti ti-eye f-18"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item m-0">
-                                                    <a href="#" class="avtar avtar-s btn btn-primary"
-                                                        @click.prevent="openEdit(user)">
-                                                        <i class="ti ti-pencil f-18"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item m-0">
-                                                    <a href="#" class="avtar avtar-s btn bg-white btn-link-danger"
-                                                        @click.prevent="deleteUser(user)">
-                                                        <i class="ti ti-trash f-18"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr v-if="!loading && filteredUsers.length === 0">
-                                        <td colspan="8" class="text-center text-muted">No users found.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+
+                <AdminDataTable title="User Management" :columns="columns" :rows="filteredUsers" :loading="loading"
+                    :search-keys="['username', 'name', 'role.name']">
+                    <template #header-actions>
+                        <button class="btn btn-outline-secondary" @click="showFilter = true">
+                            <i class="ti ti-filter f-18"></i> Filter
+                        </button>
+                        <button class="btn btn-primary" @click="openAdd">
+                            <i class="ti ti-plus f-18"></i> Add User
+                        </button>
+                    </template>
+                    <template #cell-organisasi>
+                        <!-- TODO: tampilkan nama organisasi setelah modul Organizations dibuat -->
+                        -
+                    </template>
+                    <template #cell-role-name="{ row }">
+                        {{ row.role?.name }}
+                    </template>
+                    <template #cell-is_ldap="{ row }">
+                        <span v-if="row.is_ldap" class="badge bg-light-success">Ya</span>
+                        <span v-else class="badge bg-light-secondary">Tidak</span>
+                    </template>
+                    <template #cell-is_active="{ row }">
+                        <span v-if="row.is_active" class="badge bg-light-success">Active</span>
+                        <span v-else class="badge bg-light-danger">Inactive</span>
+                    </template>
+                    <template #actions="{ row }">
+                        <RowActions :row="row" @view="openView" @edit="openEdit" @delete="deleteUser" />
+                    </template>
+                </AdminDataTable>
             </div>
         </BRow>
 
@@ -350,6 +275,39 @@ export default {
             </div>
             <div class="text-end">
                 <button class="btn btn-link-secondary" @click="showView = false">Close</button>
+            </div>
+        </BModal>
+
+        <!-- Filter -->
+        <BModal v-model="showFilter" title="Filter" hide-footer>
+            <div class="mb-2">
+                <label class="form-label mb-1">Role</label>
+                <select class="form-control" v-model="filter.role_id">
+                    <option value="">Semua</option>
+                    <option v-for="role in roles" :key="role.role_id" :value="role.role_id">
+                        {{ role.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">Status</label>
+                <select class="form-control" v-model="filter.active">
+                    <option value="">Semua</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label mb-1">LDAP</label>
+                <select class="form-control" v-model="filter.ldap">
+                    <option value="">Semua</option>
+                    <option value="yes">Ya</option>
+                    <option value="no">Tidak</option>
+                </select>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-link-secondary" @click="resetFilter">Reset</button>
+                <button class="btn btn-primary" @click="showFilter = false">Apply</button>
             </div>
         </BModal>
     </Layout>
