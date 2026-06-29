@@ -1,0 +1,862 @@
+[
+  {
+    "row": 1,
+    "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "STRATEGIC APPROACH",
+    "weight_practice_area": null,
+    "scope": "Alignment terhadap Target Area dan Regional",
+    "perangkat": "-",
+    "question": "Apakah District Manager memiliki target district yang selaras dengan target Area/Regional?",
+    "criteria": {
+      "A": "Target dan sasaran district ditetapkan serta selaras dengan target Area, Regional, dan strategi perusahaan.",
+      "B": "Target district telah diturunkan menjadi target tim, fungsi, atau individu yang terukur.",
+      "C": "Program kerja, sumber daya, dan prioritas pekerjaan district dijalankan untuk mendukung pencapaian target yang telah ditetapkan.",
+      "D": "Pencapaian target district dimonitor dan direview secara berkala menggunakan indikator kinerja yang relevan.",
+      "E": "Hasil evaluasi digunakan untuk menetapkan tindakan perbaikan, penyesuaian prioritas, atau mitigasi risiko dalam pencapaian target district."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 2,
+    "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "STRATEGIC APPROACH",
+    "weight_practice_area": null,
+    "scope": "Pengelolaan risiko operasional",
+    "perangkat": "-",
+    "question": "Apakah district menerapkan pengelolaan risiko operasional secara terstruktur untuk menjaga keberlangsungan layanan dan pencapaian target operasional?",
+    "criteria": {
+      "A": "District memiliki daftar risiko operasional yang terdokumentasi dan mencakup aspek layanan, infrastruktur, SDM, vendor, serta supporting facilities.",
+      "B": "Tersedia mitigasi, kontrol, atau rencana penanganan untuk risiko yang memiliki dampak tinggi terhadap layanan dan operasional district.",
+      "C": "Mekanisme pemantauan risiko dan eskalasi gangguan pada site, layanan, atau infrastruktur kritikal diterapkan dan dijalankan secara konsisten.",
+      "D": "Evaluasi risiko dilakukan secara berkala untuk menilai perubahan tingkat risiko dan efektivitas mitigasi yang telah diterapkan.",
+      "E": "Hasil evaluasi risiko, kejadian GAMAS, major incident, atau gangguan signifikan lainnya digunakan sebagai dasar tindakan perbaikan dan pencegahan berulang."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 3,
+    "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "PERFROMANCE IMPROVEMENT",
+    "weight_practice_area": null,
+    "scope": "Pengelolaan Kinerja Operasional",
+    "perangkat": "-",
+    "question": "Apakah district mengelola dan meningkatkan kinerja operasional secara terukur melalui monitoring, evaluasi, dan tindak lanjut yang berkelanjutan?",
+    "criteria": {
+      "A": "District menetapkan indikator kinerja operasional (KPI) yang selaras dengan target Area, Regional, dan kebutuhan operasional district.",
+      "B": "Kinerja operasional district dimonitor secara berkala menggunakan indikator, dashboard, atau laporan performansi yang telah ditetapkan.",
+      "C": "Dilakukan analisis terhadap KPI yang tidak mencapai target untuk mengidentifikasi akar masalah, tren, dan faktor penyebab utama.",
+      "D": "Hasil monitoring dan evaluasi kinerja dibahas secara berkala dalam forum review operasional atau manajemen district.",
+      "E": "Terdapat action plan, tindak lanjut perbaikan, dan pemantauan penyelesaian terhadap KPI yang belum mencapai target."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 4,
+    "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "PERFROMANCE IMPROVEMENT",
+    "weight_practice_area": null,
+    "scope": "Continuous Improvement",
+    "perangkat": "-",
+    "question": "Apakah district menerapkan budaya perbaikan berkelanjutan melalui program improvement atau inovasi yang memberikan nilai tambah bagi operasional dan layanan?",
+    "criteria": {
+      "A": "District memiliki program improvement atau inovasi yang terdokumentasi dan selaras dengan kebutuhan operasional maupun sasaran bisnis.",
+      "B": "Setiap program improvement memiliki tujuan, target, dan indikator keberhasilan yang terukur.",
+      "C": "Program improvement atau inovasi diimplementasikan sesuai rencana serta melibatkan unit atau personel yang terkait.",
+      "D": "Efektivitas program improvement dievaluasi secara berkala berdasarkan pencapaian target dan indikator yang telah ditetapkan.",
+      "E": "Hasil evaluasi digunakan untuk melakukan penyempurnaan, replikasi, atau pengembangan lebih lanjut terhadap program improvement yang dijalankan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 5,
+    "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "PERFROMANCE IMPROVEMENT",
+    "weight_practice_area": null,
+    "scope": "Pengembangan Tim",
+    "perangkat": "-",
+    "question": "Apakah District Manager mengembangkan kapabilitas dan performa tim secara terencana untuk mendukung pencapaian target district?",
+    "criteria": {
+      "A": "Terdapat rencana pengembangan kompetensi personel yang disusun berdasarkan kebutuhan organisasi, gap kompetensi, atau tuntutan operasional.",
+      "B": "Coaching, mentoring, knowledge sharing, atau kegiatan pengembangan personel dilaksanakan secara berkala dan terdokumentasi.",
+      "C": "Personel diberikan kesempatan untuk meningkatkan kompetensi melalui pelatihan, sertifikasi, penugasan khusus, atau program pengembangan lainnya.",
+      "D": "Perkembangan kompetensi dan performa personel dievaluasi secara berkala untuk mengidentifikasi kekuatan, gap, dan area pengembangan.",
+      "E": "Terdapat tindak lanjut terhadap hasil evaluasi performa maupun kompetensi, termasuk program pengembangan bagi personel berpotensi tinggi maupun perbaikan bagi personel dengan performa rendah."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 6,
+    "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "COMMUNICATION APPROACH",
+    "weight_practice_area": null,
+    "scope": "Komunikasi Internal",
+    "perangkat": null,
+    "question": "Apakah district menerapkan komunikasi internal yang efektif untuk mendukung koordinasi, penyelesaian permasalahan, dan pencapaian target operasional?",
+    "criteria": {
+      "A": "Terdapat mekanisme, forum, atau media komunikasi yang digunakan untuk mendukung koordinasi dan penyampaian informasi operasional.",
+      "B": "Briefing operasional, koordinasi tim, dan penyampaian informasi dari Area/Regional dilaksanakan secara berkala kepada personel terkait.",
+      "C": "Tersedia forum diskusi, koordinasi, atau problem solving untuk membahas isu dan permasalahan operasional yang dihadapi district.",
+      "D": "Hasil briefing, rapat, atau forum koordinasi terdokumentasi serta dilakukan pemantauan terhadap pelaksanaan keputusan dan tindak lanjut yang disepakati.",
+      "E": "Dilakukan evaluasi efektivitas komunikasi internal dan terdapat tindak lanjut untuk meningkatkan koordinasi maupun penyelesaian permasalahan operasional."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 7,
+    "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "COMMUNICATION APPROACH",
+    "weight_practice_area": null,
+    "scope": "Stakeholder Management",
+    "perangkat": null,
+    "question": "Apakah district mengelola komunikasi dan hubungan dengan stakeholder secara efektif untuk mendukung kelancaran operasional dan pencapaian target district?",
+    "criteria": {
+      "A": "District mengidentifikasi stakeholder utama yang berpengaruh terhadap operasional serta memiliki mekanisme komunikasi dan koordinasi yang jelas.",
+      "B": "Koordinasi dan komunikasi dengan stakeholder terkait (Unit pendukung, vendor, maupun pihak eksternal lainnya) dilaksanakan secara berkala.",
+      "C": "Terdapat mekanisme untuk menerima, mencatat, dan mengelola masukan, keluhan, atau isu yang disampaikan oleh stakeholder.",
+      "D": "Permasalahan, kebutuhan, dan komitmen yang disepakati dengan stakeholder dimonitor serta dievaluasi penyelesaiannya secara berkala.",
+      "E": "Terdapat tindak lanjut dan perbaikan atas isu, masukan, atau keluhan stakeholder untuk meningkatkan efektivitas hubungan dan dukungan operasional."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 8,
+    "domain": "POLICY & GUIDENCE",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "POLICY IMPLEMENTATION",
+    "weight_practice_area": null,
+    "scope": "Implementasi Komitmen dan Kebijakan",
+    "perangkat": null,
+    "question": "Apakah district mengimplementasikan komitmen dan kebijakan perusahaan secara konsisten dalam kegiatan operasional sehari-hari?",
+    "criteria": {
+      "A": "Kebijakan, arahan, dan komitmen perusahaan yang relevan dengan operasional district telah diidentifikasi dan dikomunikasikan kepada personel terkait.",
+      "B": "Kebijakan dan arahan perusahaan diterapkan dalam pelaksanaan kegiatan operasional dan pengambilan keputusan di district.",
+      "C": "Personel memahami peran dan tanggung jawabnya dalam mendukung implementasi kebijakan yang berlaku.",
+      "D": "Dilakukan monitoring atau evaluasi terhadap tingkat implementasi dan kepatuhan terhadap kebijakan yang telah ditetapkan.",
+      "E": "Terdapat tindak lanjut terhadap ketidaksesuaian, temuan, atau hasil evaluasi untuk meningkatkan implementasi kebijakan secara berkelanjutan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 9,
+    "domain": "POLICY & GUIDENCE",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "POLICY IMPLEMENTATION",
+    "weight_practice_area": null,
+    "scope": "Audit & Compliance",
+    "perangkat": null,
+    "question": "Apakah district mengelola temuan audit dan kepatuhan secara efektif untuk mendorong perbaikan berkelanjutan?",
+    "criteria": {
+      "A": "Terdapat mekanisme, penanggung jawab, dan rencana tindak lanjut untuk setiap temuan audit, assessment, atau hasil evaluasi kepatuhan.",
+      "B": "Action plan atas temuan audit dilaksanakan sesuai dengan target penyelesaian yang telah ditetapkan.",
+      "C": "Progres penyelesaian temuan audit dimonitor dan dievaluasi secara berkala untuk memastikan efektivitas tindak lanjut.",
+      "D": "Status kepatuhan dan penyelesaian temuan terdokumentasi dengan baik serta dapat ditelusuri hingga proses penutupan (closure).",
+      "E": "Terdapat tindakan perbaikan dan pencegahan untuk menghindari terulangnya temuan yang sama di masa mendatang."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 10,
+    "domain": "POLICY & GUIDENCE",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "SOP/SMP COMPLIANCE",
+    "weight_practice_area": null,
+    "scope": "Ketersedian SOP/SMP",
+    "perangkat": null,
+    "question": "Apakah SOP, SMP, dan dokumen operasional yang relevan tersedia, teridentifikasi, dan mudah diakses oleh personel yang membutuhkan?",
+    "criteria": {
+      "A": "District telah mengidentifikasi SOP, SMP, dan dokumen operasional yang relevan dengan proses bisnis yang dijalankan.",
+      "B": "SOP, SMP, dan dokumen operasional tersedia serta menggunakan versi yang masih berlaku.",
+      "C": "Dokumen dapat diakses oleh personel terkait sesuai kebutuhan operasional.",
+      "D": "Dilakukan verifikasi secara berkala untuk memastikan kelengkapan dan validitas dokumen yang digunakan.",
+      "E": "Terdapat tindak lanjut terhadap dokumen yang tidak tersedia, tidak sesuai, atau sudah tidak berlaku."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 11,
+    "domain": "POLICY & GUIDENCE",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "SOP/SMP COMPLIANCE",
+    "weight_practice_area": null,
+    "scope": "Kepatuhan Pelaksanaan SOP / SMP",
+    "perangkat": null,
+    "question": "Apakah kegiatan operasional district dilaksanakan sesuai dengan SOP dan SMP yang berlaku?",
+    "criteria": {
+      "A": "Personel memahami SOP dan SMP yang menjadi acuan dalam pelaksanaan pekerjaan.",
+      "B": "Kegiatan operasional dan pemeliharaan dilaksanakan sesuai dengan SOP dan SMP yang berlaku.",
+      "C": "Bukti pelaksanaan pekerjaan terdokumentasi sesuai ketentuan yang ditetapkan dalam SOP/SMP.",
+      "D": "Dilakukan monitoring atau evaluasi terhadap tingkat kepatuhan pelaksanaan SOP/SMP.",
+      "E": "Terdapat tindak lanjut terhadap ketidaksesuaian atau penyimpangan yang ditemukan dalam pelaksanaan SOP/SMP."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 12,
+    "domain": "POLICY & GUIDENCE",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "SOP/SMP COMPLIANCE",
+    "weight_practice_area": null,
+    "scope": "Review dan Pembaruan Dokumen",
+    "perangkat": null,
+    "question": "Apakah SOP, SMP, dan dokumen operasional direview serta diperbarui secara berkala agar tetap relevan dengan kebutuhan operasional?",
+    "criteria": {
+      "A": "Terdapat mekanisme dan jadwal review dokumen yang ditetapkan.",
+      "B": "Review SOP, SMP, dan dokumen operasional dilaksanakan sesuai periode yang ditentukan atau saat terjadi perubahan proses bisnis.",
+      "C": "Usulan perubahan, perbaikan, atau penyempurnaan dokumen terdokumentasi dengan baik.",
+      "D": "Hasil review dievaluasi untuk memastikan dokumen tetap sesuai dengan kebutuhan operasional dan regulasi yang berlaku.",
+      "E": "Dokumen yang sudah tidak relevan diperbarui, disosialisasikan, dan diimplementasikan kepada personel terkait."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 13,
+    "domain": "POLICY & GUIDENCE",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "BUSINESS PROCESS EFFECTIVENESS",
+    "weight_practice_area": null,
+    "scope": "Network Operation Control",
+    "perangkat": null,
+    "question": "Apakah district mengendalikan operasional jaringan secara efektif untuk menjaga kualitas layanan dan meminimalkan gangguan berulang?",
+    "criteria": {
+      "A": "Tersedia mekanisme monitoring, eskalasi, dan penanganan incident jaringan yang terdokumentasi.",
+      "B": "Alarm dan incident jaringan dimonitor serta ditangani sesuai prosedur dan SLA yang ditetapkan.",
+      "C": "Kinerja penanganan gangguan, backlog incident, dan pencapaian SLA dimonitor secara berkala.",
+      "D": "Dilakukan RCA terhadap gangguan mayor atau gangguan berulang untuk mengidentifikasi akar masalah.",
+      "E": "Terdapat tindakan perbaikan untuk mengurangi backlog, meningkatkan SLA, dan menurunkan kejadian gangguan berulang."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 14,
+    "domain": "POLICY & GUIDENCE",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "BUSINESS PROCESS EFFECTIVENESS",
+    "weight_practice_area": null,
+    "scope": "Infrastructure & Facility Management",
+    "perangkat": null,
+    "question": "Apakah infrastruktur dan fasilitas pendukung dikelola secara efektif untuk menjaga keandalan operasional dan keberlangsungan layanan?",
+    "criteria": {
+      "A": "Tersedia program preventive maintenance, corrective maintenance, dan pengelolaan kapasitas infrastruktur yang terdokumentasi.",
+      "B": "Kegiatan preventive dan corrective maintenance dilaksanakan sesuai jadwal dan SLA yang ditetapkan.",
+      "C": "Kondisi infrastruktur kritikal dan kapasitas fasilitas dimonitor secara berkala.",
+      "D": "Dilakukan evaluasi terhadap performansi, kapasitas, dan risiko kegagalan infrastruktur.",
+      "E": "Terdapat tindakan mitigasi atau perbaikan untuk mencegah overload, degradasi performansi, atau kegagalan fasilitas"
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 15,
+    "domain": "POLICY & GUIDENCE",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "BUSINESS PROCESS EFFECTIVENESS",
+    "weight_practice_area": null,
+    "scope": "Vendor perfomance management",
+    "perangkat": null,
+    "question": "Apakah district mengelola dan mengevaluasi performansi vendor secara efektif untuk mendukung pencapaian target operasional?",
+    "criteria": {
+      "A": "Tersedia target performansi, SLA, KPI, dan ruang lingkup pekerjaan vendor yang terdokumentasi.",
+      "B": "Kinerja vendor dimonitor berdasarkan target, SLA, dan kualitas pekerjaan yang telah ditetapkan.",
+      "C": "Dilakukan evaluasi performansi vendor secara berkala dan terdokumentasi.",
+      "D": "Dilakukan analisis terhadap ketidaktercapaian SLA, kualitas pekerjaan, atau permasalahan yang melibatkan vendor.",
+      "E": "Terdapat tindak lanjut, pembinaan, atau rencana perbaikan terhadap vendor yang tidak memenuhi target performansi."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 16,
+    "domain": "POLICY & GUIDENCE",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "DOCUMENT READINESS",
+    "weight_practice_area": null,
+    "scope": "Operational Documentation",
+    "perangkat": null,
+    "question": "Apakah dokumen operasional yang digunakan dalam pelaksanaan pekerjaan tersedia, terkendali, dan mudah diakses oleh personel terkait?",
+    "criteria": {
+      "A": "Terdapat daftar dan pengendalian dokumen operasional yang digunakan dalam kegiatan district.",
+      "B": "SOP, SMP, instruksi kerja, dan dokumen operasional tersedia serta menggunakan versi yang berlaku.",
+      "C": "Dokumen operasional dapat diakses dan digunakan oleh personel yang membutuhkan.",
+      "D": "Evidence pelaksanaan pekerjaan dan dokumen pendukung terdokumentasi serta tersimpan dengan baik.",
+      "E": "Dilakukan review dan pembaruan dokumen apabila terdapat perubahan proses, kebijakan, atau kebutuhan operasional."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 17,
+    "domain": "POLICY & GUIDENCE",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "DOCUMENT READINESS",
+    "weight_practice_area": null,
+    "scope": "Network & Infrastructure Documentation",
+    "perangkat": null,
+    "question": "Apakah dokumentasi jaringan dan infrastruktur dikelola secara akurat, terkini, dan mendukung operasional serta pengambilan keputusan?",
+    "criteria": {
+      "A": "Terdapat standar dan mekanisme pengelolaan dokumentasi jaringan serta infrastruktur yang ditetapkan.",
+      "B": "Dokumentasi network topology, inventory perangkat, konfigurasi, lisensi, dan data kapasitas dipelihara serta diperbarui sesuai kondisi aktual.",
+      "C": "Perubahan konfigurasi, penambahan perangkat, atau perubahan kapasitas dicatat melalui mekanisme yang ditetapkan.",
+      "D": "Dilakukan verifikasi dan validasi berkala terhadap akurasi dokumentasi jaringan dan infrastruktur.",
+      "E": "Terdapat tindak lanjut terhadap ketidaksesuaian, ketidaklengkapan, atau ketidakakuratan dokumentasi yang ditemukan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 18,
+    "domain": "POLICY & GUIDENCE",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "DOCUMENT READINESS",
+    "weight_practice_area": null,
+    "scope": "Supporting Facility Documentation",
+    "perangkat": null,
+    "question": "Apakah dokumentasi supporting facility dikelola secara lengkap dan mendukung kegiatan operasi serta pemeliharaan?",
+    "criteria": {
+      "A": "Terdapat standar dan kebutuhan dokumentasi untuk supporting facility yang dikelola district.",
+      "B": "Jadwal pemeliharaan, riwayat gangguan, dan dokumen pemeliharaan aset terdokumentasi dengan lengkap.",
+      "C": "Dokumentasi pemeliharaan dan pengelolaan supporting facility diperbarui secara berkala sesuai aktivitas yang dilakukan.",
+      "D": "Dilakukan pemeriksaan terhadap kelengkapan, keakuratan, dan keterkinian dokumentasi supporting facility.",
+      "E": "Terdapat tindak lanjut terhadap dokumen yang tidak lengkap, tidak sesuai, atau belum diperbarui."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 19,
+    "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "HR FULLFILMENT",
+    "weight_practice_area": null,
+    "scope": "Manpower Planning",
+    "perangkat": null,
+    "question": "Apakah district melakukan perencanaan dan pengelolaan kebutuhan personel secara efektif untuk mendukung pencapaian target operasional?",
+    "criteria": {
+      "A": "District memiliki perencanaan kebutuhan personel yang terdokumentasi berdasarkan beban kerja, cakupan layanan, dan kebutuhan organisasi.",
+      "B": "Terdapat pemetaan struktur organisasi, posisi, dan kompetensi yang dibutuhkan untuk mendukung operasional district.",
+      "C": "Kebutuhan pemenuhan personel, termasuk posisi yang masih vacant, diidentifikasi dan diusulkan sesuai mekanisme yang berlaku.",
+      "D": "District melakukan review berkala terhadap kecukupan personel, distribusi beban kerja, dan kesesuaian kebutuhan organisasi.",
+      "E": "Terdapat tindak lanjut terhadap gap manpower yang ditemukan melalui redistribusi, pengembangan kompetensi, optimalisasi sumber daya, atau usulan pemenuhan personel."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 20,
+    "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "CAPABILITY (KNOWLEDGE & SKILL)",
+    "weight_practice_area": null,
+    "scope": "Competency management",
+    "perangkat": null,
+    "question": "Apakah district mengelola kompetensi personel secara terencana untuk mendukung kebutuhan operasional dan pencapaian target district?",
+    "criteria": {
+      "A": "District memiliki standar kompetensi dan kebutuhan kemampuan yang diperlukan untuk setiap fungsi atau peran operasional.",
+      "B": "Dilakukan identifikasi gap kompetensi dan kebutuhan pengembangan personel secara berkala.",
+      "C": "Penempatan dan penugasan personel mempertimbangkan kompetensi yang dibutuhkan untuk menjalankan pekerjaannya.",
+      "D": "District Manager melakukan evaluasi kompetensi personel secara berkala untuk memastikan kesesuaian dengan kebutuhan operasional.",
+      "E": "Terdapat tindak lanjut terhadap gap kompetensi melalui pelatihan, coaching, mentoring, sertifikasi, atau metode pengembangan lainnya."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 21,
+    "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "CAPABILITY (KNOWLEDGE & SKILL)",
+    "weight_practice_area": null,
+    "scope": "Training & Development",
+    "perangkat": null,
+    "question": "Apakah district melaksanakan program pelatihan dan pengembangan secara efektif untuk meningkatkan kompetensi personel?",
+    "criteria": {
+      "A": "Kebutuhan pelatihan dan pengembangan personel diidentifikasi serta direncanakan berdasarkan kebutuhan operasional dan hasil evaluasi kompetensi.",
+      "B": "Personel mengikuti pelatihan, sertifikasi, coaching, mentoring, atau program pengembangan sesuai kebutuhan yang telah ditetapkan.",
+      "C": "Hasil pelatihan didiseminasikan atau diterapkan dalam aktivitas operasional sehari-hari.",
+      "D": "Efektivitas pelatihan dievaluasi untuk mengukur peningkatan kompetensi maupun dampaknya terhadap kinerja.",
+      "E": "Terdapat tindak lanjut untuk menutup gap kompetensi yang masih ditemukan setelah pelaksanaan program pengembangan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 22,
+    "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "CAPABILITY (KNOWLEDGE & SKILL)",
+    "weight_practice_area": null,
+    "scope": "Critical Knowledge Management",
+    "perangkat": null,
+    "question": "Apakah pengetahuan kritikal yang mendukung operasional district terdokumentasi, dipelihara, dan ditransfer secara efektif kepada personel terkait?",
+    "criteria": {
+      "A": "District mengidentifikasi knowledge, kompetensi, dan aktivitas kritikal yang harus dipertahankan untuk mendukung operasional.",
+      "B": "Dokumentasi knowledge, lesson learned, prosedur penanganan gangguan kritikal, dan referensi teknis tersedia serta mudah diakses.",
+      "C": "Dilaksanakan knowledge sharing, transfer knowledge, atau program pendampingan untuk memastikan pengetahuan kritikal dipahami oleh personel.",
+      "D": "Pemahaman personel terhadap knowledge kritikal dan kesiapan penanganan gangguan dievaluasi secara berkala.",
+      "E": "Knowledge base, lesson learned, dan kebutuhan sertifikasi diperbarui berdasarkan pengalaman operasional, perubahan teknologi, atau kejadian mayor yang terjadi."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 23,
+    "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "ASSET INVENTORY",
+    "weight_practice_area": null,
+    "scope": "Assets Registration & Control",
+    "perangkat": null,
+    "question": "Apakah aset network dan supporting facility terdaftar, teridentifikasi, dan dikelola secara akurat dalam sistem inventaris perusahaan?",
+    "criteria": {
+      "A": "District memiliki mekanisme dan standar pengelolaan inventaris aset yang mengacu pada ketentuan perusahaan.",
+      "B": "Seluruh aset network dan supporting facility terdaftar dalam sistem inventaris yang ditetapkan serta memiliki identitas yang jelas.",
+      "C": "Ownership, lokasi, dan status aset ditetapkan serta dikelola sesuai tanggung jawab yang berlaku.",
+      "D": "Data inventaris aset diverifikasi dan diperbarui secara berkala untuk memastikan kesesuaian antara data dan kondisi aktual.",
+      "E": "Terdapat tindak lanjut terhadap ketidaksesuaian data, aset tidak teridentifikasi, atau perubahan kondisi aset yang ditemukan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 24,
+    "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "ASSET INVENTORY",
+    "weight_practice_area": null,
+    "scope": "Assets Lifecycle Management",
+    "perangkat": null,
+    "question": "Apakah siklus hidup aset dikelola secara efektif untuk menjaga keandalan operasional dan keberlanjutan layanan?",
+    "criteria": {
+      "A": "District memiliki perencanaan pemeliharaan, penggantian, dan pengakhiran masa pakai aset yang terdokumentasi.",
+      "B": "Pemeliharaan aset dilaksanakan sesuai jadwal dan ketentuan yang berlaku.",
+      "C": "Kondisi aset, usia pakai, dan risiko kegagalan dipantau serta dievaluasi secara berkala.",
+      "D": "Aset yang mendekati end-of-life atau memiliki risiko tinggi diidentifikasi dan diprioritaskan untuk tindak lanjut.",
+      "E": "Terdapat rencana penggantian, revitalisasi, atau disposal aset yang dilaksanakan sesuai prosedur perusahaan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 25,
+    "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "ASSET INVENTORY",
+    "weight_practice_area": null,
+    "scope": "Assets Utilization",
+    "perangkat": null,
+    "question": "Apakah aset dimanfaatkan secara optimal untuk mendukung kebutuhan operasional district?",
+    "criteria": {
+      "A": "District memiliki parameter atau mekanisme untuk memantau tingkat utilisasi aset yang dikelola.",
+      "B": "Pemanfaatan aset network dan supporting facility dimonitor secara berkala.",
+      "C": "Dilakukan evaluasi terhadap tingkat utilisasi aset untuk mengidentifikasi aset idle, underutilized, atau overutilized.",
+      "D": "Dampak utilisasi aset terhadap kebutuhan operasional, kapasitas, dan efisiensi dievaluasi secara berkala.",
+      "E": "Terdapat tindakan optimalisasi, redistribusi, pemanfaatan kembali, atau penghapusan terhadap aset yang tidak dimanfaatkan secara optimal."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 26,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "BIR",
+    "weight_practice_area": null,
+    "scope": "Kebersihan dan Kerapihan Ruangan",
+    "perangkat": "ALL NE",
+    "question": "Apakah kondisi ruangan perangkat dalam keadaan bersih, indah dan rapih ?",
+    "criteria": {
+      "A": "Kondisi ruangan (lantai, dinding, plafon) bersih dan bebas dari debu, sampah, serta kotoran yang dapat mengganggu operasional.",
+      "B": "Tidak terdapat kebocoran, rembesan air, atau kerusakan bangunan yang berpotensi mengganggu perangkat.",
+      "C": "Barang, alat kerja, alat ukur, dokumen, dan material tersimpan rapi sesuai lokasi penyimpanan yang ditetapkan serta mudah ditemukan saat diperlukan.",
+      "D": "Suhu dan kelembaban ruangan sesuai spesifikasi teknis perangkat atau memiliki sirkulasi udara yang memadai untuk lokasi non-AC.",
+      "E": "Sistem penerangan berfungsi dengan baik dan mencukupi untuk mendukung kegiatan operasi dan pemeliharaan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 27,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "BIR",
+    "weight_practice_area": null,
+    "scope": null,
+    "perangkat": "ALL NE",
+    "question": "Apakah kondisi perangkat dalam keadaan bersih, indah dan rapih ?",
+    "criteria": {
+      "A": "Kondisi bagian dalam dan bagian luar perangkat bersih serta instalasi perkabelan tertata rapi.",
+      "B": "Tersedia checklist, logbook pengukuran, atau catatan kondisi perangkat yang terdokumentasi dan terpelihara dengan baik.",
+      "C": "Labeling perangkat, hostname, fungsi perangkat, kardex perangkat, titik ukur, dan tanda peringatan tersedia, jelas, dan terpasang sesuai fungsinya.",
+      "D": "Petunjuk pengoperasian, blok diagram, one line diagram, atau dokumen referensi teknis tersedia dan mudah diakses oleh petugas.",
+      "E": "Lampu indikator, meter pengukuran, alarm, atau fitur early warning berfungsi normal serta menunjukkan kondisi operasi perangkat dengan benar."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 28,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "BIR",
+    "weight_practice_area": null,
+    "scope": "Log Book Kejadian / Event",
+    "perangkat": "ALL NE",
+    "question": "Apakah terdapat dokumentasi yang rapih terkait  kejadian atau event ?",
+    "criteria": {
+      "A": "Log book tersedia dan digunakan.",
+      "B": "Log book diisi untuk setiap kejadian/event yang relevan.",
+      "C": "Isi log book lengkap dan informatif.",
+      "D": "Hasil log book direkap dan dibahas dalam forum evaluasi operasional (bulanan/mingguan).",
+      "E": "Terdapat tindakan perbaikan atau pencegahan yang ditetapkan dan dimonitor penyelesaiannya."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 29,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "BIR",
+    "weight_practice_area": null,
+    "scope": "Perkabelan",
+    "perangkat": "ALL NE",
+    "question": "Apakah instalasi perkabelan terkelola dengan baik dan mendukung kegiatan operasional ?",
+    "criteria": {
+      "A": "Alur kabel tersusun rapi, tidak terdapat kabel yang melintang atau berpotensi membahayakan, serta ditempatkan sesuai jalur yang ditetapkan.",
+      "B": "Terminasi kabel terpasang dengan baik, kencang, tidak berkarat, dan dalam kondisi layak operasi.",
+      "C": "Pelabelan kabel tersedia, jelas, informatif, dan sesuai dengan identitas serta fungsi kabel yang digunakan.",
+      "D": "Gambar layout kabel, one line diagram, atau dokumentasi jalur kabel tersedia, akurat, dan mudah diakses oleh petugas.",
+      "E": "Dilakukan pemeriksaan dan pemutakhiran berkala terhadap kondisi fisik, terminasi, pelabelan, dan dokumentasi perkabelan serta terdapat tindak lanjut atas temuan yang ditemukan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 30,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "BIR",
+    "weight_practice_area": null,
+    "scope": "Kondisi Tempat Penyimpanan Barang",
+    "perangkat": "ALL NE",
+    "question": "Apakah tempat penyimpanan barang dan alat kerja dikelola dengan baik dan tertata rapi ?",
+    "criteria": {
+      "A": "Kondisi ruang penyimpanan bersih, rapi, bebas kebocoran, memiliki penerangan dan sirkulasi udara yang memadai.",
+      "B": "Lemari, rak, meja, dan media penyimpanan tertata dengan baik serta dilengkapi tanda peringatan yang diperlukan.",
+      "C": "Barang, sparepart, alat ukur, dan peralatan kerja tersusun sesuai pengelompokan yang ditetapkan serta mudah ditemukan saat diperlukan.",
+      "D": "Barang, rak, atau lokasi penyimpanan memiliki identifikasi/label yang jelas dan informatif.",
+      "E": "Pencatatan keluar-masuk barang dilakukan secara tertib dan saldo fisik sesuai dengan data inventaris atau sistem yang digunakan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 31,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "BIR",
+    "weight_practice_area": null,
+    "scope": "Infrastruktur Pendukung Site",
+    "perangkat": "-",
+    "question": "Apakah infrastruktur pendukung site terpelihara dengan baik dan mendukung operasional ?",
+    "criteria": {
+      "A": "Access road dapat dilalui dengan aman dan batas jalan terlihat jelas.",
+      "B": "Halaman dan lingkungan site bersih, rapi, serta bebas dari potensi gangguan operasional.",
+      "C": "Pagar, gerbang, dan pembatas area dalam kondisi baik dan berfungsi sebagaimana mestinya.",
+      "D": "Sistem drainase, parit, atau saluran air terpelihara dengan baik dan tidak menimbulkan genangan.",
+      "E": "Dilakukan pemeriksaan dan pemeliharaan berkala terhadap infrastruktur pendukung site."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 32,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "BIR",
+    "weight_practice_area": null,
+    "scope": "Bangunan dan Fasilitas Pendukung",
+    "perangkat": "-",
+    "question": "Apakah bangunan dan fasilitas pendukung site dalam kondisi baik, aman, dan layak digunakan?",
+    "criteria": {
+      "A": "Kondisi gedung atau pos pengamanan terawat dengan baik.",
+      "B": "Tidak terdapat kebocoran, kerusakan struktural, atau kondisi yang berpotensi mengganggu operasional.",
+      "C": "Penerangan ruangan dan lingkungan berfungsi dengan baik.",
+      "D": "Area kerja, penyimpanan, dan fasilitas pendukung tertata rapi dan bersih.",
+      "E": "Dilakukan pemeriksaan dan pemeliharaan berkala terhadap bangunan dan fasilitas pendukung."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 33,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "BIR",
+    "weight_practice_area": null,
+    "scope": "Sarana Pendukung Opersional",
+    "perangkat": "-",
+    "question": "Apakah sarana pendukung operasional dikelola dan dipelihara dengan baik untuk mendukung keberlangsungan layanan?",
+    "criteria": {
+      "A": "Tangki air, tangki BBM, dan sarana pendukung lainnya dalam kondisi baik dan bersih.",
+      "B": "Tidak terdapat kebocoran, korosi, atau kerusakan yang berpotensi mengganggu operasional.",
+      "C": "Indikator, meter, atau alat ukur pendukung berfungsi dengan baik.",
+      "D": "Tersedia pencatatan atau dokumentasi inspeksi dan pemeliharaan.",
+      "E": "Terdapat tindak lanjut terhadap temuan hasil inspeksi atau pemeliharaan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 34,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": null,
+    "scope": "Ophar Radio",
+    "perangkat": "Radio",
+    "question": "Apakah operasi dan pemeliharaan perangkat radio dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
+    "criteria": {
+      "A": "Tersedia SOP, SMP, petunjuk kerja, manual book, dan jadwal pemeliharaan yang masih berlaku serta mudah diakses petugas.",
+      "B": "Pemeliharaan harian, mingguan, bulanan, dan tahunan dilaksanakan sesuai jadwal yang ditetapkan.",
+      "C": "Kegiatan operasi dan pemeliharaan terdokumentasi dengan baik, termasuk hasil pemeriksaan perangkat, pengukuran, dan aktivitas lapangan.",
+      "D": "Data alat ukur, sarana kerja, dokumen teknis, backup data, dan dokumen legalitas perangkat (termasuk ISR apabila dipersyaratkan) terkelola dan tervalidasi dengan baik.",
+      "E": "Dilakukan evaluasi berkala terhadap hasil operasi dan pemeliharaan serta terdapat tindak lanjut atas temuan atau ketidaksesuaian yang ditemukan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 35,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": null,
+    "scope": "Ophar SKSO Optical Network ISP",
+    "perangkat": "Transport",
+    "question": "Apakah operasi dan pemeliharaan perangkat ISP Transport dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
+    "criteria": {
+      "A": "Tersedia prosedur operasi, petunjuk kerja, dokumen teknis, dan jadwal pemeliharaan perangkat yang masih berlaku.",
+      "B": "Kegiatan operasi dan pemeliharaan perangkat dilaksanakan sesuai prosedur dan jadwal yang ditetapkan.",
+      "C": "Kondisi perangkat, patchcord, sarana kerja, dan alat ukur terpelihara dengan baik untuk mendukung operasional perangkat.",
+      "D": "Dokumentasi teknis, konfigurasi, wiring diagram, data interkoneksi, serta hasil pemeliharaan terdokumentasi dan tervalidasi dengan baik.",
+      "E": "Dilakukan evaluasi berkala terhadap hasil operasi dan pemeliharaan serta terdapat tindak lanjut atas temuan atau ketidaksesuaian yang ditemukan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 36,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": null,
+    "scope": "Ophar SKSO Perangkat OSP",
+    "perangkat": "Transport",
+    "question": "Apakah operasi dan pemeliharaan perangkat OSP Transport dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
+    "criteria": {
+      "A": "Tersedia sarana kerja, alat ukur, material pendukung, alat keselamatan kerja, serta jadwal operasi dan pemeliharaan yang memadai.",
+      "B": "Kegiatan patroli, inspeksi, pengukuran, dan pemeliharaan jaringan OSP dilaksanakan sesuai prosedur dan jadwal yang ditetapkan.",
+      "C": "Kondisi jalur kabel, tiang, handhole/manhole, joint closure, dan infrastruktur pendukung lainnya terpelihara dengan baik dan siap operasi.",
+      "D": "Hasil patroli, pengukuran, inspeksi, as-built drawing, data jaringan, dan dokumentasi teknis terdokumentasi serta tervalidasi dengan baik.",
+      "E": "Dilakukan evaluasi berkala terhadap kondisi jaringan OSP dan terdapat tindak lanjut terhadap temuan, risiko, atau potensi gangguan yang ditemukan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 37,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": null,
+    "scope": "Ophar Mechanical Electrical (ME)",
+    "perangkat": "DEFA",
+    "question": "Apakah operasi dan pemeliharaan perangkat DEFA dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
+    "criteria": {
+      "A": "Tersedia SOP, SMP, petunjuk kerja, manual book, dan jadwal pemeliharaan yang masih berlaku serta mudah diakses oleh petugas.",
+      "B": "Pemeliharaan harian, mingguan, bulanan, dan tahunan dilaksanakan sesuai jadwal dan prosedur yang ditetapkan.",
+      "C": "Kondisi perangkat, alat ukur, sarana kerja, dan fasilitas pendukung terpelihara dengan baik untuk mendukung operasional perangkat.",
+      "D": "Kegiatan operasi dan pemeliharaan, hasil pengukuran, dokumen teknis, serta data pendukung terdokumentasi dan tervalidasi dengan baik.",
+      "E": "Dilakukan evaluasi berkala terhadap hasil operasi dan pemeliharaan serta terdapat tindak lanjut terhadap temuan, ketidaksesuaian, atau potensi risiko yang ditemukan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 38,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": null,
+    "scope": "Ophar Service Node",
+    "perangkat": "MSE",
+    "question": "Apakah operasi dan pemeliharaan perangkat Service Node dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
+    "criteria": {
+      "A": "Tersedia prosedur, petunjuk kerja, jadwal pemeliharaan, dan checklist pemeriksaan perangkat yang masih berlaku.",
+      "B": "Kegiatan preventive maintenance dan pemeriksaan perangkat dilaksanakan sesuai jadwal dan prosedur yang ditetapkan.",
+      "C": "Kondisi fisik perangkat, sistem pendukung, alarm, dan parameter operasional dipelihara untuk memastikan perangkat beroperasi secara normal.",
+      "D": "Hasil pemeriksaan, pengukuran, checklist pemeliharaan, dan dokumentasi teknis terdokumentasi serta tervalidasi dengan baik.",
+      "E": "Dilakukan evaluasi berkala terhadap hasil pemeliharaan dan terdapat tindak lanjut terhadap temuan, alarm berulang, atau potensi gangguan yang ditemukan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 39,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": null,
+    "scope": "Ophar IP Network",
+    "perangkat": "CSO",
+    "question": "Apakah operasi dan pemeliharaan perangkat IP Network dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
+    "criteria": {
+      "A": "Tersedia prosedur, petunjuk kerja, parameter monitoring, dan jadwal pemeliharaan yang digunakan untuk mengelola perangkat IP Network.",
+      "B": "Monitoring dan pemeliharaan perangkat dilaksanakan secara berkala untuk memastikan kondisi lingkungan, perangkat, dan layanan tetap beroperasi normal.",
+      "C": "Parameter kesehatan perangkat seperti temperatur, CPU utilization, memory utilization, uptime, backup konfigurasi, routing, dan redundancy dimonitor serta dianalisis secara berkala.",
+      "D": "Hasil monitoring, pengukuran, konfigurasi, backup data, dan aktivitas pemeliharaan terdokumentasi serta tervalidasi dengan baik.",
+      "E": "Dilakukan evaluasi dan tindak lanjut terhadap alarm, degradasi performansi, kapasitas, kegagalan redundancy, atau potensi gangguan yang teridentifikasi."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 40,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": null,
+    "scope": "Ophar Access Network",
+    "perangkat": "ANO",
+    "question": "Apakah operasi dan pemeliharaan perangkat Access Network dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
+    "criteria": {
+      "A": "Tersedia prosedur, petunjuk kerja, standar pemeliharaan, dan jadwal pemeliharaan perangkat Access Network yang masih berlaku.",
+      "B": "Pemeliharaan perangkat OLT, FTM, ODC, dan infrastruktur pendukung dilaksanakan sesuai prosedur dan jadwal yang ditetapkan.",
+      "C": "Kondisi fisik perangkat, terminasi fiber, labeling, patchcord, kabinet, serta lingkungan operasional terpelihara dengan baik dan siap operasi.",
+      "D": "Data inventori jaringan, layout node, kapasitas, pengukuran core, dokumentasi terminasi, dan hasil pemeliharaan terdokumentasi serta tervalidasi dengan baik.",
+      "E": "Dilakukan evaluasi berkala terhadap kondisi jaringan Access Network serta terdapat tindak lanjut terhadap temuan, ketidaksesuaian data, degradasi kualitas, atau potensi gangguan yang ditemukan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 41,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "PENGAMANAN DAN DUKUNGAN KERJA",
+    "weight_practice_area": null,
+    "scope": "Pengamanan Site",
+    "perangkat": "-",
+    "question": "Apakah sistem pengamanan site dilaksanakan secara terencana, terdokumentasi, dan berjalan secara efektif?",
+    "criteria": {
+      "A": "Tersedia prosedur pengamanan, jadwal petugas, mekanisme kontrol akses, dan panduan penanganan kejadian keamanan.",
+      "B": "Pelaksanaan pengamanan, kontrol akses, pencatatan tamu, dan aktivitas penjagaan dilakukan sesuai prosedur yang ditetapkan.",
+      "C": "Petugas pengamanan memahami tugas, tanggung jawab, dan prosedur penanganan kondisi darurat maupun kejadian keamanan.",
+      "D": "Buku tamu, logbook pengamanan, jadwal petugas, dan dokumentasi kegiatan pengamanan terdokumentasi dan tervalidasi dengan baik.",
+      "E": "Dilakukan evaluasi berkala terhadap efektivitas pengamanan dan terdapat tindak lanjut atas kejadian atau temuan yang ditemukan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 42,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "PENGAMANAN DAN DUKUNGAN KERJA",
+    "weight_practice_area": null,
+    "scope": "Proteksi Kebakaran",
+    "perangkat": "-",
+    "question": "Apakah sistem proteksi kebakaran tersedia, berfungsi dengan baik, dan siap digunakan saat diperlukan?",
+    "criteria": {
+      "A": "Tersedia standar, prosedur, dan jadwal inspeksi sistem proteksi kebakaran.",
+      "B": "Peralatan proteksi kebakaran (APAR, Fire Alarm, Fire Suppression, Hydrant) tersedia sesuai kebutuhan lokasi.",
+      "C": "Peralatan proteksi kebakaran dalam kondisi siap operasi, mudah diakses, dan sesuai peruntukannya.",
+      "D": "Inspeksi, pengujian, dan checklist sistem proteksi kebakaran dilakukan secara berkala dan terdokumentasi.",
+      "E": "Terdapat tindak lanjut atas temuan inspeksi, kerusakan, atau ketidaksesuaian sistem proteksi kebakaran."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  },
+  {
+    "row": 43,
+    "domain": "INFRA HEALTHINESS",
+    "weight_domain": null,
+    "references": null,
+    "practice_area": "PENGAMANAN DAN DUKUNGAN KERJA",
+    "weight_practice_area": null,
+    "scope": "Proteksi Kelistrikan",
+    "perangkat": "-",
+    "question": "Apakah sistem proteksi kelistrikan terpelihara dengan baik dan mampu melindungi perangkat dari gangguan kelistrikan?",
+    "criteria": {
+      "A": "Tersedia standar dan dokumentasi proteksi kelistrikan yang digunakan pada site.",
+      "B": "Pembatas arus, fuse, MCCB, dan perangkat proteksi lainnya terpasang sesuai kapasitas beban yang dipersyaratkan.",
+      "C": "Terminasi, perkabelan, dan instalasi proteksi kelistrikan dalam kondisi baik dan aman.",
+      "D": "Pemeriksaan dan pengujian sistem proteksi kelistrikan dilakukan secara berkala serta terdokumentasi.",
+      "E": "Terdapat tindak lanjut atas temuan, kerusakan, atau ketidaksesuaian pada sistem proteksi kelistrikan."
+    },
+    "criteria_unparsed": null,
+    "max_score": 5
+  }
+]
