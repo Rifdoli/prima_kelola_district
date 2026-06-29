@@ -68,6 +68,18 @@ class LaravelAuthBackend {
     }
 
     /**
+     * Returns the sname of the logged-in user's role, or null.
+     */
+    getRoleSname() {
+        const user = this.getAuthenticatedUser();
+        return user?.role?.sname ?? null;
+    }
+
+    isSuperAdmin() {
+        return this.getRoleSname() === 'admin_sup';
+    }
+
+    /**
      * Handle the error
      * @param {*} error
      */

@@ -9,6 +9,8 @@ const router = createRouter({
 
 });
 
+const ADMIN_ONLY_PATHS = ['/users', '/roles', '/organizations', '/locations'];
+
 router.beforeEach((to, _from, next) => {
     if (to.meta.public) {
         return next();
@@ -18,6 +20,13 @@ router.beforeEach((to, _from, next) => {
 
     if (!isAuthenticated) {
         return next({ name: 'login-v1' });
+    }
+
+    if (ADMIN_ONLY_PATHS.includes(to.path)) {
+        const sname = JSON.parse(sessionStorage.getItem('authUser') || '{}')?.role?.sname;
+        if (sname !== 'admin_sup') {
+            return next({ path: '/dashboard' });
+        }
     }
 
     next();
