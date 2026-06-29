@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 #[Fillable(['ancestor_id', 'descendant_id', 'depth', 'is_active'])]
 class OrganizationMapping extends Model
 {
+    protected $table = 'organization_mapping';
+
     protected $primaryKey = 'organization_mapping_id';
 
     /**
