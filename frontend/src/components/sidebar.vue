@@ -4,6 +4,7 @@ import { ChevronDownIcon } from "@zhuowenli/vue-feather-icons";
 import simplebar from "simplebar-vue";
 import logoWhite from "@/assets/images/logo-white.svg";
 import logoDark from "@/assets/images/logo-dark.svg";
+import { getAuthBackend } from "@/authutils";
 
 export default {
     data() {
@@ -59,6 +60,9 @@ export default {
             set(layoutType) {
                 this.$store.commit('changeLayoutType', { layoutType });
             },
+        },
+        isSuperAdmin() {
+            return getAuthBackend()?.isSuperAdmin() === true;
         },
     },
     watch: {
@@ -227,7 +231,7 @@ export default {
                         </ul>
                     </div>
                 </li>
-                <li class="pc-item pc-hasmenu">
+                <li class="pc-item pc-hasmenu" v-if="isSuperAdmin">
                     <BLink class="pc-link" data-bs-toggle="collapse" href="#pcAdministration" role="button" aria-expanded="false" aria-controls="pcAdministration">
                         <span class="pc-micon">
                             <i class="ph-duotone ph-shield-check"></i>
