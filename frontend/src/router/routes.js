@@ -70,7 +70,7 @@ export default [
         path: "/assessment/self",
         name: "assessment-self",
         meta: { title: "Self Assessment", group: "Assessment" },
-        component: () => import("../views/pages/placeholder.vue"),
+        component: () => import("../views/pages/self-assessment.vue"),
     },
     {
         path: "/assessment/on-desk",
