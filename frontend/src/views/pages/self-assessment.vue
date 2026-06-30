@@ -206,7 +206,7 @@ export default {
                 <div class="alert alert-danger" v-if="errorMsg">{{ errorMsg }}</div>
                 <div class="text-center text-muted py-5" v-if="loading">Memuat...</div>
 
-                <template v-else>
+                <template v-else-if="assessment">
                     <div class="card mb-3" v-for="(practiceAreas, domain) in groupedQuestions" :key="domain">
                         <div class="card-header">
                             <h5 class="mb-0">{{ domain }}</h5>
