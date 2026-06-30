@@ -171,15 +171,15 @@ export default {
 
         <BRow class="mb-3">
             <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-body d-flex flex-wrap align-items-end gap-2">
-                        <div>
+                <div class="card sticky-top" style="top: 0.75rem; z-index: 10">
+                    <div class="card-body d-flex flex-wrap align-items-end gap-3">
+                        <div style="width: 120px">
                             <label class="form-label mb-1">Tahun</label>
                             <select class="form-control" v-model.number="year" :disabled="loading">
                                 <option v-for="y in years" :key="y" :value="y">{{ y }}</option>
                             </select>
                         </div>
-                        <div>
+                        <div style="width: 100px">
                             <label class="form-label mb-1">Kuartal</label>
                             <select class="form-control" v-model.number="quarter" :disabled="loading">
                                 <option v-for="q in [1, 2, 3, 4]" :key="q" :value="q">Q{{ q }}</option>
@@ -190,7 +190,17 @@ export default {
                                 Muat
                             </button>
                         </div>
-                        <div class="ms-auto" v-if="assessment">
+
+                        <div class="d-flex align-items-center gap-2" v-if="!isReadOnly && assessment">
+                            <button class="btn btn-outline-secondary" :disabled="saving" @click="saveDraft">
+                                Simpan Draft
+                            </button>
+                            <button class="btn btn-primary" :disabled="saving" @click="submitAssessment">
+                                Submit
+                            </button>
+                        </div>
+
+                        <div class="ms-auto d-flex align-items-center" v-if="assessment">
                             <span class="badge" :class="statusBadgeClass">{{ statusLabel }}</span>
                             <span v-if="assessment.total_score !== null && assessment.total_score !== undefined" class="ms-2">
                                 Skor: <strong>{{ assessment.total_score }}</strong>
@@ -265,15 +275,6 @@ export default {
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="text-end mb-4" v-if="!isReadOnly && assessment">
-                        <button class="btn btn-outline-secondary" :disabled="saving" @click="saveDraft">
-                            Simpan Draft
-                        </button>
-                        <button class="btn btn-primary" :disabled="saving" @click="submitAssessment">
-                            Submit
-                        </button>
                     </div>
                 </template>
             </div>
