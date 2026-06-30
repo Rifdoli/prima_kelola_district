@@ -1,4 +1,5 @@
 <script>
+import Swal from "sweetalert2";
 import api from "@/services/api";
 import Layout from "@/layout/main.vue";
 import pageheader from "@/components/page-header.vue";
@@ -85,14 +86,24 @@ export default {
                 evidence_note: val.evidence_note || null,
             }));
         },
+        async persistAnswers() {
+            await api.put(`/self-assessments/${this.assessment.self_assessment_id}/answers`, {
+                answers: this.buildPayload(),
+            });
+            await this.refresh();
+        },
         async saveDraft() {
             this.saving = true;
             this.errorMsg = "";
             try {
-                await api.put(`/self-assessments/${this.assessment.self_assessment_id}/answers`, {
-                    answers: this.buildPayload(),
+                await this.persistAnswers();
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Draft berhasil disimpan",
+                    showConfirmButton: false,
+                    timer: 1500,
                 });
-                await this.refresh();
             } catch (error) {
                 this.errorMsg = error.response?.data?.message || "Gagal menyimpan.";
             } finally {
@@ -126,9 +137,16 @@ export default {
             this.saving = true;
             this.errorMsg = "";
             try {
-                await this.saveDraft();
+                await this.persistAnswers();
                 await api.post(`/self-assessments/${this.assessment.self_assessment_id}/submit`);
                 await this.refresh();
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Self assessment berhasil disubmit",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
             } catch (error) {
                 this.errorMsg = error.response?.data?.message || "Gagal submit.";
             } finally {
