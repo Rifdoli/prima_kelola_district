@@ -20,7 +20,7 @@ export default {
             years: [now.getFullYear() - 1, now.getFullYear(), now.getFullYear() + 1],
             assessment: null, // hasil POST /self-assessments
             questions: [], // hasil GET /assessment-questions
-            answers: {}, // map: question_id -> { achieved_level, evidence_note, evidence_file_url }
+            answers: {}, // map: question_id -> { achieved_levels: ['A', ...], evidence_note, evidence_file_url }
             errorMsg: "",
         };
     },
@@ -56,6 +56,9 @@ export default {
         criteriaText(question, level) {
             return question["criteria_" + level.toLowerCase()];
         },
+        questionScore(questionId) {
+            return this.answers[questionId]?.achieved_levels?.length || 0;
+        },
         async fetchQuestions() {
             const { data } = await api.get("/assessment-questions");
             this.questions = data.data;
@@ -66,14 +69,14 @@ export default {
             this.answers = {};
             for (const q of this.questions) {
                 this.answers[q.assessment_question_id] = {
-                    achieved_level: null,
+                    achieved_levels: [],
                     evidence_note: "",
                     evidence_file_url: null,
                 };
             }
             for (const ans of this.assessment.answers || []) {
                 this.answers[ans.assessment_question_id] = {
-                    achieved_level: ans.achieved_level,
+                    achieved_levels: ans.achieved_levels || [],
                     evidence_note: ans.evidence_note,
                     evidence_file_url: ans.evidence_file_url || null,
                 };
@@ -82,7 +85,7 @@ export default {
         buildPayload() {
             return Object.entries(this.answers).map(([qid, val]) => ({
                 assessment_question_id: Number(qid),
-                achieved_level: val.achieved_level || null,
+                achieved_levels: val.achieved_levels || [],
                 evidence_note: val.evidence_note || null,
             }));
         },
@@ -244,17 +247,21 @@ export default {
                                 <h6 class="text-primary mb-3">{{ practiceArea }}</h6>
 
                                 <div class="border rounded p-3 mb-3" v-for="q in qs" :key="q.assessment_question_id">
-                                    <p class="fw-semibold mb-1" v-if="q.scope">{{ q.scope }}</p>
+                                    <div class="d-flex align-items-start mb-1">
+                                        <p class="fw-semibold mb-0" v-if="q.scope">{{ q.scope }}</p>
+                                        <span class="badge bg-light-primary ms-auto">
+                                            Skor: {{ questionScore(q.assessment_question_id) }}/{{ levels.length }}
+                                        </span>
+                                    </div>
                                     <p class="mb-3">{{ q.question }}</p>
 
                                     <div class="form-check mb-2" v-for="level in levels" :key="level">
                                         <input
                                             class="form-check-input"
-                                            type="radio"
+                                            type="checkbox"
                                             :id="'q' + q.assessment_question_id + '_' + level"
-                                            :name="'q' + q.assessment_question_id"
                                             :value="level"
-                                            v-model="answers[q.assessment_question_id].achieved_level"
+                                            v-model="answers[q.assessment_question_id].achieved_levels"
                                             :disabled="isReadOnly"
                                         >
                                         <label class="form-check-label" :for="'q' + q.assessment_question_id + '_' + level">
