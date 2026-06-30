@@ -133,7 +133,17 @@ export default {
             }
         },
         async submitAssessment() {
-            if (!confirm("Setelah disubmit, jawaban tidak dapat diubah lagi. Lanjutkan?")) return;
+            const result = await Swal.fire({
+                icon: "warning",
+                title: "Submit Self Assessment?",
+                text: "Setelah disubmit, jawaban tidak dapat diubah lagi. Lanjutkan?",
+                showCancelButton: true,
+                confirmButtonText: "Ya, Submit",
+                cancelButtonText: "Batal",
+                confirmButtonColor: "#dc3545",
+            });
+            if (!result.isConfirmed) return;
+
             this.saving = true;
             this.errorMsg = "";
             try {
