@@ -98,7 +98,7 @@ export default {
             try {
                 await this.persistAnswers();
                 Swal.fire({
-                    position: "top-end",
+                    position: "center",
                     icon: "success",
                     title: "Draft berhasil disimpan",
                     showConfirmButton: false,
@@ -141,7 +141,7 @@ export default {
                 await api.post(`/self-assessments/${this.assessment.self_assessment_id}/submit`);
                 await this.refresh();
                 Swal.fire({
-                    position: "top-end",
+                    position: "center",
                     icon: "success",
                     title: "Self assessment berhasil disubmit",
                     showConfirmButton: false,
