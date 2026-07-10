@@ -1,11 +1,6 @@
 <script>
-import Rightbar from "@/components/right-bar.vue"
-
 export default {
     name: "CODE-VERIFICATION",
-    components: {
-        Rightbar
-    }
 }
 </script>
 
@@ -40,30 +35,10 @@ export default {
                         <div class="d-grid mt-4">
                             <button type="button" class="btn btn-primary">Continue</button>
                         </div>
+                        <p class="text-muted text-sm text-center mt-4 mb-0">Created and curated by <span class="fw-semibold">DEFA-One Force Team</span></p>
                     </div>
                 </div>
             </div>
-
-            <div class="auth-sidefooter">
-                <img src="@/assets/images/logo-dark.svg" class="img-brand img-fluid" alt="images">
-                <hr class="mb-3 mt-4">
-                <BRow class="row">
-                    <BCol class="my-1">
-                        <p class="m-0">Light Able ♥ crafted by Team <a href="#" target="_blank">
-BCol       themes</a></p>
-                    </BCol>
-                    <BCol class="auto my-1">
-                        <ul class="list-inline footer-link mb-0">
-BCol   <li class="list-inline-item"><router-link to="/dashboard">Home</router-link></li>
-                            <li class="list-inline-item"><a href="#"
-                                    target="_blank">Documentation</a></li>
-                            <li class="list-inline-item"><a href="#"
-                                    target="_blank">Support</a></li>
-                        </ul>
-                    </BCol>
-                </BRow>
-            </div>
         </div>
     </div>
-    <Rightbar />
 </template>
