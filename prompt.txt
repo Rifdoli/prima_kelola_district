@@ -1,23 +1,5 @@
 Buatkan issue.md, berisi planning untuk nanti di impelemntasikan oleh junior programmer atau model AI yang lebih rendah:
 
-1. Buat Halaman Self Assesment
-Halaman self assement adalah halaman yang nanti digunakan oleh rekan-rekan district untuk menilai sejauh apa district tersebut menjadi prima district dengan berdasarkan beberapa domain yang harus dicek
-----> Domain Leadership & Strategic
----> Sub Domain Starategic Approach
---> Scope Alignment Terhadap Target dan area
-->Apakah District Manager memiliki target district yang selaras dengan target Area/Regional?
-A. Target dan sasaran district ditetapkan serta selaras dengan target Area, Regional, dan strategi perusahaan.
-B.Target district telah diturunkan menjadi target tim, fungsi, atau individu yang terukur.
-C.Program kerja, sumber daya, dan prioritas pekerjaan district dijalankan untuk mendukung pencapaian target yang telah ditetapkan.
-D.Pencapaian target district dimonitor dan direview secara berkala menggunakan indikator kinerja yang relevan.
-E.Hasil evaluasi digunakan untuk menetapkan tindakan perbaikan, penyesuaian prioritas, atau mitigasi risiko dalam pencapaian target distric
---> Scope Pengelolaan Risiko Operasional
----> Sub Domain Performance Improvement
---> Scope Continous Improvement
---> Scope Pengembangan Tim
----> Sub Domain Communication Approach
-
-2. Pada Add User management
-- Tambahkan pilihan tambah NIK, is_LDAP, organisasi
+Oke saat ini sudah ditetapkan bahwa lokasi piloting untuk prima kelola itu district binjai, karawang, flores dan makassar. Apakah bisa dihapus dulu semua seeder yg ada. Dan mengisi dengan user baru untuk keempat lokasi district ini, kemudian tambahan juga user untuk masing-masing diatasnya regional dan area untuk masing2 tingkat atas di district yg dijadikan lokasi. piloting. Kemudian, untuk username dibuat mudah saja misal admin_district_makassar, terus admin_regional_sulawesi dan admin_area_4. 
 
 Jelaskan tahapan-tahapan yang harus dilakukan untuk mengimplementasikan fitur ini. Nanti yang akan mengimplementasikan adalah junior programmer atau model AI yang lebih rendah.
