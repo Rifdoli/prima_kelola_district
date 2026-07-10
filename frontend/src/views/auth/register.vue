@@ -9,6 +9,7 @@ export default {
             username: "",
             email: "",
             phoneNumber: "",
+            isLdap: false,
             password: "",
             passwordConfirmation: "",
             error: null,
@@ -21,7 +22,7 @@ export default {
             this.loading = true;
 
             try {
-                await getAuthBackend().registerUser(this.name, this.username, this.email, this.phoneNumber, this.password, this.passwordConfirmation);
+                await getAuthBackend().registerUser(this.name, this.username, this.email, this.phoneNumber, this.isLdap, this.password, this.passwordConfirmation);
                 this.$router.push({ name: "dashboard" });
             } catch (error) {
                 this.error = error;
@@ -60,11 +61,27 @@ export default {
                             <input type="text" class="form-control" placeholder="Phone Number (optional)" v-model="phoneNumber">
                         </div>
                         <div class="mb-3">
-                            <input type="password" class="form-control" placeholder="Password" v-model="password">
+                            <label class="form-label">Account Type</label>
+                            <div class="d-flex gap-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="accountTypeLocal" :value="false" v-model="isLdap">
+                                    <label class="form-check-label" for="accountTypeLocal">Non-LDAP (create password)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="accountTypeLdap" :value="true" v-model="isLdap">
+                                    <label class="form-check-label" for="accountTypeLdap">LDAP (managed by directory)</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <input type="password" class="form-control" placeholder="Confirm Password" v-model="passwordConfirmation" @keyup.enter="register">
-                        </div>
+                        <template v-if="!isLdap">
+                            <div class="mb-3">
+                                <input type="password" class="form-control" placeholder="Password" v-model="password">
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" placeholder="Confirm Password" v-model="passwordConfirmation" @keyup.enter="register">
+                            </div>
+                        </template>
+                        <p v-else class="text-muted text-sm">LDAP accounts sign in with their directory credentials — no password needed here.</p>
                         <div class="d-flex mt-1 justify-content-between">
                             <div class="form-check">
                                 <input class="form-check-input input-primary" type="checkbox" id="customCheckc1" checked="">

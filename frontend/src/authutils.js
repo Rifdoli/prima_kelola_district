@@ -4,15 +4,15 @@ class LaravelAuthBackend {
     /**
      * Registers the user with given details
      */
-    async registerUser(name, username, email, phoneNumber, password, passwordConfirmation) {
+    async registerUser(name, username, email, phoneNumber, isLdap, password, passwordConfirmation) {
         try {
             const { data } = await api.post('/register', {
                 name,
                 username,
                 email,
                 phone_number: phoneNumber || null,
-                password,
-                password_confirmation: passwordConfirmation,
+                is_ldap: isLdap,
+                ...(isLdap ? {} : { password, password_confirmation: passwordConfirmation }),
             });
 
             this.setLoggedInUser(data.data.token, data.data.user);
