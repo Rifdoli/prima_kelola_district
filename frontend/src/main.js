@@ -12,6 +12,16 @@ import { initAuthBackend } from './authutils';
 
 initAuthBackend();
 
+// Harmless browser warning triggered by ResizeObserver-based components
+// (e.g. simplebar) during rapid layout changes like breakpoint/sidebar
+// toggles. Doesn't indicate a real error — suppress only this message
+// so it doesn't trip the dev-server error overlay.
+window.addEventListener('error', (e) => {
+    if (e.message === 'ResizeObserver loop completed with undelivered notifications.') {
+        e.stopImmediatePropagation();
+    }
+});
+
 // Packages CSS import
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css';

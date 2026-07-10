@@ -4,6 +4,19 @@ module.exports = defineConfig({
   publicPath: "/",
   devServer: {
     historyApiFallback: true,
+    client: {
+      overlay: {
+        runtimeErrors: (error) => {
+          // Harmless browser warning from ResizeObserver-based components
+          // (e.g. simplebar) during rapid layout changes like breakpoint/
+          // sidebar toggles. Doesn't indicate a real error.
+          if (error.message === 'ResizeObserver loop completed with undelivered notifications.') {
+            return false;
+          }
+          return true;
+        },
+      },
+    },
   },
   chainWebpack: (config) => {
     config.plugin('define').tap((definitions) => {

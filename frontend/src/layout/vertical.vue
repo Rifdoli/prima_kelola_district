@@ -10,9 +10,13 @@ export default {
     },
     methods: {
         handleOutsideClick(event) {
+            // Only the overlay backdrop (not the actual menu content) should
+            // close the mobile sidebar. Checking against the menu's real DOM
+            // root avoids relying on this.$el, which is unreliable here since
+            // this component renders multiple sibling root elements.
             if (
                 this.$store.state.isMobileSidebarActive &&
-                !this.$el.contains(event.target)
+                !event.target.closest('#navbar-wrapper')
             ) {
                 this.$store.commit('toggleMobileSidebar');
             }
