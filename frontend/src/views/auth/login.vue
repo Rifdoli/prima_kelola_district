@@ -1,12 +1,8 @@
 <script>
-import Rightbar from "@/components/right-bar.vue"
 import { getAuthBackend } from "@/authutils"
 
 export default {
     name: "LOGIN",
-    components: {
-        Rightbar
-    },
     data() {
         return {
             username: "",
@@ -64,10 +60,8 @@ export default {
                         <div class="d-grid mt-4">
                             <button type="button" class="btn btn-primary" :disabled="loading" @click="login">Login</button>
                         </div>
+                        <p class="text-muted text-sm text-center mt-4 mb-0">Created and curated by <span class="fw-semibold">DEFA-One Force Team</span></p>
                     </div>
-                </div>
-                <div class="text-center mt-4">
-                    <p class="text-muted text-sm">Created and curated by <span class="fw-semibold">DEFA-One Force Team</span></p>
                 </div>
             </div>
         </div>
