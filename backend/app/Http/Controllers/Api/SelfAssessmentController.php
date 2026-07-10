@@ -128,18 +128,21 @@ class SelfAssessmentController extends Controller
         $validated = $request->validate([
             'answers' => ['required', 'array'],
             'answers.*.assessment_question_id' => ['required', 'exists:assessment_questions,assessment_question_id'],
-            'answers.*.achieved_level' => ['nullable', 'in:A,B,C,D,E'],
+            'answers.*.achieved_levels' => ['nullable', 'array'],
+            'answers.*.achieved_levels.*' => ['in:A,B,C,D,E'],
             'answers.*.evidence_note' => ['nullable', 'string'],
         ]);
 
         foreach ($validated['answers'] as $answer) {
+            $levels = array_values(array_unique($answer['achieved_levels'] ?? []));
+
             SelfAssessmentAnswer::updateOrCreate(
                 [
                     'self_assessment_id' => $selfAssessment->getKey(),
                     'assessment_question_id' => $answer['assessment_question_id'],
                 ],
                 [
-                    'achieved_level' => $answer['achieved_level'] ?? null,
+                    'achieved_levels' => $levels ?: null,
                     'evidence_note' => $answer['evidence_note'] ?? null,
                 ]
             );
@@ -206,11 +209,11 @@ class SelfAssessmentController extends Controller
             return $this->error('Self assessment sudah disubmit sebelumnya.', 422);
         }
 
-        $levelToScore = ['A' => 1, 'B' => 2, 'C' => 3, 'D' => 4, 'E' => 5];
         $answers = $selfAssessment->answers()->with('question')->get();
 
+        // Skor per pertanyaan = jumlah kriteria A-E yang dicentang (0-5).
         $totalMax = $answers->sum(fn ($a) => $a->question->max_score);
-        $totalScore = $answers->sum(fn ($a) => $levelToScore[$a->achieved_level] ?? 0);
+        $totalScore = $answers->sum(fn ($a) => count($a->achieved_levels ?? []));
 
         $selfAssessment->update([
             'status' => 'submitted',
