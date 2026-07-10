@@ -2,41 +2,29 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { ChevronDownIcon } from "@zhuowenli/vue-feather-icons";
 import simplebar from "simplebar-vue";
-import logoWhite from "@/assets/images/logo-white.svg";
-import logoDark from "@/assets/images/logo-dark.svg";
+import logoForLight from "@/assets/images/prima-kelola-white-bg.png";
+import logoForDark from "@/assets/images/prima-kelola-black-bg.png";
 import { getAuthBackend } from "@/authutils";
 
 export default {
-    data() {
-        return {
-            logoDark: logoDark,
-            logoWhite: logoWhite,
-           }
-    },
     setup() {
-        const currentLogo = ref(logoDark);
+        const currentLogo = ref(logoForLight);
 
         const updateLogo = () => {
             const isDarkTheme = document.body.getAttribute("data-pc-theme") === "dark";
-            currentLogo.value = isDarkTheme ? logoWhite : logoDark;
+            currentLogo.value = isDarkTheme ? logoForDark : logoForLight;
         };
-        
 
         onMounted(() => {
             updateLogo();
 
-            const observer = new MutationObserver(() => {
-                updateLogo();
-            });
-
+            const observer = new MutationObserver(updateLogo);
             observer.observe(document.body, {
                 attributes: true,
                 attributeFilter: ['data-pc-theme']
             });
 
-            onUnmounted(() => {
-                observer.disconnect();
-            });
+            onUnmounted(() => observer.disconnect());
         });
 
         return { currentLogo };
@@ -190,10 +178,7 @@ export default {
     <div class="navbar-wrapper" id="navbar-wrapper">
         <div class="m-header">
             <router-link to="/" class="b-brand text-primary">
-                <!-- ========   Change your logo from here   ============ -->
-                <img v-if="currentLogo === logoDark" :src="logoDark" alt="logo image" class="logo-lg custom_logo">
-                <img v-else :src="logoWhite" alt="logo image" class="logo-lg custom_logo">
-                <img src="@/assets/images/favicon.svg" alt="" class="logo logo-sm"> <span class="badge bg-brand-color-2 rounded-pill ms-1 theme-version">v1.0</span>
+                <img :src="currentLogo" alt="Prima Kelola District" class="logo-lg custom_logo" style="height: 44px; width: auto;">
             </router-link>
         </div>
         <simplebar data-simplebar class="navbar-content pc-trigger">
@@ -283,18 +268,29 @@ export default {
                                 <i class="ph-duotone ph-windows-logo"></i>
                             </span>
                         </template>
-                        <BDropdownItem class="pc-user-links">
-                            <i class="ph-duotone ph-user"></i>
-                            <span>My Account</span>
-                        </BDropdownItem>
-                        <BDropdownItem class="pc-user-links">
-                            <i class="ph-duotone ph-gear"></i>
-                            <span>Settings</span>
-                        </BDropdownItem>
-                        <BDropdownItem class="pc-user-links" @click="logout">
-                            <i class="ph-duotone ph-power"></i>
-                            <span>Logout</span>
-                        </BDropdownItem>
+                        <BRow xl="6">
+                            <BCol xl="6">
+                                <BDropdownItem class="pc-user-links p-0">
+                                    <i class="ph-duotone ph-user"></i>
+                                    <br>
+                                    <span>My Account</span>
+                                </BDropdownItem>
+                            </BCol>
+                            <BCol xl="6">
+                                <BDropdownItem class="pc-user-links p-0">
+                                    <i class="ph-duotone ph-gear"></i>
+                                    <br>
+                                    <span>Settings</span>
+                                </BDropdownItem>
+                            </BCol>
+                            <BCol xl="6">
+                                <BDropdownItem class="pc-user-links p-0" @click="logout">
+                                    <i class="ph-duotone ph-power"></i>
+                                    <br>
+                                    <span>Logout</span>
+                                </BDropdownItem>
+                            </BCol>
+                        </BRow>
                     </BDropdown>
                 </div>
             </BCardBody>
