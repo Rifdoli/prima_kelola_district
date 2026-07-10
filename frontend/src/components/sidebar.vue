@@ -268,29 +268,24 @@ export default {
                                 <i class="ph-duotone ph-windows-logo"></i>
                             </span>
                         </template>
-                        <BRow xl="6">
-                            <BCol xl="6">
-                                <BDropdownItem class="pc-user-links p-0">
-                                    <i class="ph-duotone ph-user"></i>
-                                    <br>
-                                    <span>My Account</span>
-                                </BDropdownItem>
-                            </BCol>
-                            <BCol xl="6">
-                                <BDropdownItem class="pc-user-links p-0">
-                                    <i class="ph-duotone ph-gear"></i>
-                                    <br>
-                                    <span>Settings</span>
-                                </BDropdownItem>
-                            </BCol>
-                            <BCol xl="6">
-                                <BDropdownItem class="pc-user-links p-0" @click="logout">
-                                    <i class="ph-duotone ph-power"></i>
-                                    <br>
-                                    <span>Logout</span>
-                                </BDropdownItem>
-                            </BCol>
-                        </BRow>
+                        <a href="#" class="dropdown-item">
+                            <span class="d-flex align-items-center">
+                                <i class="ph-duotone ph-user"></i>
+                                <span>My Account</span>
+                            </span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <span class="d-flex align-items-center">
+                                <i class="ph-duotone ph-gear"></i>
+                                <span>Settings</span>
+                            </span>
+                        </a>
+                        <a href="#" class="dropdown-item" @click.prevent="logout">
+                            <span class="d-flex align-items-center">
+                                <i class="ph-duotone ph-power"></i>
+                                <span>Logout</span>
+                            </span>
+                        </a>
                     </BDropdown>
                 </div>
             </BCardBody>

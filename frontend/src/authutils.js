@@ -39,12 +39,18 @@ class LaravelAuthBackend {
     /**
      * Logout the user
      */
-    async logout() {
-        try {
-            await api.post('/logout');
-        } finally {
-            sessionStorage.removeItem('authUser');
-            sessionStorage.removeItem('authToken');
+    logout() {
+        const token = sessionStorage.getItem('authToken');
+        // Clear local session immediately so navigation/guards never wait on
+        // the network — a slow or unreachable server must not block logout.
+        sessionStorage.removeItem('authUser');
+        sessionStorage.removeItem('authToken');
+        // Best-effort server-side logout, fire-and-forget.
+        if (token) {
+            api.post('/logout', {}, {
+                headers: { Authorization: `Bearer ${token}` },
+                timeout: 5000,
+            }).catch(() => {});
         }
     }
 
