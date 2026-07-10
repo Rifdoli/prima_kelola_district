@@ -74,7 +74,6 @@ export default {
                                 <input type="password" class="form-control" placeholder="Confirm Password" v-model="passwordConfirmation" @keyup.enter="register">
                             </div>
                         </template>
-                        <p v-else class="text-muted text-sm">LDAP accounts sign in with their directory credentials — no password needed here.</p>
                         <div class="d-flex mt-1 justify-content-between">
                             <div class="form-check">
                                 <input class="form-check-input input-primary" type="checkbox" id="customCheckc1" checked="">
