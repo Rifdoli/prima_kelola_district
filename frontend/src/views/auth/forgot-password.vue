@@ -1,11 +1,12 @@
 <script>
-import Rightbar from "@/components/right-bar.vue"
-
 export default {
     name: "FORGOT-PASSWORD",
-    components: {
-        Rightbar
-    }
+    data() {
+        return {
+            username: "",
+            email: "",
+        }
+    },
 }
 </script>
 
@@ -23,36 +24,20 @@ export default {
                             </p>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" placeholder="Username" v-model="username">
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="floatingInput" placeholder="Email Address">
+                            <input type="email" class="form-control" placeholder="Email Address" v-model="email">
                         </div>
                         <div class="d-grid mt-3">
                             <button type="button" class="btn btn-primary">Send reset email</button>
                         </div>
+                        <p class="text-muted text-sm text-center mt-4 mb-0">Created and curated by <span class="fw-semibold">DEFA-One Force Team</span></p>
                     </div>
                 </div>
             </div>
-
-            <div class="auth-sidefooter">
-                <img src="@/assets/images/logo-dark.svg" class="img-brand img-fluid" alt="images">
-                <hr class="mb-3 mt-4">
-                <BRow class="row">
-                    <BCol class="col my-1">
-                        <p class="m-0">Light Able ♥ crafted by Team <a href="#" target="_blank">
-                                themes</a></p>
-                    </BCol>
-                    <BCol class="col-auto my-1">
-                        <ul class="list-inline footer-link mb-0">
-                            <li class="list-inline-item"><router-link to="/dashboard">Home</router-link></li>
-                            <li class="list-inline-item"><a href="#"
-                                    target="_blank">Documentation</a></li>
-                            <li class="list-inline-item"><a href="#"
-                                    target="_blank">Support</a></li>
-                        </ul>
-                    </BCol>
-                </BRow>
-            </div>
         </div>
     </div>
-    <Rightbar />
 </template>
