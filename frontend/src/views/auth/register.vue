@@ -61,17 +61,10 @@ export default {
                             <input type="text" class="form-control" placeholder="Phone Number (optional)" v-model="phoneNumber">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Account Type</label>
-                            <div class="d-flex gap-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="accountTypeLocal" :value="false" v-model="isLdap">
-                                    <label class="form-check-label" for="accountTypeLocal">Non-LDAP (create password)</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="accountTypeLdap" :value="true" v-model="isLdap">
-                                    <label class="form-check-label" for="accountTypeLdap">LDAP (managed by directory)</label>
-                                </div>
-                            </div>
+                            <select class="form-select" v-model="isLdap">
+                                <option :value="false">Non-LDAP</option>
+                                <option :value="true">LDAP</option>
+                            </select>
                         </div>
                         <template v-if="!isLdap">
                             <div class="mb-3">
