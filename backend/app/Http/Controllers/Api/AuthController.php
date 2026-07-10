@@ -46,7 +46,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return $this->success([
-            'user' => $user->load('role'),
+            'user' => $user->load('role', 'organization'),
             'token' => $token,
         ], 'Registration successful.', 201);
     }
@@ -69,7 +69,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return $this->success([
-            'user' => $user->load('role'),
+            'user' => $user->load('role', 'organization'),
             'token' => $token,
         ], 'Login successful.');
     }
@@ -83,6 +83,6 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
-        return $this->success($request->user()->load('role'), 'Authenticated user retrieved.');
+        return $this->success($request->user()->load('role', 'organization'), 'Authenticated user retrieved.');
     }
 }
