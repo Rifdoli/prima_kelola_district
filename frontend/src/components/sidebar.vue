@@ -51,6 +51,13 @@ export default {
             // Set the layout attribute based on the layout type
             document.body.setAttribute('data-pc-layout', layoutType);
         },
+        async logout() {
+            try {
+                await getAuthBackend().logout();
+            } finally {
+                this.$router.push({ name: "login-v1" });
+            }
+        },
     },
     computed: {
         layoutType: {
@@ -276,33 +283,18 @@ export default {
                                 <i class="ph-duotone ph-windows-logo"></i>
                             </span>
                         </template>
-                        <BRow xl="6">
-                            <BCol xl="6">
-                                <BDropdownItem class="pc-user-links p-0">
-                                        <i class="ph-duotone ph-user"></i>
-                                        <br>
-                                        <span>My Account</span>
-                                </BDropdownItem>
-                                <BDropdownDivider />
-                                <BDropdownItem class="pc-user-links p-0">
-                                    <i class="ph-duotone ph-lock-key"></i> <br>
-                                    <span>Lock Screen</span>
-                                </BDropdownItem>
-                                <BDropdownDivider />
-                            </BCol>
-                            <BCol xl="6">
-                                <BDropdownItem class="pc-user-links p-0">
-                                    <i class="ph-duotone ph-gear"></i> <br>
-                                    <span>Settings</span>
-                                </BDropdownItem>
-                                <BDropdownDivider />
-                                <BDropdownItem class="pc-user-links p-0">
-                                    <i class="ph-duotone ph-power"></i> <br>
-                                    <span>Logout</span>
-                                </BDropdownItem>
-                                <BDropdownDivider />
-                            </BCol>
-                        </BRow>
+                        <BDropdownItem class="pc-user-links">
+                            <i class="ph-duotone ph-user"></i>
+                            <span>My Account</span>
+                        </BDropdownItem>
+                        <BDropdownItem class="pc-user-links">
+                            <i class="ph-duotone ph-gear"></i>
+                            <span>Settings</span>
+                        </BDropdownItem>
+                        <BDropdownItem class="pc-user-links" @click="logout">
+                            <i class="ph-duotone ph-power"></i>
+                            <span>Logout</span>
+                        </BDropdownItem>
                     </BDropdown>
                 </div>
             </BCardBody>
