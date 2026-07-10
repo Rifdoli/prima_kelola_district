@@ -130,25 +130,6 @@ export default {
                         <span>Default</span>
                     </a>
                 </BDropdown>
-                <BDropdown variant="transparent" auto-close="outside" class="pc-h-item card-header-dropdown pb-0"
-                    toggle-class="text-reset dropdown-btn pc-head-link arrow-none me-0" menu-class="dropdown-menu-end"
-                    aria-haspopup="true" :offset="{ alignmentAxis: -140, crossAxis: 0, mainAxis: 20 }">
-                    <template #button-content><span class="text-muted pc-head-link"><i
-                                class="ph-duotone ph-diamonds-four"></i></span>
-                    </template>
-                    <a href="#!" class="dropdown-item">
-                        <i class="ph-duotone ph-user"></i>
-                        <span>My Account</span>
-                    </a>
-                    <a href="#!" class="dropdown-item">
-                        <i class="ph-duotone ph-gear"></i>
-                        <span>Settings</span>
-                    </a>
-                    <a href="#!" class="dropdown-item" @click.prevent="logout">
-                        <i class="ph-duotone ph-power"></i>
-                        <span>Logout</span>
-                    </a>
-                </BDropdown>
                 <BDropdown variant="transparent" auto-close="outside"
                     class="pc-h-item header-user-profile card-header-dropdown py-0"
                     toggle-class="text-reset dropdown-btn pc-head-link arrow-none me-0"
