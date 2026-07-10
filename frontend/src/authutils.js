@@ -23,9 +23,9 @@ class LaravelAuthBackend {
     /**
      * Login user with given details
      */
-    async loginUser(email, password) {
+    async loginUser(username, password) {
         try {
-            const { data } = await api.post('/login', { email, password });
+            const { data } = await api.post('/login', { username, password });
 
             this.setLoggedInUser(data.data.token, data.data.user);
             return data.data.user;

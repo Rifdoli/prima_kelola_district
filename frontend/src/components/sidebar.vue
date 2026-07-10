@@ -258,15 +258,6 @@ export default {
                     </div>
                 </li>
             </ul>
-
-            <div class="card nav-action-card bg-brand-color-4">
-                <div class="card-body" :style="{ 'background-image': 'url(' + require('@/assets/images/layout/nav-card-bg.svg') + ')' }">
-                    <h5 class="text-dark">Help Center</h5>
-                    <p class="text-dark text-opacity-75">Please contact us for more questions.</p>
-                    <BLink href="#" class="btn btn-primary" target="_blank">Go to help
-                        Center</BLink>
-                </div>
-            </div>
         </simplebar>
         <BCard no-body class="pc-user-card">
             <BCardBody>

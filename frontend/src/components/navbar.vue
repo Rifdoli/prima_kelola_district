@@ -290,13 +290,7 @@ export default {
                                 <h5 class="m-0">Notifications</h5>
                             </BCol>
                             <BCol xl="4" sm="6" class="text-end">
-                                <ul class="list-inline ms-auto mb-0">
-                                    <li class="list-inline-item">
-                                        <router-link to="/mail" class="avtar avtar-s btn-link-hover-primary">
-                                            <i class="ti ti-link f-18"></i>
-                                        </router-link>
-                                    </li>
-                                </ul>
+                                <ul class="list-inline ms-auto mb-0"></ul>
                             </BCol>
                         </BRow>
 

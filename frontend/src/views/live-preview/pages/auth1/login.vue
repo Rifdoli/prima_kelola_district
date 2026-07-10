@@ -9,7 +9,7 @@ export default {
     },
     data() {
         return {
-            email: "",
+            username: "",
             password: "",
             error: null,
             loading: false,
@@ -21,7 +21,7 @@ export default {
             this.loading = true;
 
             try {
-                await getAuthBackend().loginUser(this.email, this.password);
+                await getAuthBackend().loginUser(this.username, this.password);
                 this.$router.push({ name: "dashboard" });
             } catch (error) {
                 this.error = error;
@@ -42,13 +42,13 @@ export default {
                         <div class="text-center">
                             <img src="@/assets/images/authentication/img-auth-login.png" alt="images"
                                 class="img-fluid mb-3">
-                            <h4 class="f-w-500 mb-1">Login with your email dcdcd</h4>
+                            <h4 class="f-w-500 mb-1">Login with your username</h4>
                             <p class="mb-3">Don't have an Account? <router-link to="/register-v1"
                                     class="link-primary ms-1">Create Account</router-link></p>
                         </div>
                         <div class="alert alert-danger" v-if="error">{{ error }}</div>
                         <div class="mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="Email Address" v-model="email">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Username" v-model="username">
                         </div>
                         <div class="mb-3">
                             <input type="password" class="form-control" id="floatingInput1" placeholder="Password" v-model="password" @keyup.enter="login">
