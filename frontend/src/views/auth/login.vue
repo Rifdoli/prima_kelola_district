@@ -37,7 +37,7 @@ export default {
                     <div class="card-body">
                         <div class="text-center">
                             <img src="@/assets/images/authentication/img-auth-login.png" alt="images"
-                                class="img-fluid mb-3">
+                                class="img-fluid mb-3" style="max-width: 180px;">
                             <p class="mb-3">Don't have an Account? <router-link to="/register-v1"
                                     class="link-primary ms-1">Create Account</router-link></p>
                         </div>
