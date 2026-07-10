@@ -9,36 +9,7 @@ export default {
     },
     data() {
         return {
-            isFullscreen: false,
-            isSidebarHidden: false,
             currentMode: 'light',
-            show: false,
-            languages: [
-                {
-                    language: "en",
-                    title: "English",
-                    subtitle: "UK"
-                },
-                {
-                    language: "fr",
-                    title: "français",
-                    subtitle: "French"
-                },
-                {
-                    language: "ro",
-                    title: "Română",
-                    subtitle: "Romanian"
-                },
-                {
-                    language: "cn",
-                    title: "中国人",
-                    subtitle: "Chinese"
-                },
-            ],
-            current_language: this.$i18n.locale,
-            text: null,
-            subtitle: null,
-            value: null,
         };
     },
     computed: {
@@ -47,12 +18,7 @@ export default {
         },
     },
     mounted() {
-        // Add event listener for keydown events
         document.addEventListener('keydown', this.handleKeyDown);
-
-        this.value = this.languages.find((x) => x.language === this.$i18n.locale);
-        this.text = this.value.title;
-        this.subtitle = this.value.subtitle;
     },
     beforeUnmount() {
         // Remove event listener when component is unmounted
@@ -67,31 +33,13 @@ export default {
             }
         },
         handleSearch(event) {
-            // console.log('handleSearch called');
-            // Prevent the default action (e.g., browser search)
             event.preventDefault();
         },
         handleKeyDown(event) {
-            // console.log('handleKeyDown called', event.key, event.ctrlKey);
-            // Check if Ctrl+K is pressed
             if (event.ctrlKey && event.key === 'k') {
-                // Prevent the default action (e.g., browser search)
                 event.preventDefault();
-                // console.log('Ctrl+K detected');
-                // Focus on the search input field
-                const searchInput = document.querySelector('#serchFildid');
-                if (searchInput) {
-                    // console.log('Search input found, focusing');
-                    searchInput.focus();
-                } else {
-                    // console.log('Search input not found');
-                }
+                document.querySelector('#serchFildid')?.focus();
             }
-        },
-        setLanguage(locale, country) {
-            this.$i18n.locale = locale;
-            this.current_language = locale;
-            this.text = country;
         },
         changeMode(mode) {
             this.currentMode = mode;
@@ -115,9 +63,6 @@ export default {
         toggleMobileSidebar() {
             this.$store.commit('toggleMobileSidebar');
         },
-        toggleRightSidebar() {
-            this.$emit('toggleRightSidebar'); // Emit an event to toggle the right sidebar
-        }
     },
 };
 </script>
