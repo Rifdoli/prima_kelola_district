@@ -64,6 +64,9 @@ export default {
         isSuperAdmin() {
             return getAuthBackend()?.isSuperAdmin() === true;
         },
+        currentUser() {
+            return getAuthBackend()?.getAuthenticatedUser();
+        },
     },
     watch: {
         layoutType: {
@@ -259,15 +262,13 @@ export default {
                 </li>
             </ul>
         </simplebar>
-        <BCard no-body class="pc-user-card">
+        <BCard no-body class="pc-user-card" v-if="currentUser">
             <BCardBody>
                 <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0">
-                        <img src="@/assets/images/user/avatar-1.jpg" alt="user-image" class="user-avtar wid-45 rounded-circle">
-                    </div>
-                    <div class="flex-grow-1 ms-3 me-2">
-                        <h6 class="mb-0">Jonh Smith</h6>
-                        <small>Administrator</small>
+                    <div class="flex-grow-1 me-2">
+                        <h6 class="mb-0">{{ currentUser.name }}</h6>
+                        <small>{{ currentUser.role?.name }}</small>
+                        <small class="d-block" v-if="currentUser.organization">{{ currentUser.organization.name }}</small>
                     </div>
                     <BDropdown variant="purple" dropup no-caret toggle-class="p-0">
                         <template v-slot:button-content>
