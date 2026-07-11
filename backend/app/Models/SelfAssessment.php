@@ -59,4 +59,9 @@ class SelfAssessment extends Model
     {
         return $this->hasMany(SelfAssessmentAnswer::class, 'self_assessment_id', 'self_assessment_id');
     }
+
+    public function verifications(): HasMany
+    {
+        return $this->hasMany(AssessmentVerification::class, 'self_assessment_id', 'self_assessment_id');
+    }
 }

@@ -31,13 +31,19 @@ export default [
         path: "/assessment/on-desk",
         name: "assessment-on-desk",
         meta: { title: "On Desk Assessment", group: "Assessment" },
-        component: () => import("../views/pages/placeholder.vue"),
+        component: () => import("../views/pages/on-desk-assessment.vue"),
     },
     {
         path: "/assessment/on-site",
         name: "assessment-on-site",
         meta: { title: "On Site Assessment", group: "Assessment" },
-        component: () => import("../views/pages/placeholder.vue"),
+        component: () => import("../views/pages/on-site-assessment.vue"),
+    },
+    {
+        path: "/assessment/tracking",
+        name: "assessment-tracking",
+        meta: { title: "Tracking Assessment", group: "Assessment" },
+        component: () => import("../views/pages/tracking-assessment.vue"),
     },
     {
         path: "/organizations",

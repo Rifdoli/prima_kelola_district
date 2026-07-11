@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Api\AssessmentQuestionController;
+use App\Http\Controllers\Api\AssessmentTrackingController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\OrganizationController;
 use App\Http\Controllers\Api\OrganizationTypeController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SelfAssessmentController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\VerificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -17,13 +19,24 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('assessment-questions', [AssessmentQuestionController::class, 'index']);
+    Route::get('assessment-tracking', [AssessmentTrackingController::class, 'index']);
 
     Route::get('self-assessments', [SelfAssessmentController::class, 'index']);
     Route::post('self-assessments', [SelfAssessmentController::class, 'store']);
     Route::get('self-assessments/{selfAssessment}', [SelfAssessmentController::class, 'show']);
     Route::put('self-assessments/{selfAssessment}/answers', [SelfAssessmentController::class, 'saveAnswers']);
-    Route::post('self-assessments/{selfAssessment}/questions/{assessmentQuestion}/evidence', [SelfAssessmentController::class, 'uploadEvidence']);
+    Route::post('self-assessments/{selfAssessment}/questions/{assessmentQuestion}/evidence/{level}', [SelfAssessmentController::class, 'uploadEvidence']);
+    Route::delete('self-assessments/{selfAssessment}/questions/{assessmentQuestion}/evidence/{level}', [SelfAssessmentController::class, 'deleteEvidence']);
     Route::post('self-assessments/{selfAssessment}/submit', [SelfAssessmentController::class, 'submit']);
+
+    // Verifikasi berjenjang: ODA (type=on_desk) & OSA (type=on_site).
+    Route::get('verifications/{type}', [VerificationController::class, 'index']);
+    Route::post('verifications/{type}', [VerificationController::class, 'store']);
+    Route::get('verifications/detail/{assessmentVerification}', [VerificationController::class, 'show']);
+    Route::put('verifications/detail/{assessmentVerification}/levels', [VerificationController::class, 'saveLevels']);
+    Route::post('verifications/detail/{assessmentVerification}/questions/{assessmentQuestion}/evidence/{level}', [VerificationController::class, 'uploadEvidence']);
+    Route::delete('verifications/detail/{assessmentVerification}/questions/{assessmentQuestion}/evidence/{level}', [VerificationController::class, 'deleteEvidence']);
+    Route::post('verifications/detail/{assessmentVerification}/submit', [VerificationController::class, 'submit']);
 
     Route::middleware('admin')->group(function () {
         Route::apiResource('roles', RoleController::class);
