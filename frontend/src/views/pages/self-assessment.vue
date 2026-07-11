@@ -20,7 +20,7 @@ export default {
             years: [now.getFullYear() - 1, now.getFullYear(), now.getFullYear() + 1],
             assessment: null, // hasil POST /self-assessments
             questions: [], // hasil GET /assessment-questions
-            answers: {}, // map: question_id -> { achieved_levels: ['A', ...], evidence_note, evidence_files: { level: url } }
+            answers: {}, // map: question_id -> { achieved_levels: ['A', ...], evidence_files: { level: url } }
             errorMsg: "",
             forbidden: false, // true bila ditolak (403) -> sembunyikan filter
             activeDomain: null, // domain tab yang sedang aktif
@@ -87,14 +87,12 @@ export default {
             for (const q of this.questions) {
                 this.answers[q.assessment_question_id] = {
                     achieved_levels: [],
-                    evidence_note: "",
                     evidence_files: {}, // map level -> url
                 };
             }
             for (const ans of this.assessment.answers || []) {
                 this.answers[ans.assessment_question_id] = {
                     achieved_levels: ans.achieved_levels || [],
-                    evidence_note: ans.evidence_note,
                     evidence_files: ans.evidence_file_urls || {},
                 };
             }
@@ -103,7 +101,6 @@ export default {
             return Object.entries(this.answers).map(([qid, val]) => ({
                 assessment_question_id: Number(qid),
                 achieved_levels: val.achieved_levels || [],
-                evidence_note: val.evidence_note || null,
             }));
         },
         async persistAnswers() {
