@@ -62,6 +62,19 @@ export default {
         currentUser() {
             return getAuthBackend()?.getAuthenticatedUser();
         },
+        roleSname() {
+            return getAuthBackend()?.getRoleSname();
+        },
+        // Akses menu assessment per peran (super lihat semua).
+        canSelf() {
+            return this.isSuperAdmin || this.roleSname === "admin_dis";
+        },
+        canOnDesk() {
+            return this.isSuperAdmin || this.roleSname === "admin_reg";
+        },
+        canOnSite() {
+            return this.isSuperAdmin || ["admin_are", "admin_nas"].includes(this.roleSname);
+        },
     },
     watch: {
         layoutType: {
@@ -214,14 +227,17 @@ export default {
                     </BLink>
                     <div class="collapse" id="pcAssessment">
                         <ul class="pc-submenu">
-                            <li class="pc-item" :class="{ 'active': $route.path === '/assessment/self' }">
+                            <li class="pc-item" v-if="canSelf" :class="{ 'active': $route.path === '/assessment/self' }">
                                 <router-link class="pc-link" to="/assessment/self">{{$t("Self Assessment")}}</router-link>
                             </li>
-                            <li class="pc-item" :class="{ 'active': $route.path === '/assessment/on-desk' }">
+                            <li class="pc-item" v-if="canOnDesk" :class="{ 'active': $route.path === '/assessment/on-desk' }">
                                 <router-link class="pc-link" to="/assessment/on-desk">{{$t("On Desk Assessment")}}</router-link>
                             </li>
-                            <li class="pc-item" :class="{ 'active': $route.path === '/assessment/on-site' }">
+                            <li class="pc-item" v-if="canOnSite" :class="{ 'active': $route.path === '/assessment/on-site' }">
                                 <router-link class="pc-link" to="/assessment/on-site">{{$t("On Site Assessment")}}</router-link>
+                            </li>
+                            <li class="pc-item" :class="{ 'active': $route.path === '/assessment/tracking' }">
+                                <router-link class="pc-link" to="/assessment/tracking">{{$t("Tracking Assessment")}}</router-link>
                             </li>
                         </ul>
                     </div>
