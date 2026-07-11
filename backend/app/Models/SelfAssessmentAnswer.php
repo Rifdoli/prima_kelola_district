@@ -8,17 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
-#[Fillable(['self_assessment_id', 'assessment_question_id', 'achieved_levels', 'evidence_note', 'evidence_file'])]
+#[Fillable(['self_assessment_id', 'assessment_question_id', 'achieved_levels', 'evidence_note', 'evidence_file', 'evidence_files'])]
 class SelfAssessmentAnswer extends Model
 {
     protected $primaryKey = 'self_assessment_answer_id';
 
-    protected $appends = ['evidence_file_url', 'score'];
+    protected $appends = ['evidence_file_url', 'evidence_file_urls', 'score'];
 
     protected function casts(): array
     {
         return [
             'achieved_levels' => 'array',
+            'evidence_files' => 'array',
         ];
     }
 
@@ -27,6 +28,16 @@ class SelfAssessmentAnswer extends Model
         return Attribute::get(fn () => $this->evidence_file
             ? Storage::disk('public')->url($this->evidence_file)
             : null);
+    }
+
+    /**
+     * Map level -> URL publik, dari evidence_files (path per kriteria).
+     */
+    protected function evidenceFileUrls(): Attribute
+    {
+        return Attribute::get(fn () => collect($this->evidence_files ?? [])
+            ->map(fn ($path) => Storage::disk('public')->url($path))
+            ->all());
     }
 
     /**

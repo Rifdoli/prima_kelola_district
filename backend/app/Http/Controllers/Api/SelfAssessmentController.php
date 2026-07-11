@@ -82,7 +82,7 @@ class SelfAssessmentController extends Controller
         $user = $request->user();
 
         if (! $this->isDistrictUser($user) || ! $user->organization_id) {
-            return $this->error('Hanya District Manager yang dapat membuat self assessment.', 403);
+            return $this->error('Hanya District yang dapat melakukan Self Assessment.', 403);
         }
 
         $validated = $request->validate([
@@ -158,12 +158,16 @@ class SelfAssessmentController extends Controller
     /**
      * Upload file evidence untuk 1 jawaban (multipart, field 'file').
      */
-    public function uploadEvidence(Request $request, SelfAssessment $selfAssessment, AssessmentQuestion $assessmentQuestion)
+    public function uploadEvidence(Request $request, SelfAssessment $selfAssessment, AssessmentQuestion $assessmentQuestion, string $level)
     {
         $user = $request->user();
 
         if ($response = $this->ensureEditable($user, $selfAssessment)) {
             return $response;
+        }
+
+        if (! in_array($level, ['A', 'B', 'C', 'D', 'E'], true)) {
+            return $this->error('Level tidak valid.', 422);
         }
 
         $request->validate([
@@ -175,16 +179,18 @@ class SelfAssessmentController extends Controller
             'assessment_question_id' => $assessmentQuestion->getKey(),
         ]);
 
-        // hapus file lama kalau ada (ganti file)
-        if ($answer->evidence_file) {
-            Storage::disk('public')->delete($answer->evidence_file);
+        $files = $answer->evidence_files ?? [];
+
+        // hapus file lama di level ini kalau ada (ganti file)
+        if (! empty($files[$level])) {
+            Storage::disk('public')->delete($files[$level]);
         }
 
-        $path = $request->file('file')->store(
+        $files[$level] = $request->file('file')->store(
             'evidence/'.$selfAssessment->getKey(),
             'public'
         );
-        $answer->evidence_file = $path;
+        $answer->evidence_files = $files;
         $answer->save();
 
         if ($selfAssessment->status === 'open') {
@@ -192,6 +198,33 @@ class SelfAssessmentController extends Controller
         }
 
         return $this->success($answer->fresh(), 'File evidence diupload.');
+    }
+
+    /**
+     * Hapus file evidence untuk 1 kriteria (level A-E) dari 1 pertanyaan.
+     */
+    public function deleteEvidence(Request $request, SelfAssessment $selfAssessment, AssessmentQuestion $assessmentQuestion, string $level)
+    {
+        $user = $request->user();
+
+        if ($response = $this->ensureEditable($user, $selfAssessment)) {
+            return $response;
+        }
+
+        $answer = SelfAssessmentAnswer::where([
+            'self_assessment_id' => $selfAssessment->getKey(),
+            'assessment_question_id' => $assessmentQuestion->getKey(),
+        ])->first();
+
+        if ($answer && ! empty($answer->evidence_files[$level])) {
+            Storage::disk('public')->delete($answer->evidence_files[$level]);
+            $files = $answer->evidence_files;
+            unset($files[$level]);
+            $answer->evidence_files = $files ?: null;
+            $answer->save();
+        }
+
+        return $this->success($answer?->fresh(), 'File evidence dihapus.');
     }
 
     /**

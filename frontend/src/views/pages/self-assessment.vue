@@ -20,8 +20,10 @@ export default {
             years: [now.getFullYear() - 1, now.getFullYear(), now.getFullYear() + 1],
             assessment: null, // hasil POST /self-assessments
             questions: [], // hasil GET /assessment-questions
-            answers: {}, // map: question_id -> { achieved_levels: ['A', ...], evidence_note, evidence_file_url }
+            answers: {}, // map: question_id -> { achieved_levels: ['A', ...], evidence_note, evidence_files: { level: url } }
             errorMsg: "",
+            forbidden: false, // true bila ditolak (403) -> sembunyikan filter
+            activeDomain: null, // domain tab yang sedang aktif
         };
     },
     computed: {
@@ -51,8 +53,23 @@ export default {
             }
             return groups;
         },
+        domains() {
+            return Object.keys(this.groupedQuestions);
+        },
     },
     methods: {
+        // Jumlah pertanyaan yang sudah dijawab (min. 1 level) per domain.
+        domainAnswered(domain) {
+            const areas = this.groupedQuestions[domain] || {};
+            let answered = 0, total = 0;
+            for (const qs of Object.values(areas)) {
+                for (const q of qs) {
+                    total++;
+                    if (this.questionScore(q.assessment_question_id) > 0) answered++;
+                }
+            }
+            return { answered, total };
+        },
         criteriaText(question, level) {
             return question["criteria_" + level.toLowerCase()];
         },
@@ -71,14 +88,14 @@ export default {
                 this.answers[q.assessment_question_id] = {
                     achieved_levels: [],
                     evidence_note: "",
-                    evidence_file_url: null,
+                    evidence_files: {}, // map level -> url
                 };
             }
             for (const ans of this.assessment.answers || []) {
                 this.answers[ans.assessment_question_id] = {
                     achieved_levels: ans.achieved_levels || [],
                     evidence_note: ans.evidence_note,
-                    evidence_file_url: ans.evidence_file_url || null,
+                    evidence_files: ans.evidence_file_urls || {},
                 };
             }
         },
@@ -113,7 +130,7 @@ export default {
                 this.saving = false;
             }
         },
-        async uploadEvidence(question, event) {
+        async uploadEvidence(question, level, event) {
             const file = event.target.files[0];
             if (!file) return;
             this.errorMsg = "";
@@ -121,11 +138,11 @@ export default {
             formData.append("file", file);
             try {
                 const { data } = await api.post(
-                    `/self-assessments/${this.assessment.self_assessment_id}/questions/${question.assessment_question_id}/evidence`,
+                    `/self-assessments/${this.assessment.self_assessment_id}/questions/${question.assessment_question_id}/evidence/${level}`,
                     formData,
                     { headers: { "Content-Type": "multipart/form-data" } }
                 );
-                this.answers[question.assessment_question_id].evidence_file_url = data.data.evidence_file_url;
+                this.answers[question.assessment_question_id].evidence_files = data.data.evidence_file_urls || {};
                 if (this.assessment.status === "open") {
                     this.assessment.status = "draft";
                 }
@@ -133,6 +150,26 @@ export default {
                 this.errorMsg = error.response?.data?.message || "Gagal upload file.";
             } finally {
                 event.target.value = "";
+            }
+        },
+        async deleteEvidence(question, level) {
+            const result = await Swal.fire({
+                icon: "warning",
+                title: "Hapus evidence?",
+                showCancelButton: true,
+                confirmButtonText: "Ya, Hapus",
+                cancelButtonText: "Batal",
+                confirmButtonColor: "#dc3545",
+            });
+            if (!result.isConfirmed) return;
+            this.errorMsg = "";
+            try {
+                const { data } = await api.delete(
+                    `/self-assessments/${this.assessment.self_assessment_id}/questions/${question.assessment_question_id}/evidence/${level}`
+                );
+                this.answers[question.assessment_question_id].evidence_files = data.data?.evidence_file_urls || {};
+            } catch (error) {
+                this.errorMsg = error.response?.data?.message || "Gagal menghapus file.";
             }
         },
         async submitAssessment() {
@@ -186,9 +223,11 @@ export default {
         this.loading = true;
         try {
             await this.fetchQuestions();
+            this.activeDomain = this.domains[0] || null;
             await this.initAssessment();
         } catch (error) {
             this.errorMsg = error.response?.data?.message || "Gagal memuat self assessment.";
+            this.forbidden = error.response?.status === 403;
         } finally {
             this.loading = false;
         }
@@ -200,7 +239,9 @@ export default {
     <Layout>
         <pageheader title="Self Assessment" pageTitle="Assessment" />
 
-        <BRow class="mb-3">
+        <div class="alert alert-danger" v-if="errorMsg">{{ errorMsg }}</div>
+
+        <BRow class="mb-3" v-if="!forbidden">
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body d-flex flex-wrap align-items-end gap-3">
@@ -234,16 +275,35 @@ export default {
 
         <BRow>
             <div class="col-sm-12">
-                <div class="alert alert-danger" v-if="errorMsg">{{ errorMsg }}</div>
                 <div class="text-center text-muted py-5" v-if="loading">Memuat...</div>
 
                 <template v-else-if="assessment">
-                    <div class="card mb-3" v-for="(practiceAreas, domain) in groupedQuestions" :key="domain">
-                        <div class="card-header">
-                            <h5 class="mb-0">{{ domain }}</h5>
+                  <BRow>
+                    <BCol lg="3">
+                        <div class="card mb-3 domain-nav">
+                            <div class="list-group list-group-flush">
+                                <a
+                                    v-for="domain in domains"
+                                    :key="domain"
+                                    href="#"
+                                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center gap-2"
+                                    :class="{ active: activeDomain === domain }"
+                                    @click.prevent="activeDomain = domain"
+                                >
+                                    <span>{{ domain }}</span>
+                                    <span class="badge flex-shrink-0" :class="domainAnswered(domain).answered === domainAnswered(domain).total ? 'bg-light-success' : 'bg-light-secondary'">
+                                        {{ domainAnswered(domain).answered }}/{{ domainAnswered(domain).total }}
+                                    </span>
+                                </a>
+                            </div>
                         </div>
+                    </BCol>
+                    <BCol lg="9">
+                        <div class="card mb-3">
                         <div class="card-body">
-                            <div class="mb-4" v-for="(qs, practiceArea) in practiceAreas" :key="practiceArea">
+                          <div v-for="domain in domains" :key="domain" v-show="activeDomain === domain">
+                            <h5 class="mb-4">{{ domain }}</h5>
+                            <div class="mb-4" v-for="(qs, practiceArea) in groupedQuestions[domain]" :key="practiceArea">
                                 <h6 class="text-primary mb-3">{{ practiceArea }}</h6>
 
                                 <div class="border rounded p-3 mb-3" v-for="q in qs" :key="q.assessment_question_id">
@@ -255,50 +315,59 @@ export default {
                                     </div>
                                     <p class="mb-3">{{ q.question }}</p>
 
-                                    <div class="form-check mb-2" v-for="level in levels" :key="level">
-                                        <input
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            :id="'q' + q.assessment_question_id + '_' + level"
-                                            :value="level"
-                                            v-model="answers[q.assessment_question_id].achieved_levels"
-                                            :disabled="isReadOnly"
+                                    <div class="mb-2" v-for="level in levels" :key="level">
+                                        <div class="form-check">
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                :id="'q' + q.assessment_question_id + '_' + level"
+                                                :value="level"
+                                                v-model="answers[q.assessment_question_id].achieved_levels"
+                                                :disabled="isReadOnly"
+                                            >
+                                            <label class="form-check-label" :for="'q' + q.assessment_question_id + '_' + level">
+                                                <strong>{{ level }}.</strong> {{ criteriaText(q, level) }}
+                                            </label>
+                                        </div>
+
+                                        <!-- Evidence file khusus kriteria ini, hanya saat dicentang. -->
+                                        <div
+                                            v-if="answers[q.assessment_question_id].achieved_levels.includes(level)"
+                                            class="d-flex align-items-center gap-2 mt-1 ms-4 flex-wrap"
                                         >
-                                        <label class="form-check-label" :for="'q' + q.assessment_question_id + '_' + level">
-                                            <strong>{{ level }}.</strong> {{ criteriaText(q, level) }}
-                                        </label>
+                                            <label class="btn btn-sm btn-outline-primary mb-0" :class="{ disabled: isReadOnly }">
+                                                <i class="ph-duotone ph-upload-simple me-1"></i>
+                                                {{ answers[q.assessment_question_id].evidence_files[level] ? "Change Evidence" : "Upload Evidence" }}
+                                                <input
+                                                    type="file"
+                                                    hidden
+                                                    accept=".jpg,.jpeg,.png,.pdf"
+                                                    :disabled="isReadOnly"
+                                                    @change="uploadEvidence(q, level, $event)"
+                                                >
+                                            </label>
+                                            <a
+                                                v-if="answers[q.assessment_question_id].evidence_files[level]"
+                                                :href="answers[q.assessment_question_id].evidence_files[level]"
+                                                target="_blank"
+                                                class="text-nowrap"
+                                            >
+                                                <i class="ph-duotone ph-file-text me-1"></i>View file
+                                            </a>
+                                            <button
+                                                v-if="answers[q.assessment_question_id].evidence_files[level] && !isReadOnly"
+                                                type="button"
+                                                class="btn btn-sm btn-outline-danger text-nowrap"
+                                                @click="deleteEvidence(q, level)"
+                                            >
+                                                <i class="ph-duotone ph-trash me-1"></i>Delete
+                                            </button>
+                                        </div>
                                     </div>
 
-                                    <div class="mb-2">
-                                        <label class="form-label mb-1">Catatan Evidence</label>
-                                        <textarea
-                                            class="form-control"
-                                            rows="2"
-                                            v-model="answers[q.assessment_question_id].evidence_note"
-                                            :disabled="isReadOnly"
-                                        ></textarea>
-                                    </div>
-
-                                    <div class="mb-1">
-                                        <label class="form-label mb-1">Upload Evidence (jpg/png/pdf)</label>
-                                        <input
-                                            type="file"
-                                            class="form-control"
-                                            accept=".jpg,.jpeg,.png,.pdf"
-                                            :disabled="isReadOnly"
-                                            @change="uploadEvidence(q, $event)"
-                                        >
-                                        <a
-                                            v-if="answers[q.assessment_question_id].evidence_file_url"
-                                            :href="answers[q.assessment_question_id].evidence_file_url"
-                                            target="_blank"
-                                            class="d-inline-block mt-1"
-                                        >
-                                            Lihat file
-                                        </a>
-                                    </div>
                                 </div>
                             </div>
+                          </div>
                         </div>
                     </div>
 
@@ -310,8 +379,18 @@ export default {
                             Submit
                         </button>
                     </div>
+                    </BCol>
+                  </BRow>
                 </template>
             </div>
         </BRow>
     </Layout>
 </template>
+
+<style scoped>
+/* Keep the domain list visible while scrolling long question lists. */
+.domain-nav {
+    position: sticky;
+    top: 90px;
+}
+</style>
