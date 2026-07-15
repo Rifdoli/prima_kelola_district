@@ -1,15 +1,17 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Api\AssessmentQuestionController;
 use App\Http\Controllers\Api\AssessmentTrackingController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\OrganizationController;
 use App\Http\Controllers\Api\OrganizationTypeController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SelfAssessmentController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VerificationController;
-use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -39,11 +41,26 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('verifications/detail/{assessmentVerification}/submit', [VerificationController::class, 'submit']);
 
     Route::middleware('admin')->group(function () {
+
         Route::apiResource('roles', RoleController::class);
+
         Route::apiResource('users', UserController::class);
+
         Route::apiResource('organization-types', OrganizationTypeController::class)
             ->parameters(['organization-types' => 'organizationType']);
+
         Route::apiResource('organizations', OrganizationController::class);
         Route::post('organizations/{organization}/move', [OrganizationController::class, 'move']);
+
+        Route::prefix('locations')->group(function () {
+            Route::get('/', [LocationController::class, 'index'])->name('locations.index');
+            Route::get('{id}', [LocationController::class, 'show'])->name('locations.show');
+            Route::post('/', [LocationController::class, 'store'])->name('locations.store');
+            Route::put('{id}', [LocationController::class, 'update'])->name('locations.update');
+            Route::patch('{id}/activate', [LocationController::class, 'activate'])->name('locations.activate');
+            Route::patch('{id}/deactivate', [LocationController::class, 'deactivate'])->name('locations.deactivate');
+            Route::delete('{id}', [LocationController::class, 'destroy'])->name('locations.destroy');
+        });
+
     });
 });
