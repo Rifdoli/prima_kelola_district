@@ -20,7 +20,21 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::get('assessment-questions', [AssessmentQuestionController::class, 'index']);
+    Route::prefix('assessment-questions')
+        ->name('assessmentQuestions.')
+        ->controller(AssessmentQuestionController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}', 'show')->name('show');
+            Route::post('/', 'store')->name('store')->middleware('admin');
+            Route::put('/{id}', 'update')->name('update')->middleware('admin');
+            Route::delete('/{id}', 'destroy')->name('destroy')->middleware('admin');
+
+            Route::get('/archive', 'showArchives')->name('archives');
+            Route::patch('/archive', 'restoreArchives')->name('archives.restore')->middleware('admin');
+            Route::delete('/archive', 'clearArchives')->name('archives.clear')->middleware('admin');
+        });
+
     Route::get('assessment-tracking', [AssessmentTrackingController::class, 'index']);
 
     Route::get('self-assessments', [SelfAssessmentController::class, 'index']);

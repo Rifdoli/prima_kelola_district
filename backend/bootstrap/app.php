@@ -14,6 +14,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        /**
+         * disable auto-redirect to 'login' route in api path
+         * @todo create 401 blade for non-api path later
+         */
+        $middleware->redirectGuestsTo(fn () => null);
+
         $middleware->alias([
             'admin' => EnsureUserIsAdmin::class,
         ]);
