@@ -76,6 +76,16 @@ export default {
         questionScore(questionId) {
             return this.answers[questionId]?.achieved_levels?.length || 0;
         },
+        // Radio "Terpenuhi" = level ada di achieved_levels; "Belum" = tidak ada.
+        isFulfilled(qid, level) {
+            return this.answers[qid].achieved_levels.includes(level);
+        },
+        setFulfilled(qid, level, fulfilled) {
+            const list = this.answers[qid].achieved_levels;
+            const has = list.includes(level);
+            if (fulfilled && !has) list.push(level);
+            if (!fulfilled && has) list.splice(list.indexOf(level), 1);
+        },
         async fetchQuestions() {
             const { data } = await api.get("/assessment-questions");
             this.questions = data.data;
@@ -88,12 +98,14 @@ export default {
                 this.answers[q.assessment_question_id] = {
                     achieved_levels: [],
                     evidence_files: {}, // map level -> url
+                    notes: {}, // map level -> string (lokal, belum persist)
                 };
             }
             for (const ans of this.assessment.answers || []) {
                 this.answers[ans.assessment_question_id] = {
                     achieved_levels: ans.achieved_levels || [],
                     evidence_files: ans.evidence_file_urls || {},
+                    notes: ans.notes || {},
                 };
             }
         },
@@ -101,6 +113,7 @@ export default {
             return Object.entries(this.answers).map(([qid, val]) => ({
                 assessment_question_id: Number(qid),
                 achieved_levels: val.achieved_levels || [],
+                notes: val.notes || {},
             }));
         },
         async persistAnswers() {
@@ -170,6 +183,15 @@ export default {
             }
         },
         async submitAssessment() {
+            const errors = this.validateAnswers();
+            if (errors.length) {
+                Swal.fire({
+                    icon: "error",
+                    title: `${errors.length} isian belum lengkap`,
+                    html: errors.slice(0, 10).join("<br>") + (errors.length > 10 ? "<br>…" : ""),
+                });
+                return;
+            }
             const result = await Swal.fire({
                 icon: "warning",
                 title: "Submit Self Assessment?",
@@ -215,6 +237,22 @@ export default {
                 this.loading = false;
             }
         },
+        validateAnswers() {
+            const errors = [];
+            for (const q of this.questions) {
+                const a = this.answers[q.assessment_question_id];
+                for (const level of this.levels) {
+                    const fullfilled = a.achieved_levels.includes(level);
+                    if (fullfilled && !a.evidence_files[level]) {
+                        errors.push(`${q.question} (${level}): Terpenuhi wajib evidence.`);
+                    }
+                    if (!fullfilled && !(a.notes[level] || "").trim()) {
+                        errors.push(`${q.question} (${level}): Belum terpenuhi wajib catatan.`);
+                    }
+                }
+            }
+            return errors;
+        }
     },
     async mounted() {
         this.loading = true;
@@ -275,93 +313,120 @@ export default {
                 <div class="text-center text-muted py-5" v-if="loading">Memuat...</div>
 
                 <template v-else-if="assessment">
-                  <BRow>
-                    <BCol lg="3">
-                        <div class="card mb-3 domain-nav">
-                            <div class="list-group list-group-flush">
-                                <a
-                                    v-for="domain in domains"
-                                    :key="domain"
-                                    href="#"
-                                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center gap-2"
-                                    :class="{ active: activeDomain === domain }"
-                                    @click.prevent="activeDomain = domain"
-                                >
-                                    <span>{{ domain }}</span>
-                                    <span class="badge flex-shrink-0" :class="domainAnswered(domain).answered === domainAnswered(domain).total ? 'bg-light-success' : 'bg-light-secondary'">
-                                        {{ domainAnswered(domain).answered }}/{{ domainAnswered(domain).total }}
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </BCol>
-                    <BCol lg="9">
-                        <div class="card mb-3">
+                  <ul class="nav nav-pills flex-nowrap overflow-auto mb-3 domain-tabs">
+                      <li class="nav-item" v-for="domain in domains" :key="domain">
+                          <a
+                              href="#"
+                              class="nav-link d-flex align-items-center gap-2 text-nowrap"
+                              :class="{ active: activeDomain === domain }"
+                              @click.prevent="activeDomain = domain"
+                          >
+                              <span>{{ domain }}</span>
+                              <span class="badge flex-shrink-0" :class="domainAnswered(domain).answered === domainAnswered(domain).total ? 'bg-light-success' : 'bg-light-secondary'">
+                                  {{ domainAnswered(domain).answered }}/{{ domainAnswered(domain).total }}
+                              </span>
+                          </a>
+                      </li>
+                  </ul>
+
+                  <div class="card mb-3">
                         <div class="card-body">
                           <div v-for="domain in domains" :key="domain" v-show="activeDomain === domain">
                             <h5 class="mb-4">{{ domain }}</h5>
                             <div class="mb-4" v-for="(qs, practiceArea) in groupedQuestions[domain]" :key="practiceArea">
                                 <h6 class="text-primary mb-3">{{ practiceArea }}</h6>
 
-                                <div class="border rounded p-3 mb-3" v-for="q in qs" :key="q.assessment_question_id">
-                                    <div class="d-flex align-items-start mb-1">
-                                        <p class="fw-semibold mb-0" v-if="q.scope">{{ q.scope }}</p>
-                                        <span class="badge bg-light-primary ms-auto">
+                                <div class="mb-4" v-for="q in qs" :key="q.assessment_question_id">
+                                    <div class="d-flex align-items-start mb-2 gap-2">
+                                        <p class="fw-semibold mb-0">
+                                            <span v-if="q.scope" class="text-muted">{{ q.scope }} — </span>{{ q.question }}
+                                        </p>
+                                        <span class="badge bg-light-primary ms-auto flex-shrink-0">
                                             Skor: {{ questionScore(q.assessment_question_id) }}/{{ levels.length }}
                                         </span>
                                     </div>
-                                    <p class="mb-3">{{ q.question }}</p>
 
-                                    <div class="mb-2" v-for="level in levels" :key="level">
-                                        <div class="form-check">
-                                            <input
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                :id="'q' + q.assessment_question_id + '_' + level"
-                                                :value="level"
-                                                v-model="answers[q.assessment_question_id].achieved_levels"
-                                                :disabled="isReadOnly"
-                                            >
-                                            <label class="form-check-label" :for="'q' + q.assessment_question_id + '_' + level">
-                                                <strong>{{ level }}.</strong> {{ criteriaText(q, level) }}
-                                            </label>
-                                        </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered align-middle mb-0 assessment-table">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:42%">Kriteria</th>
+                                                    <th style="width:16%">Status Pemenuhan</th>
+                                                    <th style="width:20%">Evidence</th>
+                                                    <th style="width:22%">Catatan District</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="level in levels" :key="level">
+                                                    <td><strong>{{ level }}.</strong> {{ criteriaText(q, level) }}</td>
 
-                                        <!-- Evidence file khusus kriteria ini, hanya saat dicentang. -->
-                                        <div
-                                            v-if="answers[q.assessment_question_id].achieved_levels.includes(level)"
-                                            class="d-flex align-items-center gap-2 mt-1 ms-4 flex-wrap"
-                                        >
-                                            <label class="btn btn-sm btn-outline-primary mb-0" :class="{ disabled: isReadOnly }">
-                                                <i class="ph-duotone ph-upload-simple me-1"></i>
-                                                {{ answers[q.assessment_question_id].evidence_files[level] ? "Change Evidence" : "Upload Evidence" }}
-                                                <input
-                                                    type="file"
-                                                    hidden
-                                                    accept=".jpg,.jpeg,.png,.pdf"
-                                                    :disabled="isReadOnly"
-                                                    @change="uploadEvidence(q, level, $event)"
-                                                >
-                                            </label>
-                                            <a
-                                                v-if="answers[q.assessment_question_id].evidence_files[level]"
-                                                :href="answers[q.assessment_question_id].evidence_files[level]"
-                                                target="_blank"
-                                                class="text-nowrap"
-                                            >
-                                                <i class="ph-duotone ph-file-text me-1"></i>View file
-                                            </a>
-                                            <button
-                                                v-if="answers[q.assessment_question_id].evidence_files[level] && !isReadOnly"
-                                                type="button"
-                                                class="btn btn-sm btn-outline-danger text-nowrap"
-                                                @click="deleteEvidence(q, level)"
-                                            >
-                                                <i class="ph-duotone ph-trash me-1"></i>Delete
-                                            </button>
-                                        </div>
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio"
+                                                                :name="'fulfil_' + q.assessment_question_id + '_' + level"
+                                                                :id="'yes_' + q.assessment_question_id + '_' + level"
+                                                                :checked="isFulfilled(q.assessment_question_id, level)"
+                                                                :disabled="isReadOnly"
+                                                                @change="setFulfilled(q.assessment_question_id, level, true)">
+                                                            <label class="form-check-label" :for="'yes_' + q.assessment_question_id + '_' + level">Terpenuhi</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio"
+                                                                :name="'fulfil_' + q.assessment_question_id + '_' + level"
+                                                                :id="'no_' + q.assessment_question_id + '_' + level"
+                                                                :checked="!isFulfilled(q.assessment_question_id, level)"
+                                                                :disabled="isReadOnly"
+                                                                @change="setFulfilled(q.assessment_question_id, level, false)">
+                                                            <label class="form-check-label" :for="'no_' + q.assessment_question_id + '_' + level">Belum Terpenuhi</label>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div
+                                                            v-if="isFulfilled(q.assessment_question_id, level)"
+                                                            class="d-flex align-items-center gap-2 flex-wrap"
+                                                        >
+                                                            <label class="btn btn-sm btn-outline-primary mb-0" :class="{ disabled: isReadOnly }">
+                                                                <i class="ph-duotone ph-upload-simple me-1"></i>
+                                                                {{ answers[q.assessment_question_id].evidence_files[level] ? "Change Evidence" : "Upload Evidence" }}
+                                                                <input
+                                                                    type="file"
+                                                                    hidden
+                                                                    accept=".jpg,.jpeg,.png,.pdf"
+                                                                    :disabled="isReadOnly"
+                                                                    @change="uploadEvidence(q, level, $event)"
+                                                                >
+                                                            </label>
+                                                            <a
+                                                                v-if="answers[q.assessment_question_id].evidence_files[level]"
+                                                                :href="answers[q.assessment_question_id].evidence_files[level]"
+                                                                target="_blank"
+                                                                class="text-nowrap"
+                                                            >
+                                                                <i class="ph-duotone ph-file-text me-1"></i>View file
+                                                            </a>
+                                                            <button
+                                                                v-if="answers[q.assessment_question_id].evidence_files[level] && !isReadOnly"
+                                                                type="button"
+                                                                class="btn btn-sm btn-outline-danger text-nowrap"
+                                                                @click="deleteEvidence(q, level)"
+                                                            >
+                                                                <i class="ph-duotone ph-trash me-1"></i>Delete
+                                                            </button>
+                                                        </div>
+                                                        <span v-else class="text-muted">—</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <textarea class="form-control form-control-sm" rows="2"
+                                                            placeholder="Tuliskan catatan self assessment..."
+                                                            v-model="answers[q.assessment_question_id].notes[level]"
+                                                            :disabled="isReadOnly"></textarea>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-
                                 </div>
                             </div>
                           </div>
@@ -376,8 +441,6 @@ export default {
                             Submit
                         </button>
                     </div>
-                    </BCol>
-                  </BRow>
                 </template>
             </div>
         </BRow>
@@ -385,9 +448,28 @@ export default {
 </template>
 
 <style scoped>
-/* Keep the domain list visible while scrolling long question lists. */
-.domain-nav {
+/* Tab domain horizontal: tetap terlihat saat scroll, geser bila domain banyak. */
+.domain-tabs {
     position: sticky;
-    top: 90px;
+    top: 70px;
+    z-index: 5;
+    gap: .25rem;
+    padding: .25rem 0;
+    background: var(--bs-body-bg);
+}
+.domain-tabs::-webkit-scrollbar {
+    height: 4px;
+}
+/* Kolom mengikuti lebar yang ditentukan; teks kriteria wrap, tabel pas 100%.
+   min-width: di layar sempit tabel tidak mengkerut -> .table-responsive scroll. */
+.assessment-table {
+    table-layout: fixed;
+    width: 100%;
+    min-width: 760px;
+}
+.assessment-table td,
+.assessment-table th {
+    white-space: normal;
+    word-break: break-word;
 }
 </style>

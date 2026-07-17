@@ -365,93 +365,115 @@ export default {
                 </div>
             </div>
 
-            <BRow>
-                <BCol lg="3">
-                    <div class="card mb-3 domain-nav">
-                        <div class="list-group list-group-flush">
-                            <a
-                                v-for="domain in domains"
-                                :key="domain"
-                                href="#"
-                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center gap-2"
-                                :class="{ active: activeDomain === domain }"
-                                @click.prevent="activeDomain = domain"
-                            >
-                                <span>{{ domain }}</span>
-                                <span class="badge flex-shrink-0 bg-light-primary">
-                                    {{ domainValidated(domain).valid }}/{{ domainValidated(domain).total }}
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </BCol>
-                <BCol lg="9">
-                    <div class="card mb-3">
+            <ul class="nav nav-pills flex-nowrap overflow-auto mb-3 domain-tabs">
+                <li class="nav-item" v-for="domain in domains" :key="domain">
+                    <a
+                        href="#"
+                        class="nav-link d-flex align-items-center gap-2 text-nowrap"
+                        :class="{ active: activeDomain === domain }"
+                        @click.prevent="activeDomain = domain"
+                    >
+                        <span>{{ domain }}</span>
+                        <span class="badge flex-shrink-0 bg-light-primary">
+                            {{ domainValidated(domain).valid }}/{{ domainValidated(domain).total }}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="card mb-3">
                         <div class="card-body">
                           <div v-for="domain in domains" :key="domain" v-show="activeDomain === domain">
                             <h5 class="mb-4">{{ domain }}</h5>
                             <div class="mb-4" v-for="(qs, practiceArea) in groupedQuestions[domain]" :key="practiceArea">
                                 <h6 class="text-primary mb-3">{{ practiceArea }}</h6>
 
-                                <div class="border rounded p-3 mb-3" v-for="q in qs" :key="q.assessment_question_id">
-                                    <div class="d-flex align-items-start mb-1">
-                                        <p class="fw-semibold mb-0" v-if="q.scope">{{ q.scope }}</p>
-                                        <span class="badge bg-light-success ms-auto">
+                                <div class="mb-4" v-for="q in qs" :key="q.assessment_question_id">
+                                    <div class="d-flex align-items-start mb-2 gap-2">
+                                        <p class="fw-semibold mb-0">
+                                            <span v-if="q.scope" class="text-muted">{{ q.scope }} — </span>{{ q.question }}
+                                        </p>
+                                        <span class="badge bg-light-success ms-auto flex-shrink-0">
                                             Valid: {{ questionScore(q.assessment_question_id) }}/{{ levels.length }}
                                         </span>
                                     </div>
-                                    <p class="mb-3">{{ q.question }}</p>
 
-                                    <div class="mb-3 pb-2 border-bottom" v-for="level in levels" :key="level">
-                                        <div class="d-flex align-items-start gap-2">
-                                            <div class="form-check mt-1">
-                                                <input
-                                                    class="form-check-input"
-                                                    type="checkbox"
-                                                    :id="'v' + q.assessment_question_id + '_' + level"
-                                                    v-model="verify[q.assessment_question_id][level].is_valid"
-                                                    :disabled="isReadOnly"
-                                                >
-                                            </div>
-                                            <label class="form-check-label flex-grow-1" :for="'v' + q.assessment_question_id + '_' + level">
-                                                <strong>{{ level }}.</strong> {{ criteriaText(q, level) }}
-                                                <div class="mt-1 d-flex flex-wrap gap-2 align-items-center">
-                                                    <span class="badge" :class="selfClaimed(q.assessment_question_id, level) ? 'bg-light-success' : 'bg-light-secondary'">
-                                                        Self: {{ selfClaimed(q.assessment_question_id, level) ? 'diklaim' : '—' }}
-                                                    </span>
-                                                    <span v-if="isOnSite && parentValidLevel(q.assessment_question_id, level)" class="badge bg-light-primary">
-                                                        ODA: valid
-                                                    </span>
-                                                    <a v-if="selfEvidence(q.assessment_question_id, level)"
-                                                       :href="selfEvidence(q.assessment_question_id, level)" target="_blank" class="small">
-                                                        <i class="ph-duotone ph-file-text me-1"></i>Evidence district
-                                                    </a>
-                                                </div>
-                                            </label>
-                                        </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered align-middle mb-0 assessment-table">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:34%">Kriteria</th>
+                                                    <th style="width:26%">Hasil Self-Assessment District</th>
+                                                    <th style="width:20%">Verifikasi {{ shortLabel }}</th>
+                                                    <th style="width:20%">Catatan {{ shortLabel }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="level in levels" :key="level">
+                                                    <td><strong>{{ level }}.</strong> {{ criteriaText(q, level) }}</td>
 
-                                        <!-- Evidence verifikator, muncul saat level ditandai valid. -->
-                                        <div v-if="verify[q.assessment_question_id][level].is_valid" class="ms-4 mt-2">
-                                            <div class="d-flex align-items-center gap-2 flex-wrap">
-                                                <label class="btn btn-sm btn-outline-primary mb-0" :class="{ disabled: isReadOnly }">
-                                                    <i class="ph-duotone ph-upload-simple me-1"></i>
-                                                    {{ verify[q.assessment_question_id][level].evidence_file_url ? "Change Evidence" : "Upload Evidence" }}
-                                                    <input type="file" hidden accept=".jpg,.jpeg,.png,.pdf" :disabled="isReadOnly"
-                                                        @change="uploadEvidence(q.assessment_question_id, level, $event)">
-                                                </label>
-                                                <a v-if="verify[q.assessment_question_id][level].evidence_file_url"
-                                                   :href="verify[q.assessment_question_id][level].evidence_file_url" target="_blank" class="text-nowrap">
-                                                    <i class="ph-duotone ph-file-text me-1"></i>View file
-                                                </a>
-                                                <button v-if="verify[q.assessment_question_id][level].evidence_file_url && !isReadOnly"
-                                                    type="button" class="btn btn-sm btn-outline-danger text-nowrap"
-                                                    @click="deleteEvidence(q.assessment_question_id, level)">
-                                                    <i class="ph-duotone ph-trash me-1"></i>Delete
-                                                </button>
-                                            </div>
-                                            <textarea class="form-control form-control-sm mt-2" rows="1" placeholder="Catatan verifikator (opsional)"
-                                                v-model="verify[q.assessment_question_id][level].note" :disabled="isReadOnly"></textarea>
-                                        </div>
+                                                    <td>
+                                                        <div v-if="selfClaimed(q.assessment_question_id, level)">
+                                                            <span class="badge bg-light-success">Terpenuhi</span>
+                                                            <a v-if="selfEvidence(q.assessment_question_id, level)"
+                                                               :href="selfEvidence(q.assessment_question_id, level)" target="_blank" class="ms-2 small">
+                                                                <i class="ph-duotone ph-file-text me-1"></i>Lihat Evidence
+                                                            </a>
+                                                            <span v-if="isOnSite && parentValidLevel(q.assessment_question_id, level)"
+                                                                  class="badge bg-light-primary ms-2">ODA: valid</span>
+                                                        </div>
+                                                        <span v-else class="text-muted">Belum Terpenuhi</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio"
+                                                                :name="'valid_' + q.assessment_question_id + '_' + level"
+                                                                :id="'vyes_' + q.assessment_question_id + '_' + level"
+                                                                :checked="verify[q.assessment_question_id][level].is_valid"
+                                                                :disabled="isReadOnly"
+                                                                @change="verify[q.assessment_question_id][level].is_valid = true">
+                                                            <label class="form-check-label" :for="'vyes_' + q.assessment_question_id + '_' + level">Terpenuhi</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio"
+                                                                :name="'valid_' + q.assessment_question_id + '_' + level"
+                                                                :id="'vno_' + q.assessment_question_id + '_' + level"
+                                                                :checked="!verify[q.assessment_question_id][level].is_valid"
+                                                                :disabled="isReadOnly"
+                                                                @change="verify[q.assessment_question_id][level].is_valid = false">
+                                                            <label class="form-check-label" :for="'vno_' + q.assessment_question_id + '_' + level">Belum Terpenuhi</label>
+                                                        </div>
+
+                                                        <!-- Evidence verifikator, muncul saat level ditandai Terpenuhi. -->
+                                                        <div v-if="verify[q.assessment_question_id][level].is_valid" class="d-flex align-items-center gap-2 flex-wrap mt-2">
+                                                            <label class="btn btn-sm btn-outline-primary mb-0" :class="{ disabled: isReadOnly }">
+                                                                <i class="ph-duotone ph-upload-simple me-1"></i>
+                                                                {{ verify[q.assessment_question_id][level].evidence_file_url ? "Change Evidence" : "Upload Evidence" }}
+                                                                <input type="file" hidden accept=".jpg,.jpeg,.png,.pdf" :disabled="isReadOnly"
+                                                                    @change="uploadEvidence(q.assessment_question_id, level, $event)">
+                                                            </label>
+                                                            <a v-if="verify[q.assessment_question_id][level].evidence_file_url"
+                                                               :href="verify[q.assessment_question_id][level].evidence_file_url" target="_blank" class="text-nowrap">
+                                                                <i class="ph-duotone ph-file-text me-1"></i>View file
+                                                            </a>
+                                                            <button v-if="verify[q.assessment_question_id][level].evidence_file_url && !isReadOnly"
+                                                                type="button" class="btn btn-sm btn-outline-danger text-nowrap"
+                                                                @click="deleteEvidence(q.assessment_question_id, level)">
+                                                                <i class="ph-duotone ph-trash me-1"></i>Delete
+                                                            </button>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <textarea class="form-control form-control-sm" rows="2"
+                                                            placeholder="Tuliskan hasil verifikasi..."
+                                                            v-model="verify[q.assessment_question_id][level].note"
+                                                            :disabled="isReadOnly"></textarea>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -463,15 +485,33 @@ export default {
                         <button class="btn btn-outline-secondary" :disabled="saving" @click="saveDraft">Simpan Draft</button>
                         <button class="btn btn-primary" :disabled="saving" @click="submitVerification">Submit</button>
                     </div>
-                </BCol>
-            </BRow>
         </template>
     </Layout>
 </template>
 
 <style scoped>
-.domain-nav {
+/* Tab domain horizontal: tetap terlihat saat scroll, geser bila domain banyak. */
+.domain-tabs {
     position: sticky;
-    top: 90px;
+    top: 70px;
+    z-index: 5;
+    gap: .25rem;
+    padding: .25rem 0;
+    background: var(--bs-body-bg);
+}
+.domain-tabs::-webkit-scrollbar {
+    height: 4px;
+}
+/* Kolom mengikuti lebar yang ditentukan; teks kriteria wrap, tabel pas 100%.
+   min-width: di layar sempit tabel tidak mengkerut -> .table-responsive scroll. */
+.assessment-table {
+    table-layout: fixed;
+    width: 100%;
+    min-width: 820px;
+}
+.assessment-table td,
+.assessment-table th {
+    white-space: normal;
+    word-break: break-word;
 }
 </style>
