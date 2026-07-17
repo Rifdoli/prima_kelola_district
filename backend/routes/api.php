@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SelfAssessmentController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VerificationController;
+use App\Http\Controllers\Api\QuestionController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -20,6 +21,23 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    Route::prefix('questions')
+        ->name('questions.')
+        ->controller(QuestionController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}', 'show')->name('show');
+            Route::post('/', 'store')->name('store')->middleware('admin');
+            Route::put('/{id}', 'update')->name('update')->middleware('admin');
+            Route::patch('/{id}/criterias', 'updateCriterias')->name('criterias.update')->middleware('admin');
+            Route::delete('/{id}', 'destroy')->name('destroy')->middleware('admin');
+            Route::get('/trash', 'showTrashes')->name('trash.index');
+            Route::get('/trash/{id}', 'showTrash')->name('trash.show');
+            Route::patch('/trash', 'restoreTrashes')->name('trash.restore')->middleware('admin');
+            Route::delete('/trash', 'cleanTrashes')->name('trash.destroy')->middleware('admin');
+        });
+
+    /** @deprecated */
     Route::prefix('assessment-questions')
         ->name('assessmentQuestions.')
         ->controller(AssessmentQuestionController::class)
