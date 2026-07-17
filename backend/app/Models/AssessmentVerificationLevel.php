@@ -53,6 +53,8 @@ class AssessmentVerificationLevel extends Model
 
     public function question(): BelongsTo
     {
-        return $this->belongsTo(AssessmentQuestion::class, 'assessment_question_id', 'assessment_question_id');
+        // withTrashed: baris verifikasi historis tetap menemukan pertanyaannya walau sudah diarsip.
+        return $this->belongsTo(AssessmentQuestion::class, 'assessment_question_id', 'assessment_question_id')
+            ->withTrashed();
     }
 }

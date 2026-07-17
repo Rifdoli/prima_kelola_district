@@ -48,6 +48,9 @@ class SelfAssessmentAnswer extends Model
 
     public function question(): BelongsTo
     {
-        return $this->belongsTo(AssessmentQuestion::class, 'assessment_question_id', 'assessment_question_id');
+        // withTrashed: jawaban historis tetap menemukan pertanyaannya walau sudah diarsip,
+        // supaya show()/submit() tidak dapat null saat pertanyaan di-soft-delete.
+        return $this->belongsTo(AssessmentQuestion::class, 'assessment_question_id', 'assessment_question_id')
+            ->withTrashed();
     }
 }
