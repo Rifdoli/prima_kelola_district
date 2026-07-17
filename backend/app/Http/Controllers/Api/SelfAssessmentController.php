@@ -130,6 +130,8 @@ class SelfAssessmentController extends Controller
             'answers.*.assessment_question_id' => ['required', 'exists:assessment_questions,assessment_question_id'],
             'answers.*.achieved_levels' => ['nullable', 'array'],
             'answers.*.achieved_levels.*' => ['in:A,B,C,D,E'],
+            'answers.*.notes' => ['nullable', 'array'],
+            'answers.*.notes.*' => ['nullable', 'string', 'max:1000'],
         ]);
 
         foreach ($validated['answers'] as $answer) {
@@ -142,6 +144,7 @@ class SelfAssessmentController extends Controller
                 ],
                 [
                     'achieved_levels' => $levels ?: null,
+                    'notes' => !empty($answer['notes']) ? $answer['notes'] : null,
                 ]
             );
         }

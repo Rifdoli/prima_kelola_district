@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
-#[Fillable(['self_assessment_id', 'assessment_question_id', 'achieved_levels', 'evidence_files'])]
+#[Fillable(['self_assessment_id', 'assessment_question_id', 'achieved_levels', 'evidence_files', 'notes'])]
 class SelfAssessmentAnswer extends Model
 {
     protected $primaryKey = 'self_assessment_answer_id';
@@ -20,6 +20,7 @@ class SelfAssessmentAnswer extends Model
         return [
             'achieved_levels' => 'array',
             'evidence_files' => 'array',
+            'notes' => 'array',
         ];
     }
 
