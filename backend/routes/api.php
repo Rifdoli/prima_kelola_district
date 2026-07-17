@@ -25,14 +25,17 @@ Route::middleware('auth:sanctum')->group(function () {
         ->controller(AssessmentQuestionController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}', 'show')->name('show');
-            Route::post('/', 'store')->name('store')->middleware('admin');
-            Route::put('/{id}', 'update')->name('update')->middleware('admin');
-            Route::delete('/{id}', 'destroy')->name('destroy')->middleware('admin');
 
+            // Route literal /archive HARUS didaftarkan sebelum /{id},
+            // kalau tidak "archive" akan tertangkap oleh {id}.
             Route::get('/archive', 'showArchives')->name('archives');
             Route::patch('/archive', 'restoreArchives')->name('archives.restore')->middleware('admin');
             Route::delete('/archive', 'clearArchives')->name('archives.clear')->middleware('admin');
+
+            Route::post('/', 'store')->name('store')->middleware('admin');
+            Route::get('/{id}', 'show')->name('show')->whereNumber('id');
+            Route::put('/{id}', 'update')->name('update')->middleware('admin')->whereNumber('id');
+            Route::delete('/{id}', 'destroy')->name('destroy')->middleware('admin')->whereNumber('id');
         });
 
     Route::get('assessment-tracking', [AssessmentTrackingController::class, 'index']);
