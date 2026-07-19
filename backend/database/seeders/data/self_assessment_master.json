@@ -2,7 +2,9 @@
   {
     "row": 1,
     "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": 0.3,
     "practice_area": "STRATEGIC APPROACH",
+    "weight_practice_area": 0.3,
     "scope": "Alignment terhadap Target Area dan Regional",
     "perangkat": null,
     "question": "Apakah District Manager memiliki target district yang selaras dengan target Area/Regional?",
@@ -42,7 +44,9 @@
   {
     "row": 2,
     "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": 0.3,
     "practice_area": "STRATEGIC APPROACH",
+    "weight_practice_area": 0.3,
     "scope": "Pengelolaan risiko operasional",
     "perangkat": null,
     "question": "Apakah district menerapkan pengelolaan risiko operasional secara terstruktur untuk menjaga keberlangsungan layanan dan pencapaian target operasional?",
@@ -82,7 +86,9 @@
   {
     "row": 3,
     "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": 0.3,
     "practice_area": "PERFORMANCE IMPROVEMENT",
+    "weight_practice_area": 0.4,
     "scope": "Pengelolaan Kinerja Operasional",
     "perangkat": null,
     "question": "Apakah district mengelola dan meningkatkan kinerja operasional secara terukur melalui monitoring, evaluasi, dan tindak lanjut yang berkelanjutan?",
@@ -122,7 +128,9 @@
   {
     "row": 4,
     "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": 0.3,
     "practice_area": "PERFORMANCE IMPROVEMENT",
+    "weight_practice_area": 0.4,
     "scope": "Continuous Improvement",
     "perangkat": null,
     "question": "Apakah district menerapkan budaya perbaikan berkelanjutan melalui program improvement atau inovasi yang memberikan nilai tambah bagi operasional dan layanan?",
@@ -162,7 +170,9 @@
   {
     "row": 5,
     "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": 0.3,
     "practice_area": "PERFORMANCE IMPROVEMENT",
+    "weight_practice_area": 0.4,
     "scope": "Pengembangan Tim",
     "perangkat": null,
     "question": "Apakah District Manager mengembangkan kapabilitas dan performa tim secara terencana untuk mendukung pencapaian target district?",
@@ -202,7 +212,9 @@
   {
     "row": 6,
     "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": 0.3,
     "practice_area": "COMMUNICATION APPROACH",
+    "weight_practice_area": 0.3,
     "scope": "Komunikasi Internal",
     "perangkat": null,
     "question": "Apakah district menerapkan komunikasi internal yang efektif untuk mendukung koordinasi, penyelesaian permasalahan, dan pencapaian target operasional?",
@@ -236,7 +248,9 @@
   {
     "row": 7,
     "domain": "LEADERSHIP & STRATEGIC",
+    "weight_domain": 0.3,
     "practice_area": "COMMUNICATION APPROACH",
+    "weight_practice_area": 0.3,
     "scope": "Stakeholder Management",
     "perangkat": null,
     "question": "Apakah district mengelola komunikasi dan hubungan dengan stakeholder secara efektif untuk mendukung kelancaran operasional dan pencapaian target district?",
@@ -276,7 +290,9 @@
   {
     "row": 8,
     "domain": "POLICY & GUIDANCE",
+    "weight_domain": 0.2,
     "practice_area": "POLICY IMPLEMENTATION",
+    "weight_practice_area": 0.25,
     "scope": "Implementasi Komitmen dan Kebijakan",
     "perangkat": null,
     "question": "Apakah district mengimplementasikan komitmen dan kebijakan perusahaan secara konsisten dalam kegiatan operasional sehari-hari?",
@@ -316,7 +332,9 @@
   {
     "row": 9,
     "domain": "POLICY & GUIDANCE",
+    "weight_domain": 0.2,
     "practice_area": "POLICY IMPLEMENTATION",
+    "weight_practice_area": 0.25,
     "scope": "Audit & Compliance",
     "perangkat": null,
     "question": "Apakah district mengelola temuan audit dan kepatuhan secara efektif untuk mendorong perbaikan berkelanjutan?",
@@ -356,7 +374,9 @@
   {
     "row": 10,
     "domain": "POLICY & GUIDANCE",
+    "weight_domain": 0.2,
     "practice_area": "SOP/SMP COMPLIANCE",
+    "weight_practice_area": 0.25,
     "scope": "Ketersedian SOP/SMP",
     "perangkat": null,
     "question": "Apakah SOP, SMP, dan dokumen operasional yang relevan tersedia, teridentifikasi, dan mudah diakses oleh personel yang membutuhkan?",
@@ -396,7 +416,9 @@
   {
     "row": 11,
     "domain": "POLICY & GUIDANCE",
+    "weight_domain": 0.2,
     "practice_area": "SOP/SMP COMPLIANCE",
+    "weight_practice_area": 0.25,
     "scope": "Kepatuhan Pelaksanaan SOP / SMP",
     "perangkat": null,
     "question": "Apakah kegiatan operasional district dilaksanakan sesuai dengan SOP dan SMP yang berlaku?",
@@ -436,7 +458,9 @@
   {
     "row": 12,
     "domain": "POLICY & GUIDANCE",
+    "weight_domain": 0.2,
     "practice_area": "SOP/SMP COMPLIANCE",
+    "weight_practice_area": 0.25,
     "scope": "Review dan Pembaruan Dokumen",
     "perangkat": null,
     "question": "Apakah SOP, SMP, dan dokumen operasional direview serta diperbarui secara berkala agar tetap relevan dengan kebutuhan operasional?",
@@ -476,7 +500,9 @@
   {
     "row": 13,
     "domain": "POLICY & GUIDANCE",
+    "weight_domain": 0.2,
     "practice_area": "BUSINESS PROCESS EFFECTIVENESS",
+    "weight_practice_area": 0.25,
     "scope": "Network Operation Control",
     "perangkat": null,
     "question": "Apakah district mengendalikan operasional jaringan secara efektif untuk menjaga kualitas layanan dan meminimalkan gangguan berulang?",
@@ -516,7 +542,9 @@
   {
     "row": 14,
     "domain": "POLICY & GUIDANCE",
+    "weight_domain": 0.2,
     "practice_area": "BUSINESS PROCESS EFFECTIVENESS",
+    "weight_practice_area": 0.25,
     "scope": "Infrastructure & Facility Management",
     "perangkat": null,
     "question": "Apakah infrastruktur dan fasilitas pendukung dikelola secara efektif untuk menjaga keandalan operasional dan keberlangsungan layanan?",
@@ -556,7 +584,9 @@
   {
     "row": 15,
     "domain": "POLICY & GUIDANCE",
+    "weight_domain": 0.2,
     "practice_area": "BUSINESS PROCESS EFFECTIVENESS",
+    "weight_practice_area": 0.25,
     "scope": "Vendor perfomance management",
     "perangkat": null,
     "question": "Apakah district mengelola dan mengevaluasi performansi vendor secara efektif untuk mendukung pencapaian target operasional?",
@@ -596,7 +626,9 @@
   {
     "row": 16,
     "domain": "POLICY & GUIDANCE",
+    "weight_domain": 0.2,
     "practice_area": "DOCUMENT READINESS",
+    "weight_practice_area": 0.25,
     "scope": "Operational Documentation",
     "perangkat": null,
     "question": "Apakah dokumen operasional yang digunakan dalam pelaksanaan pekerjaan tersedia, terkendali, dan mudah diakses oleh personel terkait?",
@@ -636,7 +668,9 @@
   {
     "row": 17,
     "domain": "POLICY & GUIDANCE",
+    "weight_domain": 0.2,
     "practice_area": "DOCUMENT READINESS",
+    "weight_practice_area": 0.25,
     "scope": "Network & Infrastructure Documentation",
     "perangkat": null,
     "question": "Apakah dokumentasi jaringan dan infrastruktur dikelola secara akurat, terkini, dan mendukung operasional serta pengambilan keputusan?",
@@ -676,7 +710,9 @@
   {
     "row": 18,
     "domain": "POLICY & GUIDANCE",
+    "weight_domain": 0.2,
     "practice_area": "DOCUMENT READINESS",
+    "weight_practice_area": 0.25,
     "scope": "Supporting Facility Documentation",
     "perangkat": null,
     "question": "Apakah dokumentasi supporting facility dikelola secara lengkap dan mendukung kegiatan operasi serta pemeliharaan?",
@@ -716,7 +752,9 @@
   {
     "row": 19,
     "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": 0.2,
     "practice_area": "HR FULFILLMENT",
+    "weight_practice_area": 0.2,
     "scope": "Manpower Planning",
     "perangkat": null,
     "question": "Apakah District mengelola pemenuhan, distribusi, dan utilisasi personel secara optimal untuk mendukung kelancaran operasional di wilayahnya?",
@@ -744,7 +782,9 @@
   {
     "row": 20,
     "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": 0.2,
     "practice_area": "CAPABILITY (KNOWLEDGE & SKILL)",
+    "weight_practice_area": 0.2,
     "scope": "Competency management",
     "perangkat": null,
     "question": "Apakah District memastikan seluruh personel memiliki kesiapan kompetensi, dan sertifikasi yang valid untuk melaksanakan tugas operasional secara aman dan sesuai standar?",
@@ -772,7 +812,9 @@
   {
     "row": 21,
     "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": 0.2,
     "practice_area": "CAPABILITY (KNOWLEDGE & SKILL)",
+    "weight_practice_area": 0.2,
     "scope": "Training & Development",
     "perangkat": null,
     "question": "Apakah District secara aktif mengidentifikasi kebutuhan pengembangan tim dan memfasilitasi program pembelajaran mandiri untuk meningkatkan kualitas kerja di lapangan?",
@@ -800,7 +842,9 @@
   {
     "row": 22,
     "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": 0.2,
     "practice_area": "CAPABILITY (KNOWLEDGE & SKILL)",
+    "weight_practice_area": 0.2,
     "scope": "Critical Knowledge Management",
     "perangkat": null,
     "question": "Apakah District memiliki pendokumentasian, dan transfer knowledge secara internal district untuk mencegah hilangnya keahlian operasional (loss of knowledge) di wilayah kerja nya?",
@@ -828,7 +872,9 @@
   {
     "row": 23,
     "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": 0.2,
     "practice_area": "ASSET INVENTORY",
+    "weight_practice_area": 0.2,
     "scope": "Assets Registration & Control",
     "perangkat": null,
     "question": "Apakah aset network dan supporting facility terdaftar, teridentifikasi, dan dikelola secara akurat dalam sistem inventaris perusahaan?",
@@ -868,7 +914,9 @@
   {
     "row": 24,
     "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": 0.2,
     "practice_area": "ASSET INVENTORY",
+    "weight_practice_area": 0.2,
     "scope": "Assets Lifecycle Management",
     "perangkat": null,
     "question": "Apakah siklus hidup aset dikelola secara efektif untuk menjaga keandalan operasional dan keberlanjutan layanan?",
@@ -908,7 +956,9 @@
   {
     "row": 25,
     "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": 0.2,
     "practice_area": "ASSET INVENTORY",
+    "weight_practice_area": 0.2,
     "scope": "Assets Utilization",
     "perangkat": null,
     "question": "Apakah aset dimanfaatkan secara optimal untuk mendukung kebutuhan operasional district?",
@@ -948,7 +998,9 @@
   {
     "row": 26,
     "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": 0.2,
     "practice_area": "BUDGET MANAGEMENT",
+    "weight_practice_area": 0.2,
     "scope": "Budget Planning",
     "perangkat": null,
     "question": "Apakah District Manager menyusun kebutuhan anggaran operasional district secara terencana?",
@@ -988,7 +1040,9 @@
   {
     "row": 27,
     "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": 0.2,
     "practice_area": "BUDGET MANAGEMENT",
+    "weight_practice_area": 0.2,
     "scope": "Budget Visibility",
     "perangkat": null,
     "question": "Apakah District Manager memiliki informasi yang memadai mengenai alokasi dan realisasi anggaran district?",
@@ -1028,7 +1082,9 @@
   {
     "row": 28,
     "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": 0.2,
     "practice_area": "BUDGET MANAGEMENT",
+    "weight_practice_area": 0.2,
     "scope": "Budget Utilization Effectiveness",
     "perangkat": null,
     "question": "Apakah anggaran district digunakan secara efektif untuk mendukung pencapaian target operasional?",
@@ -1068,7 +1124,9 @@
   {
     "row": 29,
     "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": 0.2,
     "practice_area": "TOOLS/EQUIPMENT MANAGEMENT",
+    "weight_practice_area": 0.2,
     "scope": "Tools Availability",
     "perangkat": null,
     "question": "Apakah tools dan equipment yang dibutuhkan tersedia untuk mendukung operasional district?",
@@ -1108,7 +1166,9 @@
   {
     "row": 30,
     "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": 0.2,
     "practice_area": "TOOLS/EQUIPMENT MANAGEMENT",
+    "weight_practice_area": 0.2,
     "scope": "Tools Healthiness",
     "perangkat": null,
     "question": "Apakah tools dan equipment berada dalam kondisi yang layak digunakan?",
@@ -1148,7 +1208,9 @@
   {
     "row": 31,
     "domain": "RESOURCE MANAGEMENT",
+    "weight_domain": 0.2,
     "practice_area": "TOOLS/EQUIPMENT MANAGEMENT",
+    "weight_practice_area": 0.2,
     "scope": "Tools Governance & Maintenance",
     "perangkat": null,
     "question": "Apakah tools dan equipment dikelola dan dipelihara sesuai ketentuan yang berlaku?",
@@ -1188,7 +1250,9 @@
   {
     "row": 32,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "BIR",
+    "weight_practice_area": 0.4,
     "scope": "Kebersihan dan Kerapihan Ruangan",
     "perangkat": "ALL NE",
     "question": "Apakah kondisi ruangan perangkat dalam keadaan bersih, indah dan rapih ?",
@@ -1228,7 +1292,9 @@
   {
     "row": 33,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "BIR",
+    "weight_practice_area": 0.4,
     "scope": "Kebersihan dan Kerapihan Perangkat",
     "perangkat": "ALL NE",
     "question": "Apakah kondisi perangkat dalam keadaan bersih, indah dan rapih ?",
@@ -1268,7 +1334,9 @@
   {
     "row": 34,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "BIR",
+    "weight_practice_area": 0.4,
     "scope": "Log Book Kejadian / Event",
     "perangkat": "ALL NE",
     "question": "Apakah terdapat dokumentasi yang rapih terkait kejadian atau event ?",
@@ -1308,7 +1376,9 @@
   {
     "row": 35,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "BIR",
+    "weight_practice_area": 0.4,
     "scope": "Perkabelan",
     "perangkat": "ALL NE",
     "question": "Apakah instalasi perkabelan terkelola dengan baik dan mendukung kegiatan operasional ?",
@@ -1348,7 +1418,9 @@
   {
     "row": 36,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "BIR",
+    "weight_practice_area": 0.4,
     "scope": "Kondisi Tempat Penyimpanan Barang",
     "perangkat": "ALL NE",
     "question": "Apakah tempat penyimpanan barang dan alat kerja dikelola dengan baik dan tertata rapi ?",
@@ -1388,7 +1460,9 @@
   {
     "row": 37,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "BIR",
+    "weight_practice_area": 0.4,
     "scope": "Infrastruktur Pendukung Site",
     "perangkat": null,
     "question": "Apakah infrastruktur pendukung site terpelihara dengan baik dan mendukung operasional ?",
@@ -1428,7 +1502,9 @@
   {
     "row": 38,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "BIR",
+    "weight_practice_area": 0.4,
     "scope": "Bangunan dan Fasilitas Pendukung",
     "perangkat": null,
     "question": "Apakah bangunan dan fasilitas pendukung site dalam kondisi baik, aman, dan layak digunakan?",
@@ -1468,7 +1544,9 @@
   {
     "row": 39,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "BIR",
+    "weight_practice_area": 0.4,
     "scope": "Sarana Pendukung Opersional",
     "perangkat": null,
     "question": "Apakah sarana pendukung operasional dikelola dan dipelihara dengan baik untuk mendukung keberlangsungan layanan?",
@@ -1508,7 +1586,9 @@
   {
     "row": 40,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": 0.5,
     "scope": "Ophar SKSO Optical Network ISP",
     "perangkat": "Transport",
     "question": "Apakah operasi dan pemeliharaan perangkat ISP Transport dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
@@ -1548,7 +1628,9 @@
   {
     "row": 41,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": 0.5,
     "scope": "Ophar SKSO Perangkat OSP",
     "perangkat": "Transport",
     "question": "Apakah operasi dan pemeliharaan perangkat OSP Transport dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
@@ -1588,7 +1670,9 @@
   {
     "row": 42,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": 0.5,
     "scope": "Ophar Mechanical Electrical (ME)",
     "perangkat": "ME",
     "question": "Apakah operasi dan pemeliharaan perangkat ME dilaksanakan sesuai prosedur yang ditetapkan dengan baik?",
@@ -1628,7 +1712,9 @@
   {
     "row": 43,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": 0.5,
     "scope": "Ophar Service Node",
     "perangkat": "MSE",
     "question": "Apakah operasi dan pemeliharaan perangkat Service Node dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
@@ -1668,7 +1754,9 @@
   {
     "row": 44,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": 0.5,
     "scope": "Ophar IP Network",
     "perangkat": "CSO",
     "question": "Apakah operasi dan pemeliharaan perangkat IP Network dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
@@ -1708,7 +1796,9 @@
   {
     "row": 45,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": 0.5,
     "scope": "Ophar Access Network",
     "perangkat": "ANO",
     "question": "Bagaimana cara menentukan Healthiness perangkat Aktif Akses OLT ?",
@@ -1730,7 +1820,9 @@
   {
     "row": 46,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": 0.5,
     "scope": "Ophar Access Network",
     "perangkat": "ANO",
     "question": "Apakah proses pencegahan GAMAS sudah dilaksanakan dengan baik?",
@@ -1770,7 +1862,9 @@
   {
     "row": 47,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "weight_practice_area": 0.5,
     "scope": "Ophar Access Network",
     "perangkat": "ANO",
     "question": "Apakah operasi dan pemeliharaan perangkat Access Network dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
@@ -1810,7 +1904,9 @@
   {
     "row": 48,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "PENGAMANAN DAN DUKUNGAN KERJA",
+    "weight_practice_area": 0.1,
     "scope": "Pengamanan Site",
     "perangkat": null,
     "question": "Apakah sistem pengamanan site dilaksanakan secara terencana, terdokumentasi, dan berjalan secara efektif?",
@@ -1850,7 +1946,9 @@
   {
     "row": 49,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "PENGAMANAN DAN DUKUNGAN KERJA",
+    "weight_practice_area": 0.1,
     "scope": "Proteksi Kebakaran",
     "perangkat": null,
     "question": "Apakah sistem proteksi kebakaran tersedia, berfungsi dengan baik, dan siap digunakan saat diperlukan?",
@@ -1890,7 +1988,9 @@
   {
     "row": 50,
     "domain": "INFRA HEALTHINESS",
+    "weight_domain": 0.3,
     "practice_area": "PENGAMANAN DAN DUKUNGAN KERJA",
+    "weight_practice_area": 0.1,
     "scope": "Proteksi Kelistrikan",
     "perangkat": null,
     "question": "Apakah sistem proteksi kelistrikan terpelihara dengan baik dan mampu melindungi perangkat dari gangguan kelistrikan?",
