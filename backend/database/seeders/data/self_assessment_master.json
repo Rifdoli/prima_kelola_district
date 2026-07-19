@@ -2,861 +2,1929 @@
   {
     "row": 1,
     "domain": "LEADERSHIP & STRATEGIC",
-    "weight_domain": null,
-    "references": null,
     "practice_area": "STRATEGIC APPROACH",
-    "weight_practice_area": null,
     "scope": "Alignment terhadap Target Area dan Regional",
-    "perangkat": "-",
+    "perangkat": null,
     "question": "Apakah District Manager memiliki target district yang selaras dengan target Area/Regional?",
-    "criteria": {
-      "A": "Target dan sasaran district ditetapkan serta selaras dengan target Area, Regional, dan strategi perusahaan.",
-      "B": "Target district telah diturunkan menjadi target tim, fungsi, atau individu yang terukur.",
-      "C": "Program kerja, sumber daya, dan prioritas pekerjaan district dijalankan untuk mendukung pencapaian target yang telah ditetapkan.",
-      "D": "Pencapaian target district dimonitor dan direview secara berkala menggunakan indikator kinerja yang relevan.",
-      "E": "Hasil evaluasi digunakan untuk menetapkan tindakan perbaikan, penyesuaian prioritas, atau mitigasi risiko dalam pencapaian target district."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Target dan sasaran district ditetapkan serta selaras dengan target Area, Regional, dan strategi perusahaan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 5.1/6.2, Annex A A.5.1",
+        "evidence_hint": "Kontrak Manajemen/KPI District Manager yang memuat target kerja seperti WISA (Cont: OKR)"
+      },
+      {
+        "code": "B",
+        "title": "Target WISA diturunkan menjadi target tim, fungsi, atau individu yang terukur.",
+        "reference": "ISO/IEC 27001:2022 Klausul 5.3/6.2, Annex A A.5.2",
+        "evidence_hint": "KPI Individu atau TIM yang memuat kontribusi terhadap pencapaian target (Cont: OKR)"
+      },
+      {
+        "code": "C",
+        "title": "Program kerja, sumber daya, dan prioritas pekerjaan district—termasuk aktivitas pendukung dan preventif dijalankan untuk mendukung mengamankan pencapaian target WISA",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.1/8.1, Annex A A.5.4/5.37",
+        "evidence_hint": "Rencana atau program kerja yang memuat aktivitas pendukung seperti program QE untuk mengamankan target WISA (Cont: Workplan, List Priority pekerjaan)"
+      },
+      {
+        "code": "D",
+        "title": "Pencapaian target WISA dipantau dan direview secara berkala menggunakan indikator kinerja yang relevan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/9.3, Annex A A.5.36",
+        "evidence_hint": "Laporan review berkala (Cont: MoM meeting, dashboard, laporan capaian target, Kegiatan Review)"
+      },
+      {
+        "code": "E",
+        "title": "Hasil evaluasi digunakan untuk menetapkan tindakan perbaikan, penyesuaian prioritas, atau mitigasi risiko atas pencapaian target WISA.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1, Klausul 10.2, Annex A A.5.27/5.7",
+        "evidence_hint": "Catatan/Rencana tindak lanjut (Cont: action plan, keputusan penyesuaian prioritas)"
+      }
+    ]
   },
   {
     "row": 2,
     "domain": "LEADERSHIP & STRATEGIC",
-    "weight_domain": null,
-    "references": null,
     "practice_area": "STRATEGIC APPROACH",
-    "weight_practice_area": null,
     "scope": "Pengelolaan risiko operasional",
-    "perangkat": "-",
+    "perangkat": null,
     "question": "Apakah district menerapkan pengelolaan risiko operasional secara terstruktur untuk menjaga keberlangsungan layanan dan pencapaian target operasional?",
-    "criteria": {
-      "A": "District memiliki daftar risiko operasional yang terdokumentasi dan mencakup aspek layanan, infrastruktur, SDM, vendor, serta supporting facilities.",
-      "B": "Tersedia mitigasi, kontrol, atau rencana penanganan untuk risiko yang memiliki dampak tinggi terhadap layanan dan operasional district.",
-      "C": "Mekanisme pemantauan risiko dan eskalasi gangguan pada site, layanan, atau infrastruktur kritikal diterapkan dan dijalankan secara konsisten.",
-      "D": "Evaluasi risiko dilakukan secara berkala untuk menilai perubahan tingkat risiko dan efektivitas mitigasi yang telah diterapkan.",
-      "E": "Hasil evaluasi risiko, kejadian GAMAS, major incident, atau gangguan signifikan lainnya digunakan sebagai dasar tindakan perbaikan dan pencegahan berulang."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "District memiliki daftar risiko operasional yang terdokumentasi dan mencakup aspek layanan, infrastruktur, SDM, vendor, serta supporting facilities.",
+        "reference": "ISO/IEC 27001:2022 Klausul 4.1/6.1.2/8.2, Annex A A.5.7/5.9",
+        "evidence_hint": "List yang memuat ragam risiko operasioanl (cont: potensi FO cut akibat galian pihak ketiga, gangguan catu daya)"
+      },
+      {
+        "code": "B",
+        "title": "Tersedia mitigasi, kontrol, atau rencana penanganan untuk risiko yang memiliki dampak tinggi terhadap layanan dan operasional district.",
+        "reference": "ISO/IEC 27001:2022 Klausul 6.1.3/8.3, Annex A A.5.24/5.30",
+        "evidence_hint": "List mitigas atas risiko operasional"
+      },
+      {
+        "code": "C",
+        "title": "Mekanisme pemantauan risiko dan eskalasi gangguan pada site, layanan, atau infrastruktur kritikal diterapkan dan dijalankan secara konsisten.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.25/5.26/8.16",
+        "evidence_hint": "Bukti pelaksanaan eskalasi (cont: log eskalasi, notifikasi gangguan)"
+      },
+      {
+        "code": "D",
+        "title": "Evaluasi risiko dilakukan secara berkala untuk menilai perubahan tingkat risiko dan efektivitas mitigasi yang telah diterapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.2/9.1/9.3, Annex A A.5.35/5.36",
+        "evidence_hint": "Bukti pelaksanaan evaluasi (cont: MoM, meeting evaluasi)"
+      },
+      {
+        "code": "E",
+        "title": "Hasil evaluasi risiko, kejadian GAMAS, major incident, atau gangguan signifikan lainnya digunakan sebagai dasar tindakan perbaikan dan pencegahan berulang.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, Annex A A.5.27",
+        "evidence_hint": "Laporan GAMAS/major incident dan RCA beserta tindak lanjut pencegahan"
+      }
+    ]
   },
   {
     "row": 3,
     "domain": "LEADERSHIP & STRATEGIC",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "PERFROMANCE IMPROVEMENT",
-    "weight_practice_area": null,
+    "practice_area": "PERFORMANCE IMPROVEMENT",
     "scope": "Pengelolaan Kinerja Operasional",
-    "perangkat": "-",
+    "perangkat": null,
     "question": "Apakah district mengelola dan meningkatkan kinerja operasional secara terukur melalui monitoring, evaluasi, dan tindak lanjut yang berkelanjutan?",
-    "criteria": {
-      "A": "District menetapkan indikator kinerja operasional (KPI) yang selaras dengan target Area, Regional, dan kebutuhan operasional district.",
-      "B": "Kinerja operasional district dimonitor secara berkala menggunakan indikator, dashboard, atau laporan performansi yang telah ditetapkan.",
-      "C": "Dilakukan analisis terhadap KPI yang tidak mencapai target untuk mengidentifikasi akar masalah, tren, dan faktor penyebab utama.",
-      "D": "Hasil monitoring dan evaluasi kinerja dibahas secara berkala dalam forum review operasional atau manajemen district.",
-      "E": "Terdapat action plan, tindak lanjut perbaikan, dan pemantauan penyelesaian terhadap KPI yang belum mencapai target."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "District mengawal KPI operasional yang selaras dengan target Area, Regional, dan kebutuhan operasional district.",
+        "reference": "ISO/IEC 27001:2022 Klausul 6.2, Annex A A.5.1",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Kinerja operasional district dimonitor secara berkala menggunakan indikator, dashboard, atau laporan performansi yang telah ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.36",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Dilakukan analisis terhadap KPI yang tidak mencapai target untuk mengidentifikasi akar masalah, tren, dan faktor penyebab utama.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.27",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Hasil monitoring dan evaluasi kinerja dibahas secara berkala dalam forum review operasional atau manajemen district.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.3, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Terdapat action plan, tindak lanjut perbaikan, dan pemantauan penyelesaian terhadap KPI yang belum mencapai target.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1, Klausul 10.2, Annex A A.5.27",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 4,
     "domain": "LEADERSHIP & STRATEGIC",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "PERFROMANCE IMPROVEMENT",
-    "weight_practice_area": null,
+    "practice_area": "PERFORMANCE IMPROVEMENT",
     "scope": "Continuous Improvement",
-    "perangkat": "-",
+    "perangkat": null,
     "question": "Apakah district menerapkan budaya perbaikan berkelanjutan melalui program improvement atau inovasi yang memberikan nilai tambah bagi operasional dan layanan?",
-    "criteria": {
-      "A": "District memiliki program improvement atau inovasi yang terdokumentasi dan selaras dengan kebutuhan operasional maupun sasaran bisnis.",
-      "B": "Setiap program improvement memiliki tujuan, target, dan indikator keberhasilan yang terukur.",
-      "C": "Program improvement atau inovasi diimplementasikan sesuai rencana serta melibatkan unit atau personel yang terkait.",
-      "D": "Efektivitas program improvement dievaluasi secara berkala berdasarkan pencapaian target dan indikator yang telah ditetapkan.",
-      "E": "Hasil evaluasi digunakan untuk melakukan penyempurnaan, replikasi, atau pengembangan lebih lanjut terhadap program improvement yang dijalankan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "District memiliki program improvement atau inovasi yang terdokumentasi — termasuk perbaikan yang bersifat preventif/proaktif yang selaras dengan kebutuhan operasional maupun sasaran bisnis.",
+        "reference": "ISO/IEC 27001:2022 Klausul 6.2,/10.1, Annex A A.5.37",
+        "evidence_hint": "Dokumentasi program improvement (cont: program QE, preventive maintenance)"
+      },
+      {
+        "code": "B",
+        "title": "Setiap program improvement memiliki tujuan, target, dan indikator keberhasilan yang terukur.",
+        "reference": "ISO/IEC 27001:2022 Klausul 6.2/7.5, Annex A A.5.37",
+        "evidence_hint": "Proposal/Charter program yang memuat tujuan, target, dan indikator"
+      },
+      {
+        "code": "C",
+        "title": "Program improvement atau inovasi diimplementasikan sesuai rencana serta melibatkan unit atau personel yang terkait.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.5.4/5.37",
+        "evidence_hint": "Bukti pelaksanaan (cont: laporan progres, dokumentasi kegaitan, notulensi)"
+      },
+      {
+        "code": "D",
+        "title": "Efektivitas program improvement dievaluasi secara berkala berdasarkan pencapaian target dan indikator yang telah ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/9.3, Annex A A.5.35/5.36",
+        "evidence_hint": "Laporan evaluasi hasil (cont: perbandingan kondisi sebelum dan sesudah, capian vs target)"
+      },
+      {
+        "code": "E",
+        "title": "Hasil evaluasi digunakan untuk melakukan penyempurnaan, replikasi, atau pengembangan lebih lanjut terhadap program improvement yang dijalankan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, Annex A A.5.27",
+        "evidence_hint": "Bukti tindak lanjut (cont: MoM meeting, SOP/standar baru, replikasi ke site lain, knowledge sharing)"
+      }
+    ]
   },
   {
     "row": 5,
     "domain": "LEADERSHIP & STRATEGIC",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "PERFROMANCE IMPROVEMENT",
-    "weight_practice_area": null,
+    "practice_area": "PERFORMANCE IMPROVEMENT",
     "scope": "Pengembangan Tim",
-    "perangkat": "-",
+    "perangkat": null,
     "question": "Apakah District Manager mengembangkan kapabilitas dan performa tim secara terencana untuk mendukung pencapaian target district?",
-    "criteria": {
-      "A": "Terdapat rencana pengembangan kompetensi personel yang disusun berdasarkan kebutuhan organisasi, gap kompetensi, atau tuntutan operasional.",
-      "B": "Coaching, mentoring, knowledge sharing, atau kegiatan pengembangan personel dilaksanakan secara berkala dan terdokumentasi.",
-      "C": "Personel diberikan kesempatan untuk meningkatkan kompetensi melalui pelatihan, sertifikasi, penugasan khusus, atau program pengembangan lainnya.",
-      "D": "Perkembangan kompetensi dan performa personel dievaluasi secara berkala untuk mengidentifikasi kekuatan, gap, dan area pengembangan.",
-      "E": "Terdapat tindak lanjut terhadap hasil evaluasi performa maupun kompetensi, termasuk program pengembangan bagi personel berpotensi tinggi maupun perbaikan bagi personel dengan performa rendah."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Terdapat rencana pengembangan kompetensi personel berdasarkan kebutuhan organisasi, gap kompetensi, atau tuntutan operasional.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.2/6.2, Annex A A.6.3",
+        "evidence_hint": "CoE atau Undangan Sharing Knowledge antar tim atau internal tim"
+      },
+      {
+        "code": "B",
+        "title": "Coaching, mentoring, knowledge sharing, atau kegiatan pengembangan personel dilaksanakan secara berkala dan terdokumentasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.2/7.3, Annex A A.6.3",
+        "evidence_hint": "Sharing Knowledge antar tim atau internal tim, kegiatan pengembangan diri melalui mydigilearn"
+      },
+      {
+        "code": "C",
+        "title": "Personel diberikan kesempatan untuk meningkatkan kompetensi melalui pelatihan, sertifikasi, penugasan khusus, atau program pengembangan lainnya.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.2, , Annex A A.6.3",
+        "evidence_hint": "Bukti pelatihan/sertifikasi (cont: sertifikat, surat penugasan, undangan pelatihan)"
+      },
+      {
+        "code": "D",
+        "title": "Perkembangan kompetensi dan performa personel dievaluasi secara berkala untuk mengidentifikasi kekuatan, gap, dan area pengembangan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, , Annex A A.6.3",
+        "evidence_hint": "Hasil Evaluasi kompetensi/penilian kinerja personil"
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindak lanjut terhadap hasil evaluasi performa maupun kompetensi, termasuk program pengembangan bagi personel berpotensi tinggi maupun perbaikan bagi personel dengan performa rendah.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, , Annex A A.6.3",
+        "evidence_hint": "Rencana atau realisasi tindak lanjut (cont: program pengembangan atau pembinaan)"
+      }
+    ]
   },
   {
     "row": 6,
     "domain": "LEADERSHIP & STRATEGIC",
-    "weight_domain": null,
-    "references": null,
     "practice_area": "COMMUNICATION APPROACH",
-    "weight_practice_area": null,
     "scope": "Komunikasi Internal",
     "perangkat": null,
     "question": "Apakah district menerapkan komunikasi internal yang efektif untuk mendukung koordinasi, penyelesaian permasalahan, dan pencapaian target operasional?",
-    "criteria": {
-      "A": "Terdapat mekanisme, forum, atau media komunikasi yang digunakan untuk mendukung koordinasi dan penyampaian informasi operasional.",
-      "B": "Briefing operasional, koordinasi tim, dan penyampaian informasi dari Area/Regional dilaksanakan secara berkala kepada personel terkait.",
-      "C": "Tersedia forum diskusi, koordinasi, atau problem solving untuk membahas isu dan permasalahan operasional yang dihadapi district.",
-      "D": "Hasil briefing, rapat, atau forum koordinasi terdokumentasi serta dilakukan pemantauan terhadap pelaksanaan keputusan dan tindak lanjut yang disepakati.",
-      "E": "Dilakukan evaluasi efektivitas komunikasi internal dan terdapat tindak lanjut untuk meningkatkan koordinasi maupun penyelesaian permasalahan operasional."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Terdapat mekanisme, forum, atau media komunikasi yang digunakan untuk mendukung koordinasi dan penyampaian informasi operasional.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.4, Annex A A.5.4",
+        "evidence_hint": "Media/forum komunikasi resmi (Cont: Grup WA/Telegram, jadwal briefinng)"
+      },
+      {
+        "code": "B",
+        "title": "Briefing operasional, koordinasi tim, dan penyampaian informasi dari Area/Regional dilaksanakan secara berkala kepada personel terkait.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.4,/8.1, Annex A A.5.37",
+        "evidence_hint": "Bukti pelaksanaan briefing/koordinasi (Cont: materi. NDE, Notulen/MoM)"
+      },
+      {
+        "code": "C",
+        "title": "Tersedia forum diskusi, koordinasi, atau problem solving untuk membahas isu dan permasalahan operasional yang dihadapi district.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.5.37",
+        "evidence_hint": "Dokumentasi forum koordinasi (Cont: Dokumentasi hasil diskusi, MoM)"
+      },
+      {
+        "code": "D",
+        "title": "Hasil briefing, rapat, atau forum koordinasi terdokumentasi serta dilakukan pemantauan terhadap pelaksanaan keputusan dan tindak lanjut yang disepakati.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/9.3, Annex A A.5.36",
+        "evidence_hint": "Hasil Keputusan atau tindak lanjut"
+      }
+    ]
   },
   {
     "row": 7,
     "domain": "LEADERSHIP & STRATEGIC",
-    "weight_domain": null,
-    "references": null,
     "practice_area": "COMMUNICATION APPROACH",
-    "weight_practice_area": null,
     "scope": "Stakeholder Management",
     "perangkat": null,
     "question": "Apakah district mengelola komunikasi dan hubungan dengan stakeholder secara efektif untuk mendukung kelancaran operasional dan pencapaian target district?",
-    "criteria": {
-      "A": "District mengidentifikasi stakeholder utama yang berpengaruh terhadap operasional serta memiliki mekanisme komunikasi dan koordinasi yang jelas.",
-      "B": "Koordinasi dan komunikasi dengan stakeholder terkait (Unit pendukung, vendor, maupun pihak eksternal lainnya) dilaksanakan secara berkala.",
-      "C": "Terdapat mekanisme untuk menerima, mencatat, dan mengelola masukan, keluhan, atau isu yang disampaikan oleh stakeholder.",
-      "D": "Permasalahan, kebutuhan, dan komitmen yang disepakati dengan stakeholder dimonitor serta dievaluasi penyelesaiannya secara berkala.",
-      "E": "Terdapat tindak lanjut dan perbaikan atas isu, masukan, atau keluhan stakeholder untuk meningkatkan efektivitas hubungan dan dukungan operasional."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "District mengidentifikasi stakeholder utama yang berpengaruh terhadap operasional serta memiliki mekanisme komunikasi dan koordinasi yang jelas.",
+        "reference": "ISO/IEC 27001:2022 Klausul : 4.2/7.4, Annex A A.5.4",
+        "evidence_hint": "Dokumentasi komunikasi dengan pihak-pihak terkait"
+      },
+      {
+        "code": "B",
+        "title": "Koordinasi dan komunikasi dengan stakeholder terkait (Unit pendukung, vendor, maupun pihak eksternal lainnya) dilaksanakan secara berkala.",
+        "reference": "ISO/IEC 27001:2022 Klausul : 7.4, Annex A A.5.5/5.6",
+        "evidence_hint": "Jadwal/risalah koordinasi dengan stakeholder (cont: notulen/berita acara koordinasi)"
+      },
+      {
+        "code": "C",
+        "title": "Terdapat mekanisme untuk menerima, mencatat, dan mengelola masukan, keluhan, atau isu yang disampaikan oleh stakeholder.",
+        "reference": "ISO/IEC 27001:2022 Klausul : 7.4/8.1, Annex A A.5.37",
+        "evidence_hint": "Log/register/bukti komunikasi berupa masukan dan keluhan stakeholder beserta penanganannya"
+      },
+      {
+        "code": "D",
+        "title": "Permasalahan, kebutuhan, dan komitmen yang disepakati dengan stakeholder dimonitor serta dievaluasi penyelesaiannya secara berkala.",
+        "reference": "ISO/IEC 27001:2022 Klausul : 9.1/9.3, Annex A A.5.36",
+        "evidence_hint": "Daftar komitmen atau isu stakeholder (mis. progres relokasi utilitas) beserta status penyelesaiannya"
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindak lanjut dan perbaikan atas isu, masukan, atau keluhan stakeholder untuk meningkatkan efektivitas hubungan dan dukungan operasional.",
+        "reference": "ISO/IEC 27001:2022 Klausul : 10.1/10.2, Annex A 5.36",
+        "evidence_hint": "Dokumentasi tindak lanjut/perbaikan (cont: action plan beserta status penyelesaiannya)"
+      }
+    ]
   },
   {
     "row": 8,
-    "domain": "POLICY & GUIDENCE",
-    "weight_domain": null,
-    "references": null,
+    "domain": "POLICY & GUIDANCE",
     "practice_area": "POLICY IMPLEMENTATION",
-    "weight_practice_area": null,
     "scope": "Implementasi Komitmen dan Kebijakan",
     "perangkat": null,
     "question": "Apakah district mengimplementasikan komitmen dan kebijakan perusahaan secara konsisten dalam kegiatan operasional sehari-hari?",
-    "criteria": {
-      "A": "Kebijakan, arahan, dan komitmen perusahaan yang relevan dengan operasional district telah diidentifikasi dan dikomunikasikan kepada personel terkait.",
-      "B": "Kebijakan dan arahan perusahaan diterapkan dalam pelaksanaan kegiatan operasional dan pengambilan keputusan di district.",
-      "C": "Personel memahami peran dan tanggung jawabnya dalam mendukung implementasi kebijakan yang berlaku.",
-      "D": "Dilakukan monitoring atau evaluasi terhadap tingkat implementasi dan kepatuhan terhadap kebijakan yang telah ditetapkan.",
-      "E": "Terdapat tindak lanjut terhadap ketidaksesuaian, temuan, atau hasil evaluasi untuk meningkatkan implementasi kebijakan secara berkelanjutan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Kebijakan, arahan, dan komitmen perusahaan yang relevan dengan operasional district telah diidentifikasi dan dikomunikasikan kepada personel terkait.",
+        "reference": "ISO/IEC 27001:2022 Klausul 5.2/7.3, Annex A A.5.1",
+        "evidence_hint": "Komitmen kepatuhan terhadap kebijakan perusahaan yang telah ditandatangani oleh seluruh personel District."
+      },
+      {
+        "code": "B",
+        "title": "Kebijakan dan arahan perusahaan diterapkan dalam pelaksanaan kegiatan operasional dan pengambilan keputusan di district.",
+        "reference": "ISO/IEC 27001:2022 Klausul 5.2/5.3, Annex A A.5.4",
+        "evidence_hint": "Checklist harian/mingguan yang membuktikan adanya pengawasan langsung oleh DM/Supervisor terhadap kepatuhan aturan kerja di lapangan."
+      },
+      {
+        "code": "C",
+        "title": "Personel memahami peran dan tanggung jawabnya dalam mendukung implementasi kebijakan yang berlaku.",
+        "reference": "ISO/IEC 27001:2022 Klausul 5.3/7.3, Annex A A.5.4",
+        "evidence_hint": "Bukti penegakan aturan berupa surat peringatan, teguran tertulis, atau instruksi perbaikan kepada staf yang sempat melakukan pelanggaran minor terhadap kebijakan operasional."
+      },
+      {
+        "code": "D",
+        "title": "Dilakukan monitoring atau evaluasi terhadap tingkat implementasi dan kepatuhan terhadap kebijakan yang telah ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.36",
+        "evidence_hint": "Foto kegiatan, materi presentasi, dan daftar hadir pelaksanaan pengarahan (briefing) khusus saat ada kebijakan atau surat edaran (SE) baru dari Direksi TIF yang harus diterapkan."
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindak lanjut terhadap ketidaksesuaian, temuan, atau hasil evaluasi untuk meningkatkan implementasi kebijakan secara berkelanjutan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.2, Annex A A.5.36",
+        "evidence_hint": "Foto ruang kerja yang menampilkan poster atau instruksi ringkas terkait kebijakan utama perusahaan (misal: kebijakan K3, Clean Desk Policy, atau prosedur akses keamanan) sebagai bukti internalisasi visual."
+      }
+    ]
   },
   {
     "row": 9,
-    "domain": "POLICY & GUIDENCE",
-    "weight_domain": null,
-    "references": null,
+    "domain": "POLICY & GUIDANCE",
     "practice_area": "POLICY IMPLEMENTATION",
-    "weight_practice_area": null,
     "scope": "Audit & Compliance",
     "perangkat": null,
     "question": "Apakah district mengelola temuan audit dan kepatuhan secara efektif untuk mendorong perbaikan berkelanjutan?",
-    "criteria": {
-      "A": "Terdapat mekanisme, penanggung jawab, dan rencana tindak lanjut untuk setiap temuan audit, assessment, atau hasil evaluasi kepatuhan.",
-      "B": "Action plan atas temuan audit dilaksanakan sesuai dengan target penyelesaian yang telah ditetapkan.",
-      "C": "Progres penyelesaian temuan audit dimonitor dan dievaluasi secara berkala untuk memastikan efektivitas tindak lanjut.",
-      "D": "Status kepatuhan dan penyelesaian temuan terdokumentasi dengan baik serta dapat ditelusuri hingga proses penutupan (closure).",
-      "E": "Terdapat tindakan perbaikan dan pencegahan untuk menghindari terulangnya temuan yang sama di masa mendatang."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Terdapat mekanisme, penanggung jawab, dan rencana tindak lanjut untuk setiap temuan audit, assessment, atau hasil evaluasi kepatuhan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.2/9.1, Annex A A.5.35",
+        "evidence_hint": "Document Audit pemantauan tindak lanjut temuan dan progres"
+      },
+      {
+        "code": "B",
+        "title": "Action plan atas temuan audit dilaksanakan sesuai dengan target penyelesaian yang telah ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.2, Annex A A.5.36",
+        "evidence_hint": "Dokumen analisis akar penyebab masalah untuk temuan bersifat kritikal"
+      },
+      {
+        "code": "C",
+        "title": "Progres penyelesaian temuan audit dimonitor dan dievaluasi secara berkala untuk memastikan efektivitas tindak lanjut.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/9.3, Annex A A.5.36",
+        "evidence_hint": "BA Penyelesaian Temuan kepada unit Audit/Kepatuhan Pusat"
+      },
+      {
+        "code": "D",
+        "title": "Status kepatuhan dan penyelesaian temuan terdokumentasi dengan baik serta dapat ditelusuri hingga proses penutupan (closure).",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/9.2, Annex A A.5.36",
+        "evidence_hint": "Foto perbandingan kondisi di lapangan sebelum dan sesudah diperbaiki atau screenshot perubahan input data pada sistem aplikasi TIF."
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindakan perbaikan dan pencegahan untuk menghindari terulangnya temuan yang sama di masa mendatang.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, Annex A A.5.27",
+        "evidence_hint": "Dokumen MoM Meeting progres penyelesaian temuan audit yang masih menggantung (outstanding items)."
+      }
+    ]
   },
   {
     "row": 10,
-    "domain": "POLICY & GUIDENCE",
-    "weight_domain": null,
-    "references": null,
+    "domain": "POLICY & GUIDANCE",
     "practice_area": "SOP/SMP COMPLIANCE",
-    "weight_practice_area": null,
     "scope": "Ketersedian SOP/SMP",
     "perangkat": null,
     "question": "Apakah SOP, SMP, dan dokumen operasional yang relevan tersedia, teridentifikasi, dan mudah diakses oleh personel yang membutuhkan?",
-    "criteria": {
-      "A": "District telah mengidentifikasi SOP, SMP, dan dokumen operasional yang relevan dengan proses bisnis yang dijalankan.",
-      "B": "SOP, SMP, dan dokumen operasional tersedia serta menggunakan versi yang masih berlaku.",
-      "C": "Dokumen dapat diakses oleh personel terkait sesuai kebutuhan operasional.",
-      "D": "Dilakukan verifikasi secara berkala untuk memastikan kelengkapan dan validitas dokumen yang digunakan.",
-      "E": "Terdapat tindak lanjut terhadap dokumen yang tidak tersedia, tidak sesuai, atau sudah tidak berlaku."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "District telah mengidentifikasi SOP, SMP, dan dokumen operasional yang relevan dengan proses bisnis yang dijalankan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": "Dokumen inventarisasi file SOP, SMP, dan kebijakan aktif lengkap dengan informasi nomor dokumen, tanggal berlaku, dan versi revisi terakhir."
+      },
+      {
+        "code": "B",
+        "title": "SOP, SMP, dan dokumen operasional tersedia serta menggunakan versi yang masih berlaku.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": "Bukti penggunaan ruang penyimpanan terpusat seperti Teams, OneDrive, atau aplikasi repositori internal TIF) yang memperlihatkan struktur folder SOP/SMP yang teratur dan siap akses."
+      },
+      {
+        "code": "C",
+        "title": "Dokumen dapat diakses oleh personel terkait sesuai kebutuhan operasional.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": "Bukti penggunaan Document SOP/SMP dapat di akses oleh karyawan"
+      },
+      {
+        "code": "D",
+        "title": "Dilakukan verifikasi secara berkala untuk memastikan kelengkapan dan validitas dokumen yang digunakan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.36",
+        "evidence_hint": "Dokumentasi MoM pembahasan verifikasi kelengkapan dan validitas Dokumen"
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindak lanjut terhadap dokumen yang tidak tersedia, tidak sesuai, atau sudah tidak berlaku.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.2, Annex A A.5.36",
+        "evidence_hint": "Bukti tindak lanjut terhadap document yang belum tersedia / sudah tidak berlaku"
+      }
+    ]
   },
   {
     "row": 11,
-    "domain": "POLICY & GUIDENCE",
-    "weight_domain": null,
-    "references": null,
+    "domain": "POLICY & GUIDANCE",
     "practice_area": "SOP/SMP COMPLIANCE",
-    "weight_practice_area": null,
     "scope": "Kepatuhan Pelaksanaan SOP / SMP",
     "perangkat": null,
     "question": "Apakah kegiatan operasional district dilaksanakan sesuai dengan SOP dan SMP yang berlaku?",
-    "criteria": {
-      "A": "Personel memahami SOP dan SMP yang menjadi acuan dalam pelaksanaan pekerjaan.",
-      "B": "Kegiatan operasional dan pemeliharaan dilaksanakan sesuai dengan SOP dan SMP yang berlaku.",
-      "C": "Bukti pelaksanaan pekerjaan terdokumentasi sesuai ketentuan yang ditetapkan dalam SOP/SMP.",
-      "D": "Dilakukan monitoring atau evaluasi terhadap tingkat kepatuhan pelaksanaan SOP/SMP.",
-      "E": "Terdapat tindak lanjut terhadap ketidaksesuaian atau penyimpangan yang ditemukan dalam pelaksanaan SOP/SMP."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Personel memahami SOP dan SMP yang menjadi acuan dalam pelaksanaan pekerjaan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.3, Annex A A.5.4",
+        "evidence_hint": "Documen Personil lulus e-learning terkait SOP/SMP/Kebijakan yang ada"
+      },
+      {
+        "code": "B",
+        "title": "Kegiatan operasional dan pemeliharaan dilaksanakan sesuai dengan SOP dan SMP yang berlaku.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.5.37",
+        "evidence_hint": "Documen foto dan video untuk pelaksanaan operasional sudah sesuai SOP/SMP"
+      },
+      {
+        "code": "C",
+        "title": "Bukti pelaksanaan pekerjaan terdokumentasi sesuai ketentuan yang ditetapkan dalam SOP/SMP.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": "Monthly report maintenance asset sesuai dengan SOP/SMP"
+      },
+      {
+        "code": "D",
+        "title": "Dilakukan monitoring atau evaluasi terhadap tingkat kepatuhan pelaksanaan SOP/SMP.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.36",
+        "evidence_hint": "Foto dokumentasi teknisi dilengkapi dengan watermark koordinat (GPS) dan waktu serta kelengkapan APD"
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindak lanjut terhadap ketidaksesuaian atau penyimpangan yang ditemukan dalam pelaksanaan SOP/SMP.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.2, Annex A A.5.36",
+        "evidence_hint": "Dokumen MoM atau List improvement untuk ketidaksesuain operasional dengan SOP/SMP yang ada"
+      }
+    ]
   },
   {
     "row": 12,
-    "domain": "POLICY & GUIDENCE",
-    "weight_domain": null,
-    "references": null,
+    "domain": "POLICY & GUIDANCE",
     "practice_area": "SOP/SMP COMPLIANCE",
-    "weight_practice_area": null,
     "scope": "Review dan Pembaruan Dokumen",
     "perangkat": null,
     "question": "Apakah SOP, SMP, dan dokumen operasional direview serta diperbarui secara berkala agar tetap relevan dengan kebutuhan operasional?",
-    "criteria": {
-      "A": "Terdapat mekanisme dan jadwal review dokumen yang ditetapkan.",
-      "B": "Review SOP, SMP, dan dokumen operasional dilaksanakan sesuai periode yang ditentukan atau saat terjadi perubahan proses bisnis.",
-      "C": "Usulan perubahan, perbaikan, atau penyempurnaan dokumen terdokumentasi dengan baik.",
-      "D": "Hasil review dievaluasi untuk memastikan dokumen tetap sesuai dengan kebutuhan operasional dan regulasi yang berlaku.",
-      "E": "Dokumen yang sudah tidak relevan diperbarui, disosialisasikan, dan diimplementasikan kepada personel terkait."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Terdapat mekanisme dan jadwal review dokumen yang ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5.2/7.5.3, Annex A A.5.37",
+        "evidence_hint": "Document usulan perubahan klausul/prosedur kerja/SOP/SMP tertentu yang dinilai perlu diperbarui."
+      },
+      {
+        "code": "B",
+        "title": "Review SOP, SMP, dan dokumen operasional dilaksanakan sesuai periode yang ditentukan atau saat terjadi perubahan proses bisnis.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5.3/9.1, Annex A A.5.37",
+        "evidence_hint": "Dokumen MoM rapat internal District yang khusus membahas evaluasi kelayakan SOP/SMP berjalan."
+      },
+      {
+        "code": "C",
+        "title": "Usulan perubahan, perbaikan, atau penyempurnaan dokumen terdokumentasi dengan baik.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5.2, Annex A A.5.37",
+        "evidence_hint": "Sosialisasi Documen pembaharuan SOP/SMP kepada seluruh karyawan"
+      },
+      {
+        "code": "D",
+        "title": "Hasil review dievaluasi untuk memastikan dokumen tetap sesuai dengan kebutuhan operasional dan regulasi yang berlaku.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.36",
+        "evidence_hint": "Bukti korespondensi (email resmi, nota dinas, atau undangan rapat koordinasi) antara District dengan unit pengelola regulasi/SOP di tingkat Regional/Pusat TIF untuk membahas standardisasi usulan baru dari lapangan."
+      },
+      {
+        "code": "E",
+        "title": "Dokumen yang sudah tidak relevan diperbarui, disosialisasikan, dan diimplementasikan kepada personel terkait.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/7.5.3, Annex A A.5.36",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 13,
-    "domain": "POLICY & GUIDENCE",
-    "weight_domain": null,
-    "references": null,
+    "domain": "POLICY & GUIDANCE",
     "practice_area": "BUSINESS PROCESS EFFECTIVENESS",
-    "weight_practice_area": null,
     "scope": "Network Operation Control",
     "perangkat": null,
     "question": "Apakah district mengendalikan operasional jaringan secara efektif untuk menjaga kualitas layanan dan meminimalkan gangguan berulang?",
-    "criteria": {
-      "A": "Tersedia mekanisme monitoring, eskalasi, dan penanganan incident jaringan yang terdokumentasi.",
-      "B": "Alarm dan incident jaringan dimonitor serta ditangani sesuai prosedur dan SLA yang ditetapkan.",
-      "C": "Kinerja penanganan gangguan, backlog incident, dan pencapaian SLA dimonitor secara berkala.",
-      "D": "Dilakukan RCA terhadap gangguan mayor atau gangguan berulang untuk mengidentifikasi akar masalah.",
-      "E": "Terdapat tindakan perbaikan untuk mengurangi backlog, meningkatkan SLA, dan menurunkan kejadian gangguan berulang."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Tersedia mekanisme monitoring, eskalasi, dan penanganan incident jaringan yang terdokumentasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.5.24/5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Alarm dan incident jaringan dimonitor serta ditangani sesuai prosedur dan SLA yang ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1 , Annex A A.5.26/8.16",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Kinerja penanganan gangguan, backlog incident, dan pencapaian SLA dimonitor secara berkala.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1 , Annex A A.8.16",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Dilakukan RCA terhadap gangguan mayor atau gangguan berulang untuk mengidentifikasi akar masalah.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1, Annex A A.5.27",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindakan perbaikan untuk mengurangi backlog, meningkatkan SLA, dan menurunkan kejadian gangguan berulang.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2 , Annex A A.5.27",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 14,
-    "domain": "POLICY & GUIDENCE",
-    "weight_domain": null,
-    "references": null,
+    "domain": "POLICY & GUIDANCE",
     "practice_area": "BUSINESS PROCESS EFFECTIVENESS",
-    "weight_practice_area": null,
     "scope": "Infrastructure & Facility Management",
     "perangkat": null,
     "question": "Apakah infrastruktur dan fasilitas pendukung dikelola secara efektif untuk menjaga keandalan operasional dan keberlangsungan layanan?",
-    "criteria": {
-      "A": "Tersedia program preventive maintenance, corrective maintenance, dan pengelolaan kapasitas infrastruktur yang terdokumentasi.",
-      "B": "Kegiatan preventive dan corrective maintenance dilaksanakan sesuai jadwal dan SLA yang ditetapkan.",
-      "C": "Kondisi infrastruktur kritikal dan kapasitas fasilitas dimonitor secara berkala.",
-      "D": "Dilakukan evaluasi terhadap performansi, kapasitas, dan risiko kegagalan infrastruktur.",
-      "E": "Terdapat tindakan mitigasi atau perbaikan untuk mencegah overload, degradasi performansi, atau kegagalan fasilitas"
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Tersedia program preventive maintenance, corrective maintenance, dan pengelolaan kapasitas infrastruktur yang terdokumentasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5.2/7.5.3, Annex A A.5.37",
+        "evidence_hint": "Document program preventive maintenance, corrective maintenance, dan pengelolaan kapasitas infrastruktur yang terdokumentasi."
+      },
+      {
+        "code": "B",
+        "title": "Kegiatan preventive dan corrective maintenance dilaksanakan sesuai jadwal dan SLA yang ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1 , Annex A A.5.37",
+        "evidence_hint": "Document kegiatan preventive dan corrective maintenance dilaksanakan sesuai jadwal dan SLA yang ditetapkan."
+      },
+      {
+        "code": "C",
+        "title": "Kondisi infrastruktur kritikal dan kapasitas fasilitas dimonitor secara berkala.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5.3, Annex A A.5.37",
+        "evidence_hint": "Document report berkala terkait Kondisi infrastruktur kritikal dan kapasitas fasilitas"
+      },
+      {
+        "code": "D",
+        "title": "Dilakukan evaluasi terhadap performansi, kapasitas, dan risiko kegagalan infrastruktur.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": "Document MoM pembahasan evaluasi terhadap performansi, kapasitas, dan risiko kegagalan infrastruktur"
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindakan mitigasi atau perbaikan untuk mencegah overload, degradasi performansi, atau kegagalan fasilitas",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.1 , Annex A A.5.37",
+        "evidence_hint": "Document MoM pembahasan tindakan mitigasi atau perbaikan atas ketidaksesuaian yang terjadi"
+      }
+    ]
   },
   {
     "row": 15,
-    "domain": "POLICY & GUIDENCE",
-    "weight_domain": null,
-    "references": null,
+    "domain": "POLICY & GUIDANCE",
     "practice_area": "BUSINESS PROCESS EFFECTIVENESS",
-    "weight_practice_area": null,
     "scope": "Vendor perfomance management",
     "perangkat": null,
     "question": "Apakah district mengelola dan mengevaluasi performansi vendor secara efektif untuk mendukung pencapaian target operasional?",
-    "criteria": {
-      "A": "Tersedia target performansi, SLA, KPI, dan ruang lingkup pekerjaan vendor yang terdokumentasi.",
-      "B": "Kinerja vendor dimonitor berdasarkan target, SLA, dan kualitas pekerjaan yang telah ditetapkan.",
-      "C": "Dilakukan evaluasi performansi vendor secara berkala dan terdokumentasi.",
-      "D": "Dilakukan analisis terhadap ketidaktercapaian SLA, kualitas pekerjaan, atau permasalahan yang melibatkan vendor.",
-      "E": "Terdapat tindak lanjut, pembinaan, atau rencana perbaikan terhadap vendor yang tidak memenuhi target performansi."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Tersedia target performansi, SLA, KPI, dan ruang lingkup pekerjaan vendor yang terdokumentasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.5.19/ 5.20",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Kinerja vendor dimonitor berdasarkan target, SLA, dan kualitas pekerjaan yang telah ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.5.22",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Dilakukan evaluasi performansi vendor secara berkala dan terdokumentasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A .5.22",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Dilakukan analisis terhadap ketidaktercapaian SLA, kualitas pekerjaan, atau permasalahan yang melibatkan vendor.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.2, Annex A A.5.22",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindak lanjut, pembinaan, atau rencana perbaikan terhadap vendor yang tidak memenuhi target performansi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, Annex A A.5.22",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 16,
-    "domain": "POLICY & GUIDENCE",
-    "weight_domain": null,
-    "references": null,
+    "domain": "POLICY & GUIDANCE",
     "practice_area": "DOCUMENT READINESS",
-    "weight_practice_area": null,
     "scope": "Operational Documentation",
     "perangkat": null,
     "question": "Apakah dokumen operasional yang digunakan dalam pelaksanaan pekerjaan tersedia, terkendali, dan mudah diakses oleh personel terkait?",
-    "criteria": {
-      "A": "Terdapat daftar dan pengendalian dokumen operasional yang digunakan dalam kegiatan district.",
-      "B": "SOP, SMP, instruksi kerja, dan dokumen operasional tersedia serta menggunakan versi yang berlaku.",
-      "C": "Dokumen operasional dapat diakses dan digunakan oleh personel yang membutuhkan.",
-      "D": "Evidence pelaksanaan pekerjaan dan dokumen pendukung terdokumentasi serta tersimpan dengan baik.",
-      "E": "Dilakukan review dan pembaruan dokumen apabila terdapat perubahan proses, kebijakan, atau kebutuhan operasional."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Terdapat daftar dan pengendalian dokumen operasional yang digunakan dalam kegiatan district.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1 , Annex A A.7.13/5.37",
+        "evidence_hint": "Dokumen inventarisasi file SOP, SMP, dan kebijakan aktif lengkap dengan informasi nomor dokumen, tanggal berlaku, dan versi revisi terakhir."
+      },
+      {
+        "code": "B",
+        "title": "SOP, SMP, instruksi kerja, dan dokumen operasional tersedia serta menggunakan versi yang berlaku.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.13",
+        "evidence_hint": "Bukti penggunaan ruang penyimpanan terpusat seperti Teams, OneDrive, atau aplikasi repositori internal TIF) yang memperlihatkan struktur folder SOP/SMP yang teratur dan siap akses."
+      },
+      {
+        "code": "C",
+        "title": "Dokumen operasional dapat diakses dan digunakan oleh personel yang membutuhkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.8.16",
+        "evidence_hint": "Bukti penggunaan Document SOP/SMP dapat di akses oleh karyawan"
+      },
+      {
+        "code": "D",
+        "title": "Evidence pelaksanaan pekerjaan dan dokumen pendukung terdokumentasi serta tersimpan dengan baik.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.30",
+        "evidence_hint": "Dokumentasi MoM pembahasan verifikasi kelengkapan dan validitas Dokumen"
+      },
+      {
+        "code": "E",
+        "title": "Dilakukan review dan pembaruan dokumen apabila terdapat perubahan proses, kebijakan, atau kebutuhan operasional.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, Annex A 5.30/7.13",
+        "evidence_hint": "Bukti tindak lanjut terhadap document yang belum tersedia / sudah tidak berlaku"
+      }
+    ]
   },
   {
     "row": 17,
-    "domain": "POLICY & GUIDENCE",
-    "weight_domain": null,
-    "references": null,
+    "domain": "POLICY & GUIDANCE",
     "practice_area": "DOCUMENT READINESS",
-    "weight_practice_area": null,
     "scope": "Network & Infrastructure Documentation",
     "perangkat": null,
     "question": "Apakah dokumentasi jaringan dan infrastruktur dikelola secara akurat, terkini, dan mendukung operasional serta pengambilan keputusan?",
-    "criteria": {
-      "A": "Terdapat standar dan mekanisme pengelolaan dokumentasi jaringan serta infrastruktur yang ditetapkan.",
-      "B": "Dokumentasi network topology, inventory perangkat, konfigurasi, lisensi, dan data kapasitas dipelihara serta diperbarui sesuai kondisi aktual.",
-      "C": "Perubahan konfigurasi, penambahan perangkat, atau perubahan kapasitas dicatat melalui mekanisme yang ditetapkan.",
-      "D": "Dilakukan verifikasi dan validasi berkala terhadap akurasi dokumentasi jaringan dan infrastruktur.",
-      "E": "Terdapat tindak lanjut terhadap ketidaksesuaian, ketidaklengkapan, atau ketidakakuratan dokumentasi yang ditemukan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Terdapat standar dan mekanisme pengelolaan dokumentasi jaringan serta infrastruktur yang ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Dokumentasi network topology, inventory perangkat, konfigurasi, lisensi, dan data kapasitas dipelihara serta diperbarui sesuai kondisi aktual.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.5.9/8.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Perubahan konfigurasi, penambahan perangkat, atau perubahan kapasitas dicatat melalui mekanisme yang ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/7.5, Annex A A.8.32",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Dilakukan verifikasi dan validasi berkala terhadap akurasi dokumentasi jaringan dan infrastruktur.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.8.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindak lanjut terhadap ketidaksesuaian, ketidaklengkapan, atau ketidakakuratan dokumentasi yang ditemukan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2 , Annex A A.5.36",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 18,
-    "domain": "POLICY & GUIDENCE",
-    "weight_domain": null,
-    "references": null,
+    "domain": "POLICY & GUIDANCE",
     "practice_area": "DOCUMENT READINESS",
-    "weight_practice_area": null,
     "scope": "Supporting Facility Documentation",
     "perangkat": null,
     "question": "Apakah dokumentasi supporting facility dikelola secara lengkap dan mendukung kegiatan operasi serta pemeliharaan?",
-    "criteria": {
-      "A": "Terdapat standar dan kebutuhan dokumentasi untuk supporting facility yang dikelola district.",
-      "B": "Jadwal pemeliharaan, riwayat gangguan, dan dokumen pemeliharaan aset terdokumentasi dengan lengkap.",
-      "C": "Dokumentasi pemeliharaan dan pengelolaan supporting facility diperbarui secara berkala sesuai aktivitas yang dilakukan.",
-      "D": "Dilakukan pemeriksaan terhadap kelengkapan, keakuratan, dan keterkinian dokumentasi supporting facility.",
-      "E": "Terdapat tindak lanjut terhadap dokumen yang tidak lengkap, tidak sesuai, atau belum diperbarui."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Terdapat standar dan kebutuhan dokumentasi untuk supporting facility yang dikelola district.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": "Document dan dokumentasi supporting facility yang dikelola district."
+      },
+      {
+        "code": "B",
+        "title": "Jadwal pemeliharaan, riwayat gangguan, dan dokumen pemeliharaan aset terdokumentasi dengan lengkap.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.13",
+        "evidence_hint": "Document pemeliharaan berkala, riwayat gangguan, dan dokumen pemeliharaan aset lengkap"
+      },
+      {
+        "code": "C",
+        "title": "Dokumentasi pemeliharaan dan pengelolaan supporting facility diperbarui secara berkala sesuai aktivitas yang dilakukan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.7.13",
+        "evidence_hint": "Dokumentasi pemeliharaan dan pengelolaan supporting facility diperbarui secara berkala"
+      },
+      {
+        "code": "D",
+        "title": "Dilakukan pemeriksaan terhadap kelengkapan, keakuratan, dan keterkinian dokumentasi supporting facility.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.36",
+        "evidence_hint": "Pemeriksaan berkala atas kelengkapan, keakuratan, dan keterkinian supporting facility."
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindak lanjut terhadap dokumen yang tidak lengkap, tidak sesuai, atau belum diperbarui.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2 , Annex A A.5.36",
+        "evidence_hint": "Document/ MoM pembahasan tindak lanjut atas dokumen yang tidak lengkap, tidak sesuai, atau belum diperbarui."
+      }
+    ]
   },
   {
     "row": 19,
     "domain": "RESOURCE MANAGEMENT",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "HR FULLFILMENT",
-    "weight_practice_area": null,
+    "practice_area": "HR FULFILLMENT",
     "scope": "Manpower Planning",
     "perangkat": null,
-    "question": "Apakah district melakukan perencanaan dan pengelolaan kebutuhan personel secara efektif untuk mendukung pencapaian target operasional?",
-    "criteria": {
-      "A": "District memiliki perencanaan kebutuhan personel yang terdokumentasi berdasarkan beban kerja, cakupan layanan, dan kebutuhan organisasi.",
-      "B": "Terdapat pemetaan struktur organisasi, posisi, dan kompetensi yang dibutuhkan untuk mendukung operasional district.",
-      "C": "Kebutuhan pemenuhan personel, termasuk posisi yang masih vacant, diidentifikasi dan diusulkan sesuai mekanisme yang berlaku.",
-      "D": "District melakukan review berkala terhadap kecukupan personel, distribusi beban kerja, dan kesesuaian kebutuhan organisasi.",
-      "E": "Terdapat tindak lanjut terhadap gap manpower yang ditemukan melalui redistribusi, pengembangan kompetensi, optimalisasi sumber daya, atau usulan pemenuhan personel."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "question": "Apakah District mengelola pemenuhan, distribusi, dan utilisasi personel secara optimal untuk mendukung kelancaran operasional di wilayahnya?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "District mampu mengoptimalkan jumlah personel yang ada (organik/mitra/prohire). District juga aktif melakukan monitoring absensi, lembur (overtime), dan sharing resources jika diperlukan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.1/7.2 , Annex A A.5.2",
+        "evidence_hint": "Peta Distribusi / Penempatan Karyawan di tiap sub-unit/site di dalam district dan/atau Laporan utilisasi lembur (Overtime Monitoring Report) yang membuktikan penggunaan tenaga kerja efisien dan terkendali."
+      },
+      {
+        "code": "B",
+        "title": "District memiliki mekanisme yang jelas dan cepat dalam mengidentifikasi serta melaporkan kebutuhan tenaga kerja (akibat resign, sakit keras, atau penambahan beban kerja mendadak) ke Regional/Area/HO agar target operasional tidak drop",
+        "reference": "ISO/IEC 27001:2022 Klausul 5.3/7.2, Annex A A.5.2",
+        "evidence_hint": "Dokumen pengajuan Manpower Request (MPR) atau nota dinas usulan penambahan/penggantian personel ke Regional/Area/HO."
+      },
+      {
+        "code": "C",
+        "title": "District memiliki inisiatif memitigasi keterbatasan personel dengan menerapkan sistem backup atau multi-skilling (karyawan memiliki keahlian sekunder untuk saling menggantikan saat kondisi darurat)",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.1, Annex A A.5.4",
+        "evidence_hint": "Skill Matrix atau Matriks Kompetensi personel di District (Multi job / Multi Skilling Karyawan)"
+      }
+    ]
   },
   {
     "row": 20,
     "domain": "RESOURCE MANAGEMENT",
-    "weight_domain": null,
-    "references": null,
     "practice_area": "CAPABILITY (KNOWLEDGE & SKILL)",
-    "weight_practice_area": null,
     "scope": "Competency management",
     "perangkat": null,
-    "question": "Apakah district mengelola kompetensi personel secara terencana untuk mendukung kebutuhan operasional dan pencapaian target district?",
-    "criteria": {
-      "A": "District memiliki standar kompetensi dan kebutuhan kemampuan yang diperlukan untuk setiap fungsi atau peran operasional.",
-      "B": "Dilakukan identifikasi gap kompetensi dan kebutuhan pengembangan personel secara berkala.",
-      "C": "Penempatan dan penugasan personel mempertimbangkan kompetensi yang dibutuhkan untuk menjalankan pekerjaannya.",
-      "D": "District Manager melakukan evaluasi kompetensi personel secara berkala untuk memastikan kesesuaian dengan kebutuhan operasional.",
-      "E": "Terdapat tindak lanjut terhadap gap kompetensi melalui pelatihan, coaching, mentoring, sertifikasi, atau metode pengembangan lainnya."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "question": "Apakah District memastikan seluruh personel memiliki kesiapan kompetensi, dan sertifikasi yang valid untuk melaksanakan tugas operasional secara aman dan sesuai standar?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "District proaktif mengelola data personil di lapangan yang bekerja dengan lisensi atau sertifikasi kompetensi terutama untuk posisi-posisi kritikal/teknis (misal: K3, sertifikasi jaringan, perangkat khusus TIF)",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1 , Annex A A.5.24/5.37",
+        "evidence_hint": "Matriks Monitoring Sertifikasi Karyawan (Sertifikasi Kompetensi, SIO, Lisensi Kerja) lengkap dengan tanggal masa berlaku."
+      },
+      {
+        "code": "B",
+        "title": "District proaktif mengajukan kebutulan pelatihan/sharing bersama/Briefing untuk tim di lapangan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.5.26/8.16",
+        "evidence_hint": "Bukti Pengajuan Sertifikasi ke Regional/Area/HO sebelum masa berlakunya habis."
+      },
+      {
+        "code": "C",
+        "title": "District memastikan personel melakukan Sharing knowledge ke rekan kerja yang lain ketika selesai mengikuti pelatihan dari HO/eksternal",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.8.16",
+        "evidence_hint": "Dokumentasi Pelaksanaan Knowledge Sharing Program atau (Daftar hadir, foto kegiatan, dan materi/topik yang dibahas) dan/atau Laporan Transfer Knowledge dari karyawan yang baru pulang training kepada tim di District."
+      }
+    ]
   },
   {
     "row": 21,
     "domain": "RESOURCE MANAGEMENT",
-    "weight_domain": null,
-    "references": null,
     "practice_area": "CAPABILITY (KNOWLEDGE & SKILL)",
-    "weight_practice_area": null,
     "scope": "Training & Development",
     "perangkat": null,
-    "question": "Apakah district melaksanakan program pelatihan dan pengembangan secara efektif untuk meningkatkan kompetensi personel?",
-    "criteria": {
-      "A": "Kebutuhan pelatihan dan pengembangan personel diidentifikasi serta direncanakan berdasarkan kebutuhan operasional dan hasil evaluasi kompetensi.",
-      "B": "Personel mengikuti pelatihan, sertifikasi, coaching, mentoring, atau program pengembangan sesuai kebutuhan yang telah ditetapkan.",
-      "C": "Hasil pelatihan didiseminasikan atau diterapkan dalam aktivitas operasional sehari-hari.",
-      "D": "Efektivitas pelatihan dievaluasi untuk mengukur peningkatan kompetensi maupun dampaknya terhadap kinerja.",
-      "E": "Terdapat tindak lanjut untuk menutup gap kompetensi yang masih ditemukan setelah pelaksanaan program pengembangan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "question": "Apakah District secara aktif mengidentifikasi kebutuhan pengembangan tim dan memfasilitasi program pembelajaran mandiri untuk meningkatkan kualitas kerja di lapangan?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "District aktif mengelola secara berkala pelatihan yang dibutuhkan oleh tim lapangan berdasarkan kendala operasional (misal: troubleshooting perangkat tertentu, teknik K3 baru, dll.) untuk diusulkan ke Regional/Area/HO",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.2/7.5, Annex A A.5.37",
+        "evidence_hint": "Dokumen Usulan kebutuhan pelatihan personel District yang dikirimkan ke unit Regional/Area/HO dan/atau Minutes of Meeting (MoM) pembahasan internal District yang mengidentifikasi adanya gap competency yang perlu dicarikan solusi pelatihannya."
+      },
+      {
+        "code": "B",
+        "title": "Ketika ada undangan training dari HO/Area/Regional, District mampu mengelola penjadwalan dinas atau shift kerja dengan baik dan memastikan karyawan yang diundang bisa hadir 100%",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": "Data Kehadiran Kepesertaan Training (Jumlah undangan dari pusat vs realisasi karyawan District yang hadir) dan/atau Penjadwalan Shift Pengganti yang membuktikan bahwa operasional tetap berjalan lancar saat rekan kerjanya sedang dikirim untuk training"
+      },
+      {
+        "code": "C",
+        "title": "District aktif mendorong, memonitor, dan memfasilitasi karyawannya untuk memanfaatkan platform e-learning internal yang dimiliki perusahaan secara mandiri di sela-sela waktu operasional.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.2/7.3, Annex A A.6.3",
+        "evidence_hint": "Laporan Progress Penyelesaian Kelas Digital (e-learning/webinar) yang wajib diselesaikan oleh tim di District dan/atau Program Apresiasi / Reminder Internal dari District Manager yang secara rutin mengingatkan tim untuk menyelesaikan modul pembelajaran mereka."
+      }
+    ]
   },
   {
     "row": 22,
     "domain": "RESOURCE MANAGEMENT",
-    "weight_domain": null,
-    "references": null,
     "practice_area": "CAPABILITY (KNOWLEDGE & SKILL)",
-    "weight_practice_area": null,
     "scope": "Critical Knowledge Management",
     "perangkat": null,
-    "question": "Apakah pengetahuan kritikal yang mendukung operasional district terdokumentasi, dipelihara, dan ditransfer secara efektif kepada personel terkait?",
-    "criteria": {
-      "A": "District mengidentifikasi knowledge, kompetensi, dan aktivitas kritikal yang harus dipertahankan untuk mendukung operasional.",
-      "B": "Dokumentasi knowledge, lesson learned, prosedur penanganan gangguan kritikal, dan referensi teknis tersedia serta mudah diakses.",
-      "C": "Dilaksanakan knowledge sharing, transfer knowledge, atau program pendampingan untuk memastikan pengetahuan kritikal dipahami oleh personel.",
-      "D": "Pemahaman personel terhadap knowledge kritikal dan kesiapan penanganan gangguan dievaluasi secara berkala.",
-      "E": "Knowledge base, lesson learned, dan kebutuhan sertifikasi diperbarui berdasarkan pengalaman operasional, perubahan teknologi, atau kejadian mayor yang terjadi."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "question": "Apakah District memiliki pendokumentasian, dan transfer knowledge secara internal district untuk mencegah hilangnya keahlian operasional (loss of knowledge) di wilayah kerja nya?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "District secara aktif mengidentifikasi proses kerja atau penanganan kendala di lapangan yang sifatnya spesifik/langka, lalu mendokumentasikannya ke dalam panduan praktis lokal (bukan sekadar SOP formal dari pusat, melainkan tips & tricks lapangan, logbook penanganan kasus kronis, atau troubleshooting guide lokal).",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.2/7.5, Annex A A.5.37",
+        "evidence_hint": "Buku Saku / Troubleshooting Logbook / Lembar Kerja Mandiri yang disusun oleh tim teknis District untuk mencatat kasus-kasus gangguan unik di lapangan dan cara penyelesaiannya"
+      },
+      {
+        "code": "B",
+        "title": "District memiliki prosedural yang ketat dan konsisten bagi setiap personel yang akan pindah tugas atau keluar (exit), untuk melakukan transfer pengetahuan dan dokumen kerja kepada penggantinya agar operasional tidak lumpuh setelah ditinggalkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": "Berita Acara Serah Terima Jabatan (BAST) atau Handover Checklist yang memuat poin-poin transfer dokumen penting, akses sistem, dan status proyek berjalan"
+      },
+      {
+        "code": "C",
+        "title": "District mendata personel yang memiliki keahlian khusus atau memegang nomor kontak penting/darurat",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.2/7.3 , Annex A A.6.3",
+        "evidence_hint": "Grup Koordinasi Darurat / Matrix Eskalasi Insiden tingkat District / List Kontak atau nomor penting yang menunjukkan alur komunikasi jika terjadi kendala operasional yang kritis."
+      }
+    ]
   },
   {
     "row": 23,
     "domain": "RESOURCE MANAGEMENT",
-    "weight_domain": null,
-    "references": null,
     "practice_area": "ASSET INVENTORY",
-    "weight_practice_area": null,
     "scope": "Assets Registration & Control",
     "perangkat": null,
     "question": "Apakah aset network dan supporting facility terdaftar, teridentifikasi, dan dikelola secara akurat dalam sistem inventaris perusahaan?",
-    "criteria": {
-      "A": "District memiliki mekanisme dan standar pengelolaan inventaris aset yang mengacu pada ketentuan perusahaan.",
-      "B": "Seluruh aset network dan supporting facility terdaftar dalam sistem inventaris yang ditetapkan serta memiliki identitas yang jelas.",
-      "C": "Ownership, lokasi, dan status aset ditetapkan serta dikelola sesuai tanggung jawab yang berlaku.",
-      "D": "Data inventaris aset diverifikasi dan diperbarui secara berkala untuk memastikan kesesuaian antara data dan kondisi aktual.",
-      "E": "Terdapat tindak lanjut terhadap ketidaksesuaian data, aset tidak teridentifikasi, atau perubahan kondisi aset yang ditemukan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "District memiliki mekanisme dan standar pengelolaan inventaris aset yang mengacu pada ketentuan perusahaan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.9/5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Seluruh aset network dan supporting facility terdaftar dalam sistem inventaris yang ditetapkan serta memiliki identitas yang jelas.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Ownership, lokasi, dan status aset ditetapkan serta dikelola sesuai tanggung jawab yang berlaku.",
+        "reference": "ISO/IEC 27001:2022 Klausul 5.3/8.1, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Data inventaris aset diverifikasi dan diperbarui secara berkala untuk memastikan kesesuaian antara data dan kondisi aktual.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindak lanjut terhadap ketidaksesuaian data, aset tidak teridentifikasi, atau perubahan kondisi aset yang ditemukan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2 , Annex A A.5.9",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 24,
     "domain": "RESOURCE MANAGEMENT",
-    "weight_domain": null,
-    "references": null,
     "practice_area": "ASSET INVENTORY",
-    "weight_practice_area": null,
     "scope": "Assets Lifecycle Management",
     "perangkat": null,
     "question": "Apakah siklus hidup aset dikelola secara efektif untuk menjaga keandalan operasional dan keberlanjutan layanan?",
-    "criteria": {
-      "A": "District memiliki perencanaan pemeliharaan, penggantian, dan pengakhiran masa pakai aset yang terdokumentasi.",
-      "B": "Pemeliharaan aset dilaksanakan sesuai jadwal dan ketentuan yang berlaku.",
-      "C": "Kondisi aset, usia pakai, dan risiko kegagalan dipantau serta dievaluasi secara berkala.",
-      "D": "Aset yang mendekati end-of-life atau memiliki risiko tinggi diidentifikasi dan diprioritaskan untuk tindak lanjut.",
-      "E": "Terdapat rencana penggantian, revitalisasi, atau disposal aset yang dilaksanakan sesuai prosedur perusahaan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "District memiliki perencanaan pemeliharaan, penggantian, dan pengakhiran masa pakai aset yang terdokumentasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/7.5 , Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Pemeliharaan aset dilaksanakan sesuai jadwal dan ketentuan yang berlaku.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Kondisi aset, usia pakai, dan risiko kegagalan dipantau serta dievaluasi secara berkala.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.7.13/5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Aset yang mendekati end-of-life atau memiliki risiko tinggi diidentifikasi dan diprioritaskan untuk tindak lanjut.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Terdapat rencana penggantian, revitalisasi, atau disposal aset yang dilaksanakan sesuai prosedur perusahaan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, Annex A A.7.14",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 25,
     "domain": "RESOURCE MANAGEMENT",
-    "weight_domain": null,
-    "references": null,
     "practice_area": "ASSET INVENTORY",
-    "weight_practice_area": null,
     "scope": "Assets Utilization",
     "perangkat": null,
     "question": "Apakah aset dimanfaatkan secara optimal untuk mendukung kebutuhan operasional district?",
-    "criteria": {
-      "A": "District memiliki parameter atau mekanisme untuk memantau tingkat utilisasi aset yang dikelola.",
-      "B": "Pemanfaatan aset network dan supporting facility dimonitor secara berkala.",
-      "C": "Dilakukan evaluasi terhadap tingkat utilisasi aset untuk mengidentifikasi aset idle, underutilized, atau overutilized.",
-      "D": "Dampak utilisasi aset terhadap kebutuhan operasional, kapasitas, dan efisiensi dievaluasi secara berkala.",
-      "E": "Terdapat tindakan optimalisasi, redistribusi, pemanfaatan kembali, atau penghapusan terhadap aset yang tidak dimanfaatkan secara optimal."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "District memiliki parameter atau mekanisme untuk memantau tingkat utilisasi aset yang dikelola.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/7.5, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Pemanfaatan aset network dan supporting facility dimonitor secara berkala.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Dilakukan evaluasi terhadap tingkat utilisasi aset untuk mengidentifikasi aset idle, underutilized, atau overutilized.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Dampak utilisasi aset terhadap kebutuhan operasional, kapasitas, dan efisiensi dievaluasi secara berkala.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.9/7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindakan optimalisasi, redistribusi, pemanfaatan kembali, atau penghapusan terhadap aset yang tidak dimanfaatkan secara optimal.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2 , Annex A A.5.9/7.14",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 26,
-    "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "BIR",
-    "weight_practice_area": null,
-    "scope": "Kebersihan dan Kerapihan Ruangan",
-    "perangkat": "ALL NE",
-    "question": "Apakah kondisi ruangan perangkat dalam keadaan bersih, indah dan rapih ?",
-    "criteria": {
-      "A": "Kondisi ruangan (lantai, dinding, plafon) bersih dan bebas dari debu, sampah, serta kotoran yang dapat mengganggu operasional.",
-      "B": "Tidak terdapat kebocoran, rembesan air, atau kerusakan bangunan yang berpotensi mengganggu perangkat.",
-      "C": "Barang, alat kerja, alat ukur, dokumen, dan material tersimpan rapi sesuai lokasi penyimpanan yang ditetapkan serta mudah ditemukan saat diperlukan.",
-      "D": "Suhu dan kelembaban ruangan sesuai spesifikasi teknis perangkat atau memiliki sirkulasi udara yang memadai untuk lokasi non-AC.",
-      "E": "Sistem penerangan berfungsi dengan baik dan mencukupi untuk mendukung kegiatan operasi dan pemeliharaan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "domain": "RESOURCE MANAGEMENT",
+    "practice_area": "BUDGET MANAGEMENT",
+    "scope": "Budget Planning",
+    "perangkat": null,
+    "question": "Apakah District Manager menyusun kebutuhan anggaran operasional district secara terencana?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Dokumen kebutuhan anggaran tersedia.",
+        "reference": "ISO/IEC 27001:2022 Klausul 6.2/7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Anggaran mencakup seluruh aktivitas operasional district.",
+        "reference": "ISO/IEC 27001:2022 Klausul 6.2/7.1, Annex A A.5.4",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Anggaran disusun berdasarkan kebutuhan operasional yang teridentifikasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 6.1/6.2, Annex A A.5.7",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Anggaran dilengkapi justifikasi kebutuhan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 6.2/7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Anggaran direview dan diajukan sesuai siklus perencanaan perusahaan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.3/10.1, Annex A A.5.4",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 27,
-    "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "BIR",
-    "weight_practice_area": null,
-    "scope": null,
-    "perangkat": "ALL NE",
-    "question": "Apakah kondisi perangkat dalam keadaan bersih, indah dan rapih ?",
-    "criteria": {
-      "A": "Kondisi bagian dalam dan bagian luar perangkat bersih serta instalasi perkabelan tertata rapi.",
-      "B": "Tersedia checklist, logbook pengukuran, atau catatan kondisi perangkat yang terdokumentasi dan terpelihara dengan baik.",
-      "C": "Labeling perangkat, hostname, fungsi perangkat, kardex perangkat, titik ukur, dan tanda peringatan tersedia, jelas, dan terpasang sesuai fungsinya.",
-      "D": "Petunjuk pengoperasian, blok diagram, one line diagram, atau dokumen referensi teknis tersedia dan mudah diakses oleh petugas.",
-      "E": "Lampu indikator, meter pengukuran, alarm, atau fitur early warning berfungsi normal serta menunjukkan kondisi operasi perangkat dengan benar."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "domain": "RESOURCE MANAGEMENT",
+    "practice_area": "BUDGET MANAGEMENT",
+    "scope": "Budget Visibility",
+    "perangkat": null,
+    "question": "Apakah District Manager memiliki informasi yang memadai mengenai alokasi dan realisasi anggaran district?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Data alokasi anggaran tersedia.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/7.1, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Data realisasi anggaran tersedia.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/9.1, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Data dapat ditelusuri per kegiatan atau program.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/9.1, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Informasi realisasi diperbarui secara berkala min. per kuartal.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.4",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "District Manager dapat menunjukkan posisi anggaran yang masih tersedia dan yang telah digunakan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/9.3, Annex A A.5.4",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 28,
-    "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "BIR",
-    "weight_practice_area": null,
-    "scope": "Log Book Kejadian / Event",
-    "perangkat": "ALL NE",
-    "question": "Apakah terdapat dokumentasi yang rapih terkait  kejadian atau event ?",
-    "criteria": {
-      "A": "Log book tersedia dan digunakan.",
-      "B": "Log book diisi untuk setiap kejadian/event yang relevan.",
-      "C": "Isi log book lengkap dan informatif.",
-      "D": "Hasil log book direkap dan dibahas dalam forum evaluasi operasional (bulanan/mingguan).",
-      "E": "Terdapat tindakan perbaikan atau pencegahan yang ditetapkan dan dimonitor penyelesaiannya."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "domain": "RESOURCE MANAGEMENT",
+    "practice_area": "BUDGET MANAGEMENT",
+    "scope": "Budget Utilization Effectiveness",
+    "perangkat": null,
+    "question": "Apakah anggaran district digunakan secara efektif untuk mendukung pencapaian target operasional?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Anggaran digunakan untuk aktivitas yang mendukung operasional district.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/6.2, Annex A A.5.4",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Terdapat keterkaitan antara penggunaan anggaran dan target operasional.",
+        "reference": "ISO/IEC 27001:2022 Klausul 6.2/9.1, Annex A A.5.4",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Program yang didanai menghasilkan output yang terukur.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.4",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Realisasi anggaran tidak menghambat pencapaian SLA atau KPI.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/9.3, Annex A A.5.4",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Terdapat evaluasi manfaat penggunaan anggaran.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.1, Annex A A.5.4",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 29,
-    "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "BIR",
-    "weight_practice_area": null,
-    "scope": "Perkabelan",
-    "perangkat": "ALL NE",
-    "question": "Apakah instalasi perkabelan terkelola dengan baik dan mendukung kegiatan operasional ?",
-    "criteria": {
-      "A": "Alur kabel tersusun rapi, tidak terdapat kabel yang melintang atau berpotensi membahayakan, serta ditempatkan sesuai jalur yang ditetapkan.",
-      "B": "Terminasi kabel terpasang dengan baik, kencang, tidak berkarat, dan dalam kondisi layak operasi.",
-      "C": "Pelabelan kabel tersedia, jelas, informatif, dan sesuai dengan identitas serta fungsi kabel yang digunakan.",
-      "D": "Gambar layout kabel, one line diagram, atau dokumentasi jalur kabel tersedia, akurat, dan mudah diakses oleh petugas.",
-      "E": "Dilakukan pemeriksaan dan pemutakhiran berkala terhadap kondisi fisik, terminasi, pelabelan, dan dokumentasi perkabelan serta terdapat tindak lanjut atas temuan yang ditemukan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "domain": "RESOURCE MANAGEMENT",
+    "practice_area": "TOOLS/EQUIPMENT MANAGEMENT",
+    "scope": "Tools Availability",
+    "perangkat": null,
+    "question": "Apakah tools dan equipment yang dibutuhkan tersedia untuk mendukung operasional district?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Inventory tools tersedia.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.1/7.5, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Seluruh tools kritikal tercatat dalam inventory.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.1, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Status ketersediaan tools terdokumentasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/9.1, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Ketersediaan tools dimonitor secara berkala",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.5.4",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Tidak terdapat kekurangan tools kritikal yang menghambat operasional.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, Annex A A.5.9",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 30,
-    "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "BIR",
-    "weight_practice_area": null,
-    "scope": "Kondisi Tempat Penyimpanan Barang",
-    "perangkat": "ALL NE",
-    "question": "Apakah tempat penyimpanan barang dan alat kerja dikelola dengan baik dan tertata rapi ?",
-    "criteria": {
-      "A": "Kondisi ruang penyimpanan bersih, rapi, bebas kebocoran, memiliki penerangan dan sirkulasi udara yang memadai.",
-      "B": "Lemari, rak, meja, dan media penyimpanan tertata dengan baik serta dilengkapi tanda peringatan yang diperlukan.",
-      "C": "Barang, sparepart, alat ukur, dan peralatan kerja tersusun sesuai pengelompokan yang ditetapkan serta mudah ditemukan saat diperlukan.",
-      "D": "Barang, rak, atau lokasi penyimpanan memiliki identifikasi/label yang jelas dan informatif.",
-      "E": "Pencatatan keluar-masuk barang dilakukan secara tertib dan saldo fisik sesuai dengan data inventaris atau sistem yang digunakan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "domain": "RESOURCE MANAGEMENT",
+    "practice_area": "TOOLS/EQUIPMENT MANAGEMENT",
+    "scope": "Tools Healthiness",
+    "perangkat": null,
+    "question": "Apakah tools dan equipment berada dalam kondisi yang layak digunakan?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Terdapat pemeriksaan kondisi tools secara berkala.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Hasil pemeriksaan terdokumentasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Tools yang rusak atau tidak layak teridentifikasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Terdapat tindak lanjut terhadap tools yang rusak atau tidak layak.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Persentase tools dalam kondisi baik memenuhi target perusahaan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/9.3, Annex A A.5.4",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 31,
-    "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "BIR",
-    "weight_practice_area": null,
-    "scope": "Infrastruktur Pendukung Site",
-    "perangkat": "-",
-    "question": "Apakah infrastruktur pendukung site terpelihara dengan baik dan mendukung operasional ?",
-    "criteria": {
-      "A": "Access road dapat dilalui dengan aman dan batas jalan terlihat jelas.",
-      "B": "Halaman dan lingkungan site bersih, rapi, serta bebas dari potensi gangguan operasional.",
-      "C": "Pagar, gerbang, dan pembatas area dalam kondisi baik dan berfungsi sebagaimana mestinya.",
-      "D": "Sistem drainase, parit, atau saluran air terpelihara dengan baik dan tidak menimbulkan genangan.",
-      "E": "Dilakukan pemeriksaan dan pemeliharaan berkala terhadap infrastruktur pendukung site."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "domain": "RESOURCE MANAGEMENT",
+    "practice_area": "TOOLS/EQUIPMENT MANAGEMENT",
+    "scope": "Tools Governance & Maintenance",
+    "perangkat": null,
+    "question": "Apakah tools dan equipment dikelola dan dipelihara sesuai ketentuan yang berlaku?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Terdapat prosedur pengelolaan/maintenance tools.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Terdapat jadwal pemeliharaan atau kalibrasi tools yang dipersyaratkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Pemeliharaan atau kalibrasi dilaksanakan sesuai jadwal.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Riwayat pemeliharaan atau kalibrasi terdokumentasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Hasil pemeliharaan atau kalibrasi digunakan untuk memastikan keandalan tools.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.1, Annex A A.7.13",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 32,
     "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
     "practice_area": "BIR",
-    "weight_practice_area": null,
-    "scope": "Bangunan dan Fasilitas Pendukung",
-    "perangkat": "-",
-    "question": "Apakah bangunan dan fasilitas pendukung site dalam kondisi baik, aman, dan layak digunakan?",
-    "criteria": {
-      "A": "Kondisi gedung atau pos pengamanan terawat dengan baik.",
-      "B": "Tidak terdapat kebocoran, kerusakan struktural, atau kondisi yang berpotensi mengganggu operasional.",
-      "C": "Penerangan ruangan dan lingkungan berfungsi dengan baik.",
-      "D": "Area kerja, penyimpanan, dan fasilitas pendukung tertata rapi dan bersih.",
-      "E": "Dilakukan pemeriksaan dan pemeliharaan berkala terhadap bangunan dan fasilitas pendukung."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "scope": "Kebersihan dan Kerapihan Ruangan",
+    "perangkat": "ALL NE",
+    "question": "Apakah kondisi ruangan perangkat dalam keadaan bersih, indah dan rapih ?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Kondisi ruangan (lantai, dinding, plafon) bersih dan bebas dari debu, sampah, serta kotoran yang dapat mengganggu operasional.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/7.5, Annex A A.7.8/5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Tidak terdapat kebocoran, rembesan air, atau kerusakan bangunan yang berpotensi mengganggu perangkat.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1 , Annex A A.7.8",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Barang, alat kerja, alat ukur, dokumen, dan material tersimpan rapi sesuai lokasi penyimpanan yang ditetapkan serta mudah ditemukan saat diperlukan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Suhu dan kelembaban ruangan sesuai spesifikasi teknis perangkat atau memiliki sirkulasi udara yang memadai untuk lokasi non-AC.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.8",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Sistem penerangan berfungsi dengan baik dan mencukupi untuk mendukung kegiatan operasi dan pemeliharaan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.8",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 33,
     "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
     "practice_area": "BIR",
-    "weight_practice_area": null,
-    "scope": "Sarana Pendukung Opersional",
-    "perangkat": "-",
-    "question": "Apakah sarana pendukung operasional dikelola dan dipelihara dengan baik untuk mendukung keberlangsungan layanan?",
-    "criteria": {
-      "A": "Tangki air, tangki BBM, dan sarana pendukung lainnya dalam kondisi baik dan bersih.",
-      "B": "Tidak terdapat kebocoran, korosi, atau kerusakan yang berpotensi mengganggu operasional.",
-      "C": "Indikator, meter, atau alat ukur pendukung berfungsi dengan baik.",
-      "D": "Tersedia pencatatan atau dokumentasi inspeksi dan pemeliharaan.",
-      "E": "Terdapat tindak lanjut terhadap temuan hasil inspeksi atau pemeliharaan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "scope": "Kebersihan dan Kerapihan Perangkat",
+    "perangkat": "ALL NE",
+    "question": "Apakah kondisi perangkat dalam keadaan bersih, indah dan rapih ?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Kondisi bagian dalam dan bagian luar perangkat bersih serta instalasi perkabelan tertata rapi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1 , Annex A A.7.8/7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Tersedia checklist, logbook pengukuran, atau catatan kondisi perangkat yang terdokumentasi dan terpelihara dengan baik.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Labeling perangkat, hostname, fungsi perangkat, kardex perangkat, titik ukur, dan tanda peringatan tersedia, jelas, dan terpasang sesuai fungsinya.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1 , Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Petunjuk pengoperasian, blok diagram, one line diagram, atau dokumen referensi teknis tersedia dan mudah diakses oleh petugas.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Lampu indikator, meter pengukuran, alarm, atau fitur early warning berfungsi normal serta menunjukkan kondisi operasi perangkat dengan benar.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.13",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 34,
     "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "OPERASI DAN PEMELIHARAAN",
-    "weight_practice_area": null,
-    "scope": "Ophar Radio",
-    "perangkat": "Radio",
-    "question": "Apakah operasi dan pemeliharaan perangkat radio dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
-    "criteria": {
-      "A": "Tersedia SOP, SMP, petunjuk kerja, manual book, dan jadwal pemeliharaan yang masih berlaku serta mudah diakses petugas.",
-      "B": "Pemeliharaan harian, mingguan, bulanan, dan tahunan dilaksanakan sesuai jadwal yang ditetapkan.",
-      "C": "Kegiatan operasi dan pemeliharaan terdokumentasi dengan baik, termasuk hasil pemeriksaan perangkat, pengukuran, dan aktivitas lapangan.",
-      "D": "Data alat ukur, sarana kerja, dokumen teknis, backup data, dan dokumen legalitas perangkat (termasuk ISR apabila dipersyaratkan) terkelola dan tervalidasi dengan baik.",
-      "E": "Dilakukan evaluasi berkala terhadap hasil operasi dan pemeliharaan serta terdapat tindak lanjut atas temuan atau ketidaksesuaian yang ditemukan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "practice_area": "BIR",
+    "scope": "Log Book Kejadian / Event",
+    "perangkat": "ALL NE",
+    "question": "Apakah terdapat dokumentasi yang rapih terkait kejadian atau event ?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Log book tersedia dan digunakan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Log book diisi untuk setiap kejadian/event yang relevan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/7.5, Annex A A.5.24/A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Isi log book lengkap dan informatif.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Hasil log book direkap dan dibahas dalam forum evaluasi operasional (bulanan/mingguan).",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/9.3, Annex A A.5.27",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindakan perbaikan atau pencegahan yang ditetapkan dan dimonitor penyelesaiannya.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, Annex A A.5.27",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 35,
     "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "OPERASI DAN PEMELIHARAAN",
-    "weight_practice_area": null,
-    "scope": "Ophar SKSO Optical Network ISP",
-    "perangkat": "Transport",
-    "question": "Apakah operasi dan pemeliharaan perangkat ISP Transport dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
-    "criteria": {
-      "A": "Tersedia prosedur operasi, petunjuk kerja, dokumen teknis, dan jadwal pemeliharaan perangkat yang masih berlaku.",
-      "B": "Kegiatan operasi dan pemeliharaan perangkat dilaksanakan sesuai prosedur dan jadwal yang ditetapkan.",
-      "C": "Kondisi perangkat, patchcord, sarana kerja, dan alat ukur terpelihara dengan baik untuk mendukung operasional perangkat.",
-      "D": "Dokumentasi teknis, konfigurasi, wiring diagram, data interkoneksi, serta hasil pemeliharaan terdokumentasi dan tervalidasi dengan baik.",
-      "E": "Dilakukan evaluasi berkala terhadap hasil operasi dan pemeliharaan serta terdapat tindak lanjut atas temuan atau ketidaksesuaian yang ditemukan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "practice_area": "BIR",
+    "scope": "Perkabelan",
+    "perangkat": "ALL NE",
+    "question": "Apakah instalasi perkabelan terkelola dengan baik dan mendukung kegiatan operasional ?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Alur kabel tersusun rapi, tidak terdapat kabel yang melintang atau berpotensi membahayakan, serta ditempatkan sesuai jalur yang ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.8",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Terminasi kabel terpasang dengan baik, kencang, tidak berkarat, dan dalam kondisi layak operasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1 , Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Pelabelan kabel tersedia, jelas, informatif, dan sesuai dengan identitas serta fungsi kabel yang digunakan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Gambar layout kabel, one line diagram, atau dokumentasi jalur kabel tersedia, akurat, dan mudah diakses oleh petugas.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Dilakukan pemeriksaan dan pemutakhiran berkala terhadap kondisi fisik, terminasi, pelabelan, dan dokumentasi perkabelan serta terdapat tindak lanjut atas temuan yang ditemukan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.1/10.2, Annex A A.7.13",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 36,
     "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "OPERASI DAN PEMELIHARAAN",
-    "weight_practice_area": null,
-    "scope": "Ophar SKSO Perangkat OSP",
-    "perangkat": "Transport",
-    "question": "Apakah operasi dan pemeliharaan perangkat OSP Transport dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
-    "criteria": {
-      "A": "Tersedia sarana kerja, alat ukur, material pendukung, alat keselamatan kerja, serta jadwal operasi dan pemeliharaan yang memadai.",
-      "B": "Kegiatan patroli, inspeksi, pengukuran, dan pemeliharaan jaringan OSP dilaksanakan sesuai prosedur dan jadwal yang ditetapkan.",
-      "C": "Kondisi jalur kabel, tiang, handhole/manhole, joint closure, dan infrastruktur pendukung lainnya terpelihara dengan baik dan siap operasi.",
-      "D": "Hasil patroli, pengukuran, inspeksi, as-built drawing, data jaringan, dan dokumentasi teknis terdokumentasi serta tervalidasi dengan baik.",
-      "E": "Dilakukan evaluasi berkala terhadap kondisi jaringan OSP dan terdapat tindak lanjut terhadap temuan, risiko, atau potensi gangguan yang ditemukan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "practice_area": "BIR",
+    "scope": "Kondisi Tempat Penyimpanan Barang",
+    "perangkat": "ALL NE",
+    "question": "Apakah tempat penyimpanan barang dan alat kerja dikelola dengan baik dan tertata rapi ?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Kondisi ruang penyimpanan bersih, rapi, bebas kebocoran, memiliki penerangan dan sirkulasi udara yang memadai.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.8",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Lemari, rak, meja, dan media penyimpanan tertata dengan baik serta dilengkapi tanda peringatan yang diperlukan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.8",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Barang, sparepart, alat ukur, dan peralatan kerja tersusun sesuai pengelompokan yang ditetapkan serta mudah ditemukan saat diperlukan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Barang, rak, atau lokasi penyimpanan memiliki identifikasi/label yang jelas dan informatif.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Pencatatan keluar-masuk barang dilakukan secara tertib dan saldo fisik sesuai dengan data inventaris atau sistem yang digunakan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/9.1, Annex A A.5.9",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 37,
     "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "OPERASI DAN PEMELIHARAAN",
-    "weight_practice_area": null,
-    "scope": "Ophar Mechanical Electrical (ME)",
-    "perangkat": "DEFA",
-    "question": "Apakah operasi dan pemeliharaan perangkat DEFA dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
-    "criteria": {
-      "A": "Tersedia SOP, SMP, petunjuk kerja, manual book, dan jadwal pemeliharaan yang masih berlaku serta mudah diakses oleh petugas.",
-      "B": "Pemeliharaan harian, mingguan, bulanan, dan tahunan dilaksanakan sesuai jadwal dan prosedur yang ditetapkan.",
-      "C": "Kondisi perangkat, alat ukur, sarana kerja, dan fasilitas pendukung terpelihara dengan baik untuk mendukung operasional perangkat.",
-      "D": "Kegiatan operasi dan pemeliharaan, hasil pengukuran, dokumen teknis, serta data pendukung terdokumentasi dan tervalidasi dengan baik.",
-      "E": "Dilakukan evaluasi berkala terhadap hasil operasi dan pemeliharaan serta terdapat tindak lanjut terhadap temuan, ketidaksesuaian, atau potensi risiko yang ditemukan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "practice_area": "BIR",
+    "scope": "Infrastruktur Pendukung Site",
+    "perangkat": null,
+    "question": "Apakah infrastruktur pendukung site terpelihara dengan baik dan mendukung operasional ?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Access road dapat dilalui dengan aman dan batas jalan terlihat jelas.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.8",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Halaman dan lingkungan site bersih, rapi, serta bebas dari potensi gangguan operasional.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.8",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Pagar, gerbang, dan pembatas area dalam kondisi baik dan berfungsi sebagaimana mestinya.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.1",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Sistem drainase, parit, atau saluran air terpelihara dengan baik dan tidak menimbulkan genangan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.8",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Dilakukan pemeriksaan dan pemeliharaan berkala terhadap infrastruktur pendukung site.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.1, Annex A A.7.13",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 38,
     "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "OPERASI DAN PEMELIHARAAN",
-    "weight_practice_area": null,
-    "scope": "Ophar Service Node",
-    "perangkat": "MSE",
-    "question": "Apakah operasi dan pemeliharaan perangkat Service Node dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
-    "criteria": {
-      "A": "Tersedia prosedur, petunjuk kerja, jadwal pemeliharaan, dan checklist pemeriksaan perangkat yang masih berlaku.",
-      "B": "Kegiatan preventive maintenance dan pemeriksaan perangkat dilaksanakan sesuai jadwal dan prosedur yang ditetapkan.",
-      "C": "Kondisi fisik perangkat, sistem pendukung, alarm, dan parameter operasional dipelihara untuk memastikan perangkat beroperasi secara normal.",
-      "D": "Hasil pemeriksaan, pengukuran, checklist pemeliharaan, dan dokumentasi teknis terdokumentasi serta tervalidasi dengan baik.",
-      "E": "Dilakukan evaluasi berkala terhadap hasil pemeliharaan dan terdapat tindak lanjut terhadap temuan, alarm berulang, atau potensi gangguan yang ditemukan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "practice_area": "BIR",
+    "scope": "Bangunan dan Fasilitas Pendukung",
+    "perangkat": null,
+    "question": "Apakah bangunan dan fasilitas pendukung site dalam kondisi baik, aman, dan layak digunakan?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Kondisi gedung atau pos pengamanan terawat dengan baik.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.8",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Tidak terdapat kebocoran, kerusakan struktural, atau kondisi yang berpotensi mengganggu operasional.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.8",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Penerangan ruangan dan lingkungan berfungsi dengan baik.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.8",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Area kerja, penyimpanan, dan fasilitas pendukung tertata rapi dan bersih.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Dilakukan pemeriksaan dan pemeliharaan berkala terhadap bangunan dan fasilitas pendukung.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.1, Annex A A.7.13",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 39,
     "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "OPERASI DAN PEMELIHARAAN",
-    "weight_practice_area": null,
-    "scope": "Ophar IP Network",
-    "perangkat": "CSO",
-    "question": "Apakah operasi dan pemeliharaan perangkat IP Network dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
-    "criteria": {
-      "A": "Tersedia prosedur, petunjuk kerja, parameter monitoring, dan jadwal pemeliharaan yang digunakan untuk mengelola perangkat IP Network.",
-      "B": "Monitoring dan pemeliharaan perangkat dilaksanakan secara berkala untuk memastikan kondisi lingkungan, perangkat, dan layanan tetap beroperasi normal.",
-      "C": "Parameter kesehatan perangkat seperti temperatur, CPU utilization, memory utilization, uptime, backup konfigurasi, routing, dan redundancy dimonitor serta dianalisis secara berkala.",
-      "D": "Hasil monitoring, pengukuran, konfigurasi, backup data, dan aktivitas pemeliharaan terdokumentasi serta tervalidasi dengan baik.",
-      "E": "Dilakukan evaluasi dan tindak lanjut terhadap alarm, degradasi performansi, kapasitas, kegagalan redundancy, atau potensi gangguan yang teridentifikasi."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "practice_area": "BIR",
+    "scope": "Sarana Pendukung Opersional",
+    "perangkat": null,
+    "question": "Apakah sarana pendukung operasional dikelola dan dipelihara dengan baik untuk mendukung keberlangsungan layanan?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Tangki air, tangki BBM, dan sarana pendukung lainnya dalam kondisi baik dan bersih.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Tidak terdapat kebocoran, korosi, atau kerusakan yang berpotensi mengganggu operasional.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.13/7.8",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Indikator, meter, atau alat ukur pendukung berfungsi dengan baik.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Tersedia pencatatan atau dokumentasi inspeksi dan pemeliharaan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindak lanjut terhadap temuan hasil inspeksi atau pemeliharaan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, Annex A A.7.13",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 40,
     "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
     "practice_area": "OPERASI DAN PEMELIHARAAN",
-    "weight_practice_area": null,
-    "scope": "Ophar Access Network",
-    "perangkat": "ANO",
-    "question": "Apakah operasi dan pemeliharaan perangkat Access Network dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
-    "criteria": {
-      "A": "Tersedia prosedur, petunjuk kerja, standar pemeliharaan, dan jadwal pemeliharaan perangkat Access Network yang masih berlaku.",
-      "B": "Pemeliharaan perangkat OLT, FTM, ODC, dan infrastruktur pendukung dilaksanakan sesuai prosedur dan jadwal yang ditetapkan.",
-      "C": "Kondisi fisik perangkat, terminasi fiber, labeling, patchcord, kabinet, serta lingkungan operasional terpelihara dengan baik dan siap operasi.",
-      "D": "Data inventori jaringan, layout node, kapasitas, pengukuran core, dokumentasi terminasi, dan hasil pemeliharaan terdokumentasi serta tervalidasi dengan baik.",
-      "E": "Dilakukan evaluasi berkala terhadap kondisi jaringan Access Network serta terdapat tindak lanjut terhadap temuan, ketidaksesuaian data, degradasi kualitas, atau potensi gangguan yang ditemukan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "scope": "Ophar SKSO Optical Network ISP",
+    "perangkat": "Transport",
+    "question": "Apakah operasi dan pemeliharaan perangkat ISP Transport dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Tersedia prosedur operasi, petunjuk kerja, dokumen teknis, dan jadwal pemeliharaan perangkat yang masih berlaku.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Kegiatan operasi dan pemeliharaan perangkat dilaksanakan sesuai prosedur dan jadwal yang ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Kondisi perangkat, patchcord, sarana kerja, dan alat ukur terpelihara dengan baik untuk mendukung operasional perangkat.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Dokumentasi teknis, konfigurasi, wiring diagram, data interkoneksi, serta hasil pemeliharaan terdokumentasi dan tervalidasi dengan baik.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Dilakukan evaluasi berkala terhadap hasil operasi dan pemeliharaan serta terdapat tindak lanjut atas temuan atau ketidaksesuaian yang ditemukan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.1/10.2, Annex A A.7.13",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 41,
     "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "PENGAMANAN DAN DUKUNGAN KERJA",
-    "weight_practice_area": null,
-    "scope": "Pengamanan Site",
-    "perangkat": "-",
-    "question": "Apakah sistem pengamanan site dilaksanakan secara terencana, terdokumentasi, dan berjalan secara efektif?",
-    "criteria": {
-      "A": "Tersedia prosedur pengamanan, jadwal petugas, mekanisme kontrol akses, dan panduan penanganan kejadian keamanan.",
-      "B": "Pelaksanaan pengamanan, kontrol akses, pencatatan tamu, dan aktivitas penjagaan dilakukan sesuai prosedur yang ditetapkan.",
-      "C": "Petugas pengamanan memahami tugas, tanggung jawab, dan prosedur penanganan kondisi darurat maupun kejadian keamanan.",
-      "D": "Buku tamu, logbook pengamanan, jadwal petugas, dan dokumentasi kegiatan pengamanan terdokumentasi dan tervalidasi dengan baik.",
-      "E": "Dilakukan evaluasi berkala terhadap efektivitas pengamanan dan terdapat tindak lanjut atas kejadian atau temuan yang ditemukan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "scope": "Ophar SKSO Perangkat OSP",
+    "perangkat": "Transport",
+    "question": "Apakah operasi dan pemeliharaan perangkat OSP Transport dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Tersedia sarana kerja, alat ukur, material pendukung, alat keselamatan kerja, serta jadwal operasi dan pemeliharaan yang memadai.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.1/8.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Kegiatan patroli, inspeksi, pengukuran, dan pemeliharaan jaringan OSP dilaksanakan sesuai prosedur dan jadwal yang ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Kondisi jalur kabel, tiang, handhole/manhole, joint closure, dan infrastruktur pendukung lainnya terpelihara dengan baik dan siap operasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.8/7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Hasil patroli, pengukuran, inspeksi, as-built drawing, data jaringan, dan dokumentasi teknis terdokumentasi serta tervalidasi dengan baik.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Dilakukan evaluasi berkala terhadap kondisi jaringan OSP dan terdapat tindak lanjut terhadap temuan, risiko, atau potensi gangguan yang ditemukan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.1/10.2, Annex A A.7.13",
+        "evidence_hint": null
+      }
+    ]
   },
   {
     "row": 42,
     "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
-    "practice_area": "PENGAMANAN DAN DUKUNGAN KERJA",
-    "weight_practice_area": null,
-    "scope": "Proteksi Kebakaran",
-    "perangkat": "-",
-    "question": "Apakah sistem proteksi kebakaran tersedia, berfungsi dengan baik, dan siap digunakan saat diperlukan?",
-    "criteria": {
-      "A": "Tersedia standar, prosedur, dan jadwal inspeksi sistem proteksi kebakaran.",
-      "B": "Peralatan proteksi kebakaran (APAR, Fire Alarm, Fire Suppression, Hydrant) tersedia sesuai kebutuhan lokasi.",
-      "C": "Peralatan proteksi kebakaran dalam kondisi siap operasi, mudah diakses, dan sesuai peruntukannya.",
-      "D": "Inspeksi, pengujian, dan checklist sistem proteksi kebakaran dilakukan secara berkala dan terdokumentasi.",
-      "E": "Terdapat tindak lanjut atas temuan inspeksi, kerusakan, atau ketidaksesuaian sistem proteksi kebakaran."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "scope": "Ophar Mechanical Electrical (ME)",
+    "perangkat": "ME",
+    "question": "Apakah operasi dan pemeliharaan perangkat ME dilaksanakan sesuai prosedur yang ditetapkan dengan baik?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Memastikan preventive maintenance (PM) dilaksanakan secara konsisten dan berkualitas, terutama pada kebersihan, kerapian, instalasi, hasil pengukuran, dan kondisi fisik perangkat.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": "Jadwal, pelaksanaan, evidence dan review, preventive maintenance pada: https:///mydefa.tif.co.id/checklist-review"
+      },
+      {
+        "code": "B",
+        "title": "Memastikan setiap anomali atau kerusakan yang ditemukan dibuatkan tiket corrective maintenance, dikoordinasikan dengan unit terkait, dipantau progresnya, dan ditindaklanjuti sampai selesai.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.13",
+        "evidence_hint": "Ticketing Auto dan Manual ME, serta tracking pekerjaan corrective pada: https://mydefa.tif.co.id/ticket"
+      },
+      {
+        "code": "C",
+        "title": "Memastikan ketersediaan dan pengendalian spare part, terutama untuk perangkat kritikal dan komponen yang sering mengalami kerusakan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.13",
+        "evidence_hint": "Ketersediaan dan pengendalian spare part pada: https://artemis.telkom.co.id atau melalui manager TIF Infra and Support Area atau melalui telegram bot atemis.ai https://t.me/AtemisAI_bot"
+      },
+      {
+        "code": "D",
+        "title": "Memastikan sensor, RTU, alarm, dan konektivitas monitoring berfungsi dengan baik, menghasilkan data yang valid, serta segera ditindaklanjuti apabila ditemukan anomali.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": "Avalilibility RTU, konektivitas RTU pada: https://osase.telkom.co.id atau pada telegram bot OPNIMUS https://t.me/opnimusdev_bot"
+      },
+      {
+        "code": "E",
+        "title": "Melakukan supervisi terhadap pelaksanaan pekerjaan mitra agar sesuai SOW, Term of Reference, SOP/SMP.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, Annex A A.7.13/5.27",
+        "evidence_hint": "Evaluasi dan review KPI Mitra pada: https://mydefa.tif.co.id/miss/kpi"
+      }
+    ]
   },
   {
     "row": 43,
     "domain": "INFRA HEALTHINESS",
-    "weight_domain": null,
-    "references": null,
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "scope": "Ophar Service Node",
+    "perangkat": "MSE",
+    "question": "Apakah operasi dan pemeliharaan perangkat Service Node dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Tersedia prosedur, petunjuk kerja, jadwal pemeliharaan, dan checklist pemeriksaan perangkat yang masih berlaku.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Kegiatan preventive maintenance dan pemeriksaan perangkat dilaksanakan sesuai jadwal dan prosedur yang ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Kondisi fisik perangkat, sistem pendukung, alarm, dan parameter operasional dipelihara untuk memastikan perangkat beroperasi secara normal.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Hasil pemeriksaan, pengukuran, checklist pemeliharaan, dan dokumentasi teknis terdokumentasi serta tervalidasi dengan baik.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Dilakukan evaluasi berkala terhadap hasil pemeliharaan dan terdapat tindak lanjut terhadap temuan, alarm berulang, atau potensi gangguan yang ditemukan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.1/10.2, Annex A A.7.13",
+        "evidence_hint": null
+      }
+    ]
+  },
+  {
+    "row": 44,
+    "domain": "INFRA HEALTHINESS",
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "scope": "Ophar IP Network",
+    "perangkat": "CSO",
+    "question": "Apakah operasi dan pemeliharaan perangkat IP Network dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Tersedia prosedur, petunjuk kerja, parameter monitoring, dan jadwal pemeliharaan yang digunakan untuk mengelola perangkat IP Network.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Monitoring dan pemeliharaan perangkat dilaksanakan secara berkala untuk memastikan kondisi lingkungan, perangkat, dan layanan tetap beroperasi normal.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Parameter kesehatan perangkat seperti temperatur, CPU utilization, memory utilization, uptime, backup konfigurasi, routing, dan redundancy dimonitor serta dianalisis secara berkala.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.8.16/8.9",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Hasil monitoring, pengukuran, konfigurasi, backup data, dan aktivitas pemeliharaan terdokumentasi serta tervalidasi dengan baik.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Dilakukan evaluasi dan tindak lanjut terhadap alarm, degradasi performansi, kapasitas, kegagalan redundancy, atau potensi gangguan yang teridentifikasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.1/10.2, Annex A A.8.16",
+        "evidence_hint": null
+      }
+    ]
+  },
+  {
+    "row": 45,
+    "domain": "INFRA HEALTHINESS",
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "scope": "Ophar Access Network",
+    "perangkat": "ANO",
+    "question": "Bagaimana cara menentukan Healthiness perangkat Aktif Akses OLT ?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Parameter Resources OLT ( CPU, Memory, Temperature)",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": "Ketersediaan Data Healthiness OLT sudah ada secara real time di dashboard https://dbaccess-ibooster.telkom.co.id/access-health-index/login"
+      },
+      {
+        "code": "B",
+        "title": "Parameter Performance OLT (Availability, Utilisasi, Power OLT dan CRC)",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.13",
+        "evidence_hint": null
+      }
+    ]
+  },
+  {
+    "row": 46,
+    "domain": "INFRA HEALTHINESS",
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "scope": "Ophar Access Network",
+    "perangkat": "ANO",
+    "question": "Apakah proses pencegahan GAMAS sudah dilaksanakan dengan baik?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Patroli rutin daerah yang rawan terjadi Gamas dan Kegiatan Wasman pada proyek pihak ketiga.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": "Kegiatan Patroli dan Wasman di laporkan dan di monitoring di https://posjar.telkom.co.id/app_district/index.php/login"
+      },
+      {
+        "code": "B",
+        "title": "Koordinasi dengan para pihak ketiga pemilik proyek utilitas. Seperti Pemda, PU, dll",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.13",
+        "evidence_hint": "Mempunyai kontak PIC para pihak ketiga pemilik proyek dan membuat WAG di masing-masing daerahnya"
+      },
+      {
+        "code": "C",
+        "title": "Hasil temuan Patroli yang diperlukan QE Preventive, diorder kepada tim Maintenance Access IOAN (OPEX).",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.13",
+        "evidence_hint": "Order permintaan QE Preventive menggunakan channel Non Numbering atau infracare via Insera"
+      },
+      {
+        "code": "D",
+        "title": "Hasil temuan Patroli yang diperlukan QE Relokasi utilitas (CAPEX).",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.9/5.37",
+        "evidence_hint": "Mengusulkan via DIGASSS atau AISS terkait usulan QE Relokasi"
+      },
+      {
+        "code": "E",
+        "title": "Evaluasi secara berkala terkait hasil pengamanan agar tidak terjadi Gamas.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.1/10.2, Annex A A.7.13",
+        "evidence_hint": "Monitor hasil pekerjaan QE Preventive dan QE Relokasi di DIGASSS dan WAG War Room Gamas"
+      }
+    ]
+  },
+  {
+    "row": 47,
+    "domain": "INFRA HEALTHINESS",
+    "practice_area": "OPERASI DAN PEMELIHARAAN",
+    "scope": "Ophar Access Network",
+    "perangkat": "ANO",
+    "question": "Apakah operasi dan pemeliharaan perangkat Access Network dilaksanakan sesuai prosedur yang ditetapkan serta terdokumentasi dengan baik?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Tersedia prosedur, petunjuk kerja, standar pemeliharaan, dan jadwal pemeliharaan perangkat Access Network yang masih berlaku.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.5.37",
+        "evidence_hint": "Referensi prosedur pemeliharan ODP via https://assurance.telkom.co.id/pro-man//assets/PEDOMAN%20INPUT%20CHECKLIST%20TANGIBLE%20ODP%20PROMAN.pdf dan untuk OLT, FTM dan ODC ada pada dokumen https://ixsa.telkom.co.id/3.0/help/sop"
+      },
+      {
+        "code": "B",
+        "title": "Pemeliharaan perangkat ODP, OLT, FTM, ODC, dan infrastruktur pendukung dilaksanakan sesuai prosedur dan jadwal yang ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.13",
+        "evidence_hint": "Terdapat jadwal-jadwal siklus pemeliharaan perangkat OLT, FTM & ODC pada dashboard https://ixsa.telkom.co.id/ dan ODP pada https://assurance.telkom.co.id/pro-man/"
+      },
+      {
+        "code": "C",
+        "title": "Kondisi fisik perangkat, terminasi fiber, labeling, patchcord, kabinet, serta lingkungan operasional terpelihara dengan baik dan siap operasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.13",
+        "evidence_hint": "Evidence hasil cek kondisi perangkat OLT, FTM & ODC pada dashboard https://ixsa.telkom.co.id/ dan ODP pada https://assurance.telkom.co.id/pro-man/"
+      },
+      {
+        "code": "D",
+        "title": "Data inventori jaringan, layout node, kapasitas, pengukuran core, dokumentasi terminasi, dan hasil pemeliharaan terdokumentasi serta tervalidasi dengan baik.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.9/5.37",
+        "evidence_hint": "Data inventori terkait jaringan akses pada dashboard https://ibrite.telkom.co.id/telkom_maps"
+      },
+      {
+        "code": "E",
+        "title": "Dilakukan evaluasi berkala terhadap kondisi jaringan Access Network serta terdapat tindak lanjut terhadap temuan, ketidaksesuaian data, degradasi kualitas, atau potensi gangguan yang ditemukan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.1/10.2, Annex A A.7.13",
+        "evidence_hint": "Evaluasi dilakukan melalui mekanisme Uji Petik Assurance pada dashboard https://ixsa.telkom.co.id/3.0/Ujipetik_assurance"
+      }
+    ]
+  },
+  {
+    "row": 48,
+    "domain": "INFRA HEALTHINESS",
     "practice_area": "PENGAMANAN DAN DUKUNGAN KERJA",
-    "weight_practice_area": null,
+    "scope": "Pengamanan Site",
+    "perangkat": null,
+    "question": "Apakah sistem pengamanan site dilaksanakan secara terencana, terdokumentasi, dan berjalan secara efektif?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Tersedia prosedur pengamanan, jadwal petugas, mekanisme kontrol akses, dan panduan penanganan kejadian keamanan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1, Annex A A.7.2",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Pelaksanaan pengamanan, kontrol akses, pencatatan tamu, dan aktivitas penjagaan dilakukan sesuai prosedur yang ditetapkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.2",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Petugas pengamanan memahami tugas, tanggung jawab, dan prosedur penanganan kondisi darurat maupun kejadian keamanan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.2/7.3, Annex A A.6.3",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Buku tamu, logbook pengamanan, jadwal petugas, dan dokumentasi kegiatan pengamanan terdokumentasi dan tervalidasi dengan baik.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5, Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Dilakukan evaluasi berkala terhadap efektivitas pengamanan dan terdapat tindak lanjut atas kejadian atau temuan yang ditemukan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1/10.1/10.2, Annex A A.5.24/5.27",
+        "evidence_hint": null
+      }
+    ]
+  },
+  {
+    "row": 49,
+    "domain": "INFRA HEALTHINESS",
+    "practice_area": "PENGAMANAN DAN DUKUNGAN KERJA",
+    "scope": "Proteksi Kebakaran",
+    "perangkat": null,
+    "question": "Apakah sistem proteksi kebakaran tersedia, berfungsi dengan baik, dan siap digunakan saat diperlukan?",
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Tersedia standar, prosedur, dan jadwal inspeksi sistem proteksi kebakaran.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1 , Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Peralatan proteksi kebakaran (APAR, Fire Alarm, Fire Suppression, Hydrant) tersedia sesuai kebutuhan lokasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.5",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Peralatan proteksi kebakaran dalam kondisi siap operasi, mudah diakses, dan sesuai peruntukannya.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Inspeksi, pengujian, dan checklist sistem proteksi kebakaran dilakukan secara berkala dan terdokumentasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindak lanjut atas temuan inspeksi, kerusakan, atau ketidaksesuaian sistem proteksi kebakaran.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, Annex A A.7.13/A.5.27",
+        "evidence_hint": null
+      }
+    ]
+  },
+  {
+    "row": 50,
+    "domain": "INFRA HEALTHINESS",
+    "practice_area": "PENGAMANAN DAN DUKUNGAN KERJA",
     "scope": "Proteksi Kelistrikan",
-    "perangkat": "-",
+    "perangkat": null,
     "question": "Apakah sistem proteksi kelistrikan terpelihara dengan baik dan mampu melindungi perangkat dari gangguan kelistrikan?",
-    "criteria": {
-      "A": "Tersedia standar dan dokumentasi proteksi kelistrikan yang digunakan pada site.",
-      "B": "Pembatas arus, fuse, MCCB, dan perangkat proteksi lainnya terpasang sesuai kapasitas beban yang dipersyaratkan.",
-      "C": "Terminasi, perkabelan, dan instalasi proteksi kelistrikan dalam kondisi baik dan aman.",
-      "D": "Pemeriksaan dan pengujian sistem proteksi kelistrikan dilakukan secara berkala serta terdokumentasi.",
-      "E": "Terdapat tindak lanjut atas temuan, kerusakan, atau ketidaksesuaian pada sistem proteksi kelistrikan."
-    },
-    "criteria_unparsed": null,
-    "max_score": 5
+    "criterias": [
+      {
+        "code": "A",
+        "title": "Tersedia standar dan dokumentasi proteksi kelistrikan yang digunakan pada site.",
+        "reference": "ISO/IEC 27001:2022 Klausul 7.5/8.1 , Annex A A.5.37",
+        "evidence_hint": null
+      },
+      {
+        "code": "B",
+        "title": "Pembatas arus, fuse, MCCB, dan perangkat proteksi lainnya terpasang sesuai kapasitas beban yang dipersyaratkan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "C",
+        "title": "Terminasi, perkabelan, dan instalasi proteksi kelistrikan dalam kondisi baik dan aman.",
+        "reference": "ISO/IEC 27001:2022 Klausul 8.1/9.1, Annex A A.7.8",
+        "evidence_hint": null
+      },
+      {
+        "code": "D",
+        "title": "Pemeriksaan dan pengujian sistem proteksi kelistrikan dilakukan secara berkala serta terdokumentasi.",
+        "reference": "ISO/IEC 27001:2022 Klausul 9.1, Annex A A.7.13",
+        "evidence_hint": null
+      },
+      {
+        "code": "E",
+        "title": "Terdapat tindak lanjut atas temuan, kerusakan, atau ketidaksesuaian pada sistem proteksi kelistrikan.",
+        "reference": "ISO/IEC 27001:2022 Klausul 10.1/10.2, Annex A A.7.13/5.27",
+        "evidence_hint": null
+      }
+    ]
   }
 ]
