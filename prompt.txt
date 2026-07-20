@@ -1,5 +1,0 @@
-Buatkan issue.md, berisi planning untuk nanti di impelemntasikan oleh junior programmer atau model AI yang lebih rendah:
-
-Oke saat ini sudah ditetapkan bahwa lokasi piloting untuk prima kelola itu district binjai, karawang, flores dan makassar. Apakah bisa dihapus dulu semua seeder yg ada. Dan mengisi dengan user baru untuk keempat lokasi district ini, kemudian tambahan juga user untuk masing-masing diatasnya regional dan area untuk masing2 tingkat atas di district yg dijadikan lokasi. piloting. Kemudian, untuk username dibuat mudah saja misal admin_district_makassar, terus admin_regional_sulawesi dan admin_area_4. 
-
-Jelaskan tahapan-tahapan yang harus dilakukan untuk mengimplementasikan fitur ini. Nanti yang akan mengimplementasikan adalah junior programmer atau model AI yang lebih rendah.
