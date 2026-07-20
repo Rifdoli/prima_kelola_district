@@ -23,7 +23,6 @@ class UpdateQuestionRequest extends FormRequest
             ],
             'question' => ['required', 'string'],
             'scope' => ['nullable', 'string', 'max:255'],
-            'references' => ['nullable', 'string', 'max:255'],
             'perangkat' => ['nullable', 'string', 'max:255'],
             'sort_order' => ['required', 'integer', 'min:0'],
         ];
