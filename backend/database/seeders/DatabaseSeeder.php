@@ -20,8 +20,5 @@ class DatabaseSeeder extends Seeder
         $this->call(LocationSeeder::class);
         $this->call(PilotingUserSeeder::class);
         $this->call(QuestionSeeder::class);
-
-        /** @todo Akan dihapus nanti saat fitur sudah di-refactor */
-        $this->call(AssessmentQuestionSeeder::class);
     }
 }

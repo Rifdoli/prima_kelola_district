@@ -207,9 +207,9 @@ class QuestionController extends Controller
             'id' => $question->id,
             'question' => $question->question,
             'scope' => $question->scope,
-            'references' => $question->references,
             'perangkat' => $question->perangkat,
             'max_score' => $question->max_score,
+            'sort_order' => $question->sort_order,
             'domain' => [
                 'id' => $question->practiceArea->domain->id,
                 'name' => $question->practiceArea->domain->name,
@@ -223,7 +223,11 @@ class QuestionController extends Controller
             'criterias' => $question->criterias
                 ->map(fn ($criteria) => [
                     'id' => $criteria->id,
+                    'code' => $criteria->code,
+                    'sort_order' => $criteria->sort_order,
                     'title' => $criteria->title,
+                    'reference' => $criteria->reference,
+                    'evidence_hint' => $criteria->evidence_hint,
                 ])
                 ->all(),
             'created_at' => $question->created_at,

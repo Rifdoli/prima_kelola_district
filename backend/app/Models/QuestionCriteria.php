@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Table(timestamps: false)]
-#[Fillable(['question_id', 'title'])]
+#[Fillable(['question_id', 'code', 'sort_order', 'title', 'reference', 'evidence_hint'])]
 class QuestionCriteria extends Model
 {
     public function question(): BelongsTo

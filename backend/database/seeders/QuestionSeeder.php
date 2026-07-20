@@ -35,7 +35,7 @@ class QuestionSeeder extends Seeder
                     'id' => $groupId,
                     'type' => 'domain',
                     'name' => $domainName,
-                    'weight' => null,
+                    'weight' => $row['weight_domain'] ?? null,
                     'parent_id' => null,
                 ];
             }
@@ -50,7 +50,7 @@ class QuestionSeeder extends Seeder
                     'id' => $groupId,
                     'type' => 'practice_area',
                     'name' => $practiceAreaName,
-                    'weight' => null,
+                    'weight' => $row['weight_practice_area'] ?? null,
                     'parent_id' => $questionGroups[$domainName]['id'],
                 ];
             }
@@ -61,26 +61,33 @@ class QuestionSeeder extends Seeder
                 'practice_area_id' => $questionGroups[$practiceAreaName]['id'],
                 'question' => $row['question'],
                 'scope' => $row['scope'],
-                'references' => $row['references'],
                 'perangkat' => $row['perangkat'] == '-' ? null : $row['perangkat'],
                 'max_score' => 0,
                 'sort_order' => $row['row'],
-                // 'created_at' => $timestamp,
-                // 'updated_at' => $timestamp,
             ];
 
-            foreach ($criteriaKeys as $k) {
-                /** @var ?string */
-                $criteriaTitle = $row['criteria'][$k] ?? null;
-                if (!$criteriaTitle) {
-                    throw new \Exception("rows[$r]['criteria']['$k'] is invalid");
+            $criterias = $row['criterias'] ?? [];
+            if (!is_array($criterias) || count($criterias) === 0) {
+                throw new \Exception("rows[$r]['criterias'] is invalid");
+            }
+
+            $sortOrder = 0;
+            foreach ($criterias as $c => $criteria) {
+                $title = trim((string) ($criteria['title'] ?? ''));
+                if ($title === '') {
+                    throw new \Exception("rows[$r]['criterias'][$c]['title'] is invalid");
                 }
 
+                $sortOrder++;
                 $criteriaId++;
                 $questionCriterias[] = [
                     'id' => $criteriaId,
                     'question_id' => $questionId,
-                    'title' => $criteriaTitle,
+                    'code' => $criteria['code'] ?? null,
+                    'sort_order' => $sortOrder,
+                    'title' => $title,
+                    'reference' => $criteria['reference'] ?? null,
+                    'evidence_hint' => $criteria['evidence_hint'] ?? null,
                 ];
                 $questions[$questionId]['max_score']++;
             }

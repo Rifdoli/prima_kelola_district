@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'practice_area_id',
     'question',
     'scope',
-    'references',
     'perangkat',
     'max_score',
     'sort_order',
@@ -30,6 +29,8 @@ class Question extends Model
 
     public function criterias(): HasMany
     {
-        return $this->hasMany(QuestionCriteria::class)->chaperone();
+        return $this->hasMany(QuestionCriteria::class)
+            ->orderBy('sort_order')
+            ->chaperone();
     }
 }

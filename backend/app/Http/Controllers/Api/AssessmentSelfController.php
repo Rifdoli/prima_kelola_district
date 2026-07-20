@@ -154,9 +154,9 @@ class AssessmentSelfController extends Controller
                         'id' => $questionId,
                         'question' => $item->question,
                         'scope' => $item->scope,
-                        'references' => $item->references,
                         'perangkat' => $item->perangkat,
                         'max_score' => $item->max_score,
+                        'sort_order' => $item->sort_order,
                         'practice_area_id' => $practiceAreaId,
                         'domain_id' => $domainId,
                     ],
@@ -166,7 +166,11 @@ class AssessmentSelfController extends Controller
                 foreach($item->criterias->all() as $criteria) {
                     $questionTree['criterias'][] = [
                         'id' => $criteria->id,
+                        'code' => $criteria->code,
+                        'sort_order' => $criteria->sort_order,
                         'title' => $criteria->title,
+                        'reference' => $criteria->reference,
+                        'evidence_hint' => $criteria->evidence_hint,
                         'question_id' => $questionId,
                         'practice_area_id' => $practiceAreaId,
                         'domain_id' => $domainId,
