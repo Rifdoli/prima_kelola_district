@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 trait TracksUserActivity
 {
-    protected ?string $createdByColumn = 'created_by';
-    protected ?string $updatedByColumn = 'updated_by';
-
     /**
      * Boot the trait and register model event listeners.
      *
@@ -31,18 +28,18 @@ trait TracksUserActivity
                 return;
             }
 
-            if ($createdByColumn = $model->createdByColumn) {
+            if ($createdByColumn = $model->createdByCol()) {
                 $model->$createdByColumn = auth()->id();
             }
 
-            if ($updatedByColumn = $model->updatedByColumn) {
+            if ($updatedByColumn = $model->updatedByCol()) {
                 $model->$updatedByColumn = auth()->id();
             }
         });
 
         // Set updated_by on every subsequent update.
         static::updating(function (Model $model) {
-            if (auth()->check() && ($updatedByColumn = $model->updatedByColumn)) {
+            if (auth()->check() && ($updatedByColumn = $model->updatedByCol())) {
                 $model->$updatedByColumn = auth()->id();
             }
         });
@@ -50,32 +47,34 @@ trait TracksUserActivity
         // Set updated_by when a soft delete is performed.
         static::deleting(function (Model $model) {
             if (
-                !$model->usesSoftDeletes() ||
+                !static::usesSoftDeletes() ||
                 $model->isForceDeleting() ||
                 !auth()->check()
             ) {
                 return;
             }
 
-            if ($updatedByColumn = $model->updatedByColumn) {
+            if ($updatedByColumn = $model->updatedByCol()) {
                 $model->$updatedByColumn = auth()->id();
                 $model->saveQuietly();
             }
         });
 
         // Set updated_by when the model is restored.
-        static::restoring(function (Model $model) {
-            if (auth()->check() && ($updatedByColumn = $model->updatedByColumn)) {
-                $model->$updatedByColumn = auth()->id();
-                $model->saveQuietly();
-            }
-        });
+        if (static::usesSoftDeletes()) {
+            static::restoring(function (Model $model) {
+                if (auth()->check() && ($updatedByColumn = $model->updatedByCol())) {
+                    $model->$updatedByColumn = auth()->id();
+                    $model->saveQuietly();
+                }
+            });
+        }
     }
 
     /**
      * Determine whether the model uses the SoftDeletes trait.
      */
-    public function usesSoftDeletes(): bool
+    public static function usesSoftDeletes(): bool
     {
         static $cache = [];
         return $cache[static::class]
@@ -84,5 +83,15 @@ trait TracksUserActivity
                 class_uses_recursive(static::class),
                 true
             );
+    }
+
+    protected function createdByCol(): ?string
+    {
+        return 'created_by';
+    }
+
+    protected function updatedByCol(): ?string
+    {
+        return 'updated_by';
     }
 }

@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('question_criterias', function (Blueprint $table) {
+        Schema::create('assessment_answers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('assessment_id')
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->restrictOnDelete();
             $table->foreignId('question_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
-            $table->text('title');
         });
     }
 
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('question_criterias');
+        Schema::dropIfExists('assessment_answers');
     }
 };

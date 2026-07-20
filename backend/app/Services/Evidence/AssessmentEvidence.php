@@ -23,7 +23,7 @@ class AssessmentEvidence extends BaseEvidence
 
     public function cleanup(string $path): void
     {
-        $sql = 'SELECT EXISTS (SELECT 1 FROM assessment_answers WHERE evidence = ?)';
+        $sql = 'SELECT EXISTS (SELECT 1 FROM assessment_criterias WHERE evidence_path = ?)';
         $isExists = (bool) DB::scalar($sql, [$path]);
         if (!$isExists && $this->storage()->exists($path)) {
             $this->delete($path);

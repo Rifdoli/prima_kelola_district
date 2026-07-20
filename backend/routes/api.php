@@ -12,7 +12,9 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SelfAssessmentController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VerificationController;
+
 use App\Http\Controllers\Api\QuestionController;
+use App\Http\Controllers\Api\AssessmentSelfController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -35,6 +37,18 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/trash/{id}', 'showTrash')->name('trash.show');
             Route::patch('/trash', 'restoreTrashes')->name('trash.restore')->middleware('admin');
             Route::delete('/trash', 'cleanTrashes')->name('trash.destroy')->middleware('admin');
+        });
+
+    Route::prefix('assessments/sa')
+        ->name('assessments.sa.')
+        ->controller(AssessmentSelfController::class)
+        ->group(function () {
+            Route::get('/{period}', 'index')->name('index');
+            Route::post('/{period}', 'store')->name('store');
+            Route::post('/{period}/draft', 'storeDraft')->name('draft.store');
+            Route::post('/{period}/evidence', 'storeEvidence')->name('evidence.store');
+            // Route::delete('/{period}/evidence', 'destroyEvidence')->name('evidence.destroy');
+            // Route::get('/{period}/example', 'showExampleAnswersBody')->name('example.show');
         });
 
     /** @deprecated */
