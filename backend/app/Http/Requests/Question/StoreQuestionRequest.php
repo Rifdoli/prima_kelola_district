@@ -24,9 +24,11 @@ class StoreQuestionRequest extends FormRequest
             'question' => ['required', 'string'],
             'scope' => ['nullable', 'string', 'max:255'],
             'perangkat' => ['nullable', 'string', 'max:255'],
-            'sort_order' => ['nullable', 'integer', 'min:0'],
-            'criterias.*' => ['required', 'array:title'],
+            'criterias.*' => ['required', 'array'],
+            'criterias.*.code' => ['required', 'string', 'max:8'],
             'criterias.*.title' => ['required', 'string'],
+            'criterias.*.reference' => ['nullable', 'string'],
+            'criterias.*.evidence_hint' => ['nullable', 'string'],
         ];
     }
 }

@@ -36,7 +36,14 @@ class QuestionController extends Controller
     {
         $data = $request->validated();
         $payload = Arr::except($data, 'criterias');
-        $criteriasPayload = $data['criterias'];
+
+        $criteriasPayload = [];
+        $criteriaSortOrder = 0;
+        foreach ($data['criterias'] as $c) {
+            $criteriaSortOrder++;
+            $criteriasPayload[] = [ ...$c, 'sort_order' => $criteriaSortOrder ];
+        }
+
         $question = DB::transaction(function () use ($payload, $criteriasPayload) {
             $payload['max_score'] = count($criteriasPayload);
             $payload['sort_order'] ??= (Question::max('sort_order') ?? 0) + 1;
