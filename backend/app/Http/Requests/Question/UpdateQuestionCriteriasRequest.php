@@ -16,6 +16,7 @@ class UpdateQuestionCriteriasRequest extends FormRequest
         return [
             'criterias.*' => ['required', 'array'],
             'criterias.*.id' => ['nullable', 'integer', 'min:1'],
+            'criterias.*.code' => ['required', 'string', 'max:8'],
             'criterias.*.title' => ['required', 'string', 'max:255'],
         ];
     }

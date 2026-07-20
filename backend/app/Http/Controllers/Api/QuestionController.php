@@ -98,8 +98,10 @@ class QuestionController extends Controller
 
             $keepIds = [];
             foreach ($criteriasPayload as $index => $payload) {
-                $criteria = $payload['id'] ? $existing[$payload['id']] : null;
+                $id = $payload['id'] ?? null;
+                $criteria = $id ? $existing[$id] : null;
                 $attributes = [
+                    'code' => $payload['code'],
                     'title' => $payload['title'],
                     'sort_order' => $index + 1,
                 ];
