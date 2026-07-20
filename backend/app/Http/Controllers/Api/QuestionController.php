@@ -8,9 +8,11 @@ use App\Models\Question;
 use App\Http\Requests\Question\StoreQuestionRequest;
 use App\Http\Requests\Question\UpdateQuestionRequest;
 use App\Http\Requests\Question\UpdateQuestionCriteriasRequest;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class QuestionController extends Controller
 {
@@ -77,17 +79,45 @@ class QuestionController extends Controller
 
     public function updateCriterias(UpdateQuestionCriteriasRequest $request, int $id)
     {
-        $question = Question::withTrashed()->findOrFail($id);
+        $question = Question::withTrashed()->with('criterias')->findOrFail($id);
         $criteriasPayload = $request->validated('criterias');
-        $question = DB::transaction(function () use ($criteriasPayload, $question) {
+        DB::transaction(function () use ($question, $criteriasPayload) {
+            $existing = $question->criterias->keyBy('id');
+
+            $invalidMsgs = [];
+            foreach ($criteriasPayload as $index => $payload) {
+                $id = $payload['id'] ?? null;
+                if ($id && !$existing->has($id)) {
+                    $invalidMsgs["criterias.$index.id"][] = "Criteria with id {$id} was not found.";
+                }
+            }
+
+            if ($invalidMsgs) {
+                throw ValidationException::withMessages($invalidMsgs);
+            }
+
+            $keepIds = [];
+            foreach ($criteriasPayload as $index => $payload) {
+                $criteria = $payload['id'] ? $existing[$payload['id']] : null;
+                $attributes = [
+                    'title' => $payload['title'],
+                    'sort_order' => $index + 1,
+                ];
+
+                if ($criteria) {
+                    $criteria->update($attributes);
+                } else {
+                    $criteria = $question->criterias()->create($attributes);
+                }
+
+                $keepIds[] = $criteria->id;
+            }
+
+            $question->criterias()->whereNotIn('id', $keepIds)->delete();
             $question->update([ 'max_score' => count($criteriasPayload) ]);
-            $question->criterias()->delete();
-            $criterias = $question->criterias()->createMany($criteriasPayload);
-            $question->setRelation('criterias', $criterias);
-            return $question;
         });
 
-        $question->load(['practiceArea.domain']);
+        $question->load(['practiceArea.domain', 'criterias']);
         return $this->success(
             message: 'Question updated successfully.',
             data: $this->formatQuestion($question),

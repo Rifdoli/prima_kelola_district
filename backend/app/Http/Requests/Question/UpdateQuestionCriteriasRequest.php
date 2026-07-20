@@ -14,8 +14,9 @@ class UpdateQuestionCriteriasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'criterias.*' => ['required', 'array:title'],
-            'criterias.*.title' => ['required', 'string'],
+            'criterias.*' => ['required', 'array'],
+            'criterias.*.id' => ['nullable', 'integer', 'min:1'],
+            'criterias.*.title' => ['required', 'string', 'max:255'],
         ];
     }
 }
