@@ -19,7 +19,6 @@ class QuestionSeeder extends Seeder
         $questions = [];
         $questionGroups = [];
         $questionCriterias = [];
-        $criteriaKeys = ['A', 'B', 'C', 'D', 'E'];
         $questionId = 0;
         $groupId = 0;
         $criteriaId = 0;
