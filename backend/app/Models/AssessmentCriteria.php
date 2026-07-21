@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[WithoutTimestamps]
 #[Fillable([
@@ -23,8 +22,12 @@ class AssessmentCriteria extends Model
         return $this->belongsTo(AssessmentAnswer::class);
     }
 
-    public function questionCriteria(): HasOne
+    /**
+     * Kriteria rubrik yang dijawab. withTrashed: kriteria yang sudah diarsipkan
+     * harus tetap terbaca dari sisi jawaban historis.
+     */
+    public function questionCriteria(): BelongsTo
     {
-        return $this->hasOne(QuestionCriteria::class);
+        return $this->belongsTo(QuestionCriteria::class, 'question_criteria_id')->withTrashed();
     }
 }

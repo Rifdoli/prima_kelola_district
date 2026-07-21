@@ -98,7 +98,10 @@ class AssessmentSelfController extends Controller
 
         $questionsQuery = Question::with(['practiceArea.domain', 'criterias']);
         if ($assessment->status == Assessment::STATUS_SUBMITTED) {
-            $questionsQuery->withTrashed();
+            // assessment yang sudah disubmit ditampilkan apa adanya saat dinilai,
+            // termasuk soal & kriteria yang sejak itu diarsipkan
+            $questionsQuery->withTrashed()
+                ->with(['criterias' => fn ($query) => $query->withTrashed()]);
         }
 
         if (!empty($params['domain_ids'])) {

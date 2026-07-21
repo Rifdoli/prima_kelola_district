@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
+use App\Models\Assessment;
+use App\Models\AssessmentCriteria;
 use App\Models\Question;
 use App\Models\QuestionCriteria;
 use App\Http\Requests\Question\StoreQuestionRequest;
@@ -86,6 +88,13 @@ class QuestionController extends Controller
     public function updateCriterias(UpdateQuestionCriteriasRequest $request, int $id)
     {
         $question = Question::withTrashed()->with('criterias')->findOrFail($id);
+        if ($this->hasSubmittedAnswers($question->criterias->modelKeys())) {
+            return $this->error(
+                message: 'Kriteria tidak dapat diubah karena sudah digunakan pada assessment yang telah disubmit.',
+                status: 409,
+            );
+        }
+
         $criteriasPayload = $request->validated('criterias');
         DB::transaction(function () use ($question, $criteriasPayload) {
             $existing = $question->criterias->keyBy('id');
@@ -143,7 +152,7 @@ class QuestionController extends Controller
         if ($validated['force'] ?? false) {
             if ($this->forceDeleteQuestions([$question->id]) === 0) {
                 return $this->error(
-                    message: 'Question is referenced by existing assessments and cannot be permanently deleted.',
+                    message: 'Soal tidak dapat dihapus permanen karena sudah digunakan pada assessment.',
                     status: 409,
                 );
             }
@@ -234,6 +243,20 @@ class QuestionController extends Controller
         }
 
         return $deleted;
+    }
+
+    /**
+     * Naskah rubrik dikunci begitu dipakai penilaian: jawaban district hanya
+     * menyimpan question_criteria_id, jadi mengubah kriteria akan menulis ulang
+     * assessment yang sudah disubmit. Perubahan naskah menyusul lewat mekanisme
+     * versioning (copy-on-write), lihat issue #52.
+     */
+    private function hasSubmittedAnswers(array $criteriaIds): bool
+    {
+        return AssessmentCriteria::whereIn('question_criteria_id', $criteriaIds)
+            ->whereHas('assessmentAnswer.assessment', fn ($query) => $query
+                ->where('status', Assessment::STATUS_SUBMITTED))
+            ->exists();
     }
 
     /**
