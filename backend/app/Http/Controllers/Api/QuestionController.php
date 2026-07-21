@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use App\Models\Question;
+use App\Models\QuestionCriteria;
 use App\Http\Requests\Question\StoreQuestionRequest;
 use App\Http\Requests\Question\UpdateQuestionRequest;
 use App\Http\Requests\Question\UpdateQuestionCriteriasRequest;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -139,7 +141,13 @@ class QuestionController extends Controller
 
         $question = Question::withTrashed()->findOrFail($id);
         if ($validated['force'] ?? false) {
-            $question->forceDelete();
+            if ($this->forceDeleteQuestions([$question->id]) === 0) {
+                return $this->error(
+                    message: 'Question is referenced by existing assessments and cannot be permanently deleted.',
+                    status: 409,
+                );
+            }
+
             return $this->success(
                 message: 'Question permanently deleted successfully.',
             );
@@ -198,11 +206,34 @@ class QuestionController extends Controller
             $query->whereKey($validated['ids']);
         }
 
-        $deletedCount = $query->forceDelete();
+        $deletedCount = $this->forceDeleteQuestions($query->pluck('id')->all());
         return $this->success(
             message: 'Questions permanently deleted successfully.',
             data: [ 'deleted_count' => $deletedCount ],
         );
+    }
+
+    /**
+     * Hapus permanen soal beserta kriterianya. question_criterias.question_id
+     * restrictOnDelete, jadi kriteria harus dibuang lebih dulu — termasuk yang
+     * ter-arsip. Soal yang kriterianya masih dirujuk assessment ditolak DB dan
+     * dilewati, bukan menjatuhkan seluruh batch.
+     */
+    private function forceDeleteQuestions(array $ids): int
+    {
+        $deleted = 0;
+        foreach ($ids as $id) {
+            try {
+                DB::transaction(function () use ($id, &$deleted) {
+                    QuestionCriteria::withTrashed()->where('question_id', $id)->forceDelete();
+                    $deleted += Question::withTrashed()->whereKey($id)->forceDelete();
+                });
+            } catch (QueryException) {
+                continue;
+            }
+        }
+
+        return $deleted;
     }
 
     /**
