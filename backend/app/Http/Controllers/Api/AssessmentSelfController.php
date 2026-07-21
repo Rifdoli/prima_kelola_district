@@ -451,9 +451,11 @@ class AssessmentSelfController extends Controller
 
         unset($newCriterias, $matchedCriteriaIds);
         DB::transaction(function () use ($assessment, $storeAsDraft, $assAnswersData, $assCriteriasMap) {
-            if ($assessment->answers->isNotEmpty()) {
-                AssessmentCriteria::whereIn('assessment_answer_id', $assessment->id);
-                AssessmentAnswer::whereIn('assessment_id', $assessment->answers->modelKeys());
+            $oldAnswerIds = $assessment->answers->modelKeys();
+            if ($oldAnswerIds) {
+                // kriteria dulu: assessment_criterias.assessment_answer_id restrictOnDelete
+                AssessmentCriteria::whereIn('assessment_answer_id', $oldAnswerIds)->delete();
+                AssessmentAnswer::whereKey($oldAnswerIds)->delete();
             }
 
             AssessmentAnswer::fillAndInsert($assAnswersData);
@@ -505,7 +507,7 @@ class AssessmentSelfController extends Controller
                 $assAnswerData['assessment_id'] = $newAssessment->id;
             }
             AssessmentAnswer::fillAndInsert($assAnswersData);
-            $newAssAnswers = AssessmentAnswer::where('assessment_id', $assessment->id)->get();
+            $newAssAnswers = AssessmentAnswer::where('assessment_id', $newAssessment->id)->get();
 
             $assCriteriasData = [];
             foreach ($newAssAnswers as $assAnswer) {
