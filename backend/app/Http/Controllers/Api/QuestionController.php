@@ -43,7 +43,11 @@ class QuestionController extends Controller
         $criteriaSortOrder = 0;
         foreach ($data['criterias'] as $c) {
             $criteriaSortOrder++;
-            $criteriasPayload[] = [ ...$c, 'sort_order' => $criteriaSortOrder ];
+            $criteriasPayload[] = [
+                ...$c,
+                'code' => $this->criteriaCode($criteriaSortOrder),
+                'sort_order' => $criteriaSortOrder,
+            ];
         }
 
         $question = DB::transaction(function () use ($payload, $criteriasPayload) {
@@ -100,11 +104,12 @@ class QuestionController extends Controller
             foreach ($criteriasPayload as $index => $payload) {
                 $id = $payload['id'] ?? null;
                 $criteria = $id ? $existing[$id] : null;
+                // key yang tidak dikirim dibiarkan apa adanya (tidak ditimpa null)
                 $attributes = [
-                    'code' => $payload['code'],
+                    'code' => $this->criteriaCode($index + 1),
                     'title' => $payload['title'],
                     'sort_order' => $index + 1,
-                ];
+                ] + Arr::only($payload, ['reference', 'evidence_hint']);
 
                 if ($criteria) {
                     $criteria->update($attributes);
@@ -198,6 +203,15 @@ class QuestionController extends Controller
             message: 'Questions permanently deleted successfully.',
             data: [ 'deleted_count' => $deletedCount ],
         );
+    }
+
+    /**
+     * Label kriteria mengikuti urutan: 1 -> "A", 2 -> "B", dst.
+     * ponytail: mentok di 26 kriteria per soal (rubrik satgas maks 5).
+     */
+    private function criteriaCode(int $sortOrder): string
+    {
+        return chr(64 + $sortOrder);
     }
 
     private function getQuestions(bool $onlyTrashed = false): array
