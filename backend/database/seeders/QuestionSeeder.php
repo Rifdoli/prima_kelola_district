@@ -6,6 +6,7 @@ use App\Models\Question;
 use App\Models\QuestionGroup;
 use App\Models\QuestionCriteria;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class QuestionSeeder extends Seeder
 {
@@ -98,6 +99,24 @@ class QuestionSeeder extends Seeder
         QuestionGroup::fillAndInsert($questionGroups);
         Question::fillAndInsert($questions);
         QuestionCriteria::fillAndInsert($questionCriterias);
+
+        $this->syncSequences();
+    }
+
+    /**
+     * Baris di atas di-insert dengan id eksplisit, jadi sequence Postgres tidak
+     * ikut maju dan INSERT berikutnya (CRUD admin) akan bentrok primary key.
+     */
+    private function syncSequences(): void
+    {
+        if (DB::connection()->getDriverName() !== 'pgsql') return;
+
+        foreach (['question_groups', 'questions', 'question_criterias'] as $table) {
+            DB::statement(
+                "select setval(pg_get_serial_sequence(?, 'id'), (select max(id) from {$table}))",
+                [$table]
+            );
+        }
     }
 
     private function validateOldRecords(): void

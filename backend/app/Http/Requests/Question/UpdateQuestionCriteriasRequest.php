@@ -14,10 +14,12 @@ class UpdateQuestionCriteriasRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'criterias' => ['required', 'array', 'min:1'],
             'criterias.*' => ['required', 'array'],
             'criterias.*.id' => ['nullable', 'integer', 'min:1'],
-            'criterias.*.code' => ['required', 'string', 'max:8'],
-            'criterias.*.title' => ['required', 'string', 'max:255'],
+            'criterias.*.title' => ['required', 'string'],
+            'criterias.*.reference' => ['nullable', 'string'],
+            'criterias.*.evidence_hint' => ['nullable', 'string'],
         ];
     }
 }
