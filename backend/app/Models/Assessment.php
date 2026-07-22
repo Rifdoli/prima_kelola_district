@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Attributes\Appends;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Support\AssessmentScore;
 
 #[Fillable([
     'organization_id',
@@ -17,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'total_score',
     'prev_assessment_id',
 ])]
+#[Appends(['category'])]
 class Assessment extends Model
 {
     use TracksUserActivity;
@@ -50,6 +54,13 @@ class Assessment extends Model
     protected function updatedByCol(): ?string
     {
         return null;
+    }
+
+    protected function category(): Attribute
+    {
+    return Attribute::get(fn () => AssessmentScore::category(
+        $this->total_score !== null ? (float) $this->total_score : null
+    ));
     }
 
     public function organization(): BelongsTo

@@ -17,6 +17,7 @@ use App\Rules\AssessmentPeriod;
 use App\Services\Evidence\AssessmentEvidence;
 use App\Exceptions\Assessment\AssessmentLockedException;
 use App\Exceptions\Assessment\InvalidQCriteriaException;
+use App\Support\AssessmentScore;
 
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -406,11 +407,12 @@ class AssessmentSelfController extends Controller
         $matchedCriteriaIds = [];
         $assAnswersData = [];
         $assCriteriasMap = [];
-        Question::with(['criterias'])
+        $scoreItems = [];
+        Question::with(['practiceArea.domain', 'criterias'])
             ->orderBy('sort_order')
             ->lazy()
             ->each(function (Question $question)
-                use ($assessment, $newCriterias, &$matchedCriteriaIds, &$assAnswersData, &$assCriteriasMap)
+                use ($assessment, $newCriterias, &$matchedCriteriaIds, &$assAnswersData, &$assCriteriasMap, &$scoreItems)
             {
                 $assAnswersData[] = [
                     'assessment_id' => $assessment->id,
@@ -418,16 +420,19 @@ class AssessmentSelfController extends Controller
                 ];
 
                 $assCriteriaMap = [];
+                $achieved = 0;
                 foreach ($question->criterias as $criteria) {
                     if (isset($newCriterias[$criteria->id])) {
 
                         $newCriteria = $newCriterias[$criteria->id];
+                        $value = filter_var($newCriteria['value'], FILTER_VALIDATE_BOOLEAN);
                         $assCriteriaMap[] = [
                             'question_criteria_id' => $criteria->id,
-                            'value' => filter_var($newCriteria['value'], FILTER_VALIDATE_BOOLEAN),
+                            'value' => $value,
                             'evidence_path' => $newCriteria['evidence_path'],
                             'note' => $newCriteria['note'],
                         ];
+                        if ($value) $achieved++;
 
                         $matchedCriteriaIds[$criteria->id] = $criteria->id;
 
@@ -442,6 +447,16 @@ class AssessmentSelfController extends Controller
                 }
 
                 $assCriteriasMap[$question->id] = $assCriteriaMap;
+
+                $scoreItems[] = [
+                    'domain' => $question->practiceArea->domain->name,
+                    'practice_area' => $question->practiceArea->name,
+                    'weight_domain' => (float) $question->practiceArea->domain->weight,
+                    'weight_pa' => (float) $question->practiceArea->weight,
+                    'achieved' => $achieved,
+                    'max' => count($question->criterias),
+                ];
+
             });
 
         if (count($newCriterias) > count($matchedCriteriaIds)) {
@@ -452,8 +467,9 @@ class AssessmentSelfController extends Controller
             }
         }
 
-        unset($newCriterias, $matchedCriteriaIds);
-        DB::transaction(function () use ($assessment, $storeAsDraft, $assAnswersData, $assCriteriasMap) {
+        $totalScore = AssessmentScore::weightedTotal($scoreItems);
+        unset($newCriterias, $matchedCriteriaIds, $scoreItems);
+        DB::transaction(function () use ($assessment, $storeAsDraft, $assAnswersData, $assCriteriasMap, $totalScore) {
             $oldAnswerIds = $assessment->answers->modelKeys();
             if ($oldAnswerIds) {
                 // kriteria dulu: assessment_criterias.assessment_answer_id restrictOnDelete
@@ -465,14 +481,10 @@ class AssessmentSelfController extends Controller
             $assAnswers = AssessmentAnswer::where('assessment_id', $assessment->id)->get();
 
             $assCriteriasData = [];
-            $totalScore = 0;
             foreach ($assAnswers as $assAnswer) {
                 foreach ($assCriteriasMap[$assAnswer->question_id] as $assCriteriaData) {
                     $assCriteriaData['assessment_answer_id'] = $assAnswer->id;
                     $assCriteriasData[] = $assCriteriaData;
-                    if ($assCriteriaData['value'] === true) {
-                        $totalScore++;
-                    }
                 }
             }
             AssessmentCriteria::fillAndInsert($assCriteriasData);
