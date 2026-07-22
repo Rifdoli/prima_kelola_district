@@ -4,26 +4,26 @@ import api from "@/services/api";
 import Layout from "@/layout/main.vue";
 import pageheader from "@/components/page-header.vue";
 
-const LEVELS = ["A", "B", "C", "D", "E"];
-
 export default {
     name: "SELF_ASSESSMENT",
     components: { Layout, pageheader },
     data() {
         const now = new Date();
         return {
-            levels: LEVELS,
             loading: false,
             saving: false,
             year: now.getFullYear(),
             quarter: Math.floor(now.getMonth() / 3) + 1, // 1..4
             years: [now.getFullYear() - 1, now.getFullYear(), now.getFullYear() + 1],
-            assessment: null, // hasil POST /self-assessments
-            questions: [], // hasil GET /assessment-questions
-            answers: {}, // map: question_id -> { achieved_levels: ['A', ...], evidence_files: { level: url } }
+            assessment: null, // hasil GET /assessments/sa/{period}
+            domains: [], // response.domains
+            practiceAreas: [], // response.practice_areas
+            questions: [], // response.questions
+            criterias: [], // response.criterias
+            answers: {}, // map: criteria_id -> { value, evidence_path, evidence_url, note }
             errorMsg: "",
             forbidden: false, // true bila ditolak (403) -> sembunyikan filter
-            activeDomain: null, // domain tab yang sedang aktif
+            activeDomain: null, // domain.id yang sedang aktif
         };
     },
     computed: {
@@ -43,90 +43,96 @@ export default {
                 submitted: "bg-light-success",
             }[this.assessment?.status] || "bg-light-secondary";
         },
-        // { [domain]: { [practice_area]: [question, ...] } }, urutan ikut sort_order
-        groupedQuestions() {
-            const groups = {};
-            for (const q of this.questions) {
-                groups[q.domain] = groups[q.domain] || {};
-                groups[q.domain][q.practice_area] = groups[q.domain][q.practice_area] || [];
-                groups[q.domain][q.practice_area].push(q);
+        // question_id -> [criteria, ...], urutan ikut sort_order
+        criteriasByQuestion() {
+            const map = {};
+            for (const c of this.criterias) {
+                (map[c.question_id] = map[c.question_id] || []).push(c);
             }
-            return groups;
+            for (const list of Object.values(map)) list.sort((a, b) => a.sort_order - b.sort_order);
+            return map;
         },
-        domains() {
-            return Object.keys(this.groupedQuestions);
+        // practice_area_id -> [question, ...], urutan ikut sort_order
+        questionsByPracticeArea() {
+            const map = {};
+            for (const q of this.questions) {
+                (map[q.practice_area_id] = map[q.practice_area_id] || []).push(q);
+            }
+            for (const list of Object.values(map)) list.sort((a, b) => a.sort_order - b.sort_order);
+            return map;
+        },
+        // domain_id -> [practice_area, ...]
+        practiceAreasByDomain() {
+            const map = {};
+            for (const pa of this.practiceAreas) {
+                (map[pa.domain_id] = map[pa.domain_id] || []).push(pa);
+            }
+            return map;
         },
     },
     methods: {
-        // Jumlah pertanyaan yang sudah dijawab (min. 1 level) per domain.
-        domainAnswered(domain) {
-            const areas = this.groupedQuestions[domain] || {};
+        achievedCount(questionId) {
+            const crits = this.criteriasByQuestion[questionId] || [];
+            return crits.filter((c) => this.answers[c.id]?.value).length;
+        },
+        // Jumlah pertanyaan yang sudah tersentuh (>=1 kriteria terpenuhi) per domain.
+        domainAnswered(domainId) {
+            const pas = this.practiceAreasByDomain[domainId] || [];
             let answered = 0, total = 0;
-            for (const qs of Object.values(areas)) {
-                for (const q of qs) {
+            for (const pa of pas) {
+                for (const q of this.questionsByPracticeArea[pa.id] || []) {
                     total++;
-                    if (this.questionScore(q.assessment_question_id) > 0) answered++;
+                    if (this.achievedCount(q.id) > 0) answered++;
                 }
             }
             return { answered, total };
         },
-        criteriaText(question, level) {
-            return question["criteria_" + level.toLowerCase()];
-        },
-        questionScore(questionId) {
-            return this.answers[questionId]?.achieved_levels?.length || 0;
-        },
-        // Radio "Terpenuhi" = level ada di achieved_levels; "Belum" = tidak ada.
-        isFulfilled(qid, level) {
-            return this.answers[qid].achieved_levels.includes(level);
-        },
-        setFulfilled(qid, level, fulfilled) {
-            const list = this.answers[qid].achieved_levels;
-            const has = list.includes(level);
-            if (fulfilled && !has) list.push(level);
-            if (!fulfilled && has) list.splice(list.indexOf(level), 1);
-        },
-        async fetchQuestions() {
-            const { data } = await api.get("/assessment-questions");
-            this.questions = data.data;
-        },
-        async initAssessment() {
-            const { data } = await api.post("/self-assessments", { period: this.period });
-            this.assessment = data.data;
+        async loadAssessment() {
+            const { data } = await api.get(`/assessments/sa/${this.period}`);
+            const d = data.data;
+            this.assessment = d.assessment;
+            this.domains = d.domains;
+            this.practiceAreas = d.practice_areas;
+            this.questions = d.questions;
+            this.criterias = d.criterias;
+
             this.answers = {};
-            for (const q of this.questions) {
-                this.answers[q.assessment_question_id] = {
-                    achieved_levels: [],
-                    evidence_files: {}, // map level -> url
-                    notes: {}, // map level -> string (lokal, belum persist)
+            for (const c of this.criterias) {
+                this.answers[c.id] = { value: false, evidence_path: null, evidence_url: null, note: null };
+            }
+            for (const a of d.answers) {
+                this.answers[a.criteria_id] = {
+                    value: a.value,
+                    evidence_path: a.evidence_path,
+                    evidence_url: a.evidence_url,
+                    note: a.note,
                 };
             }
-            for (const ans of this.assessment.answers || []) {
-                this.answers[ans.assessment_question_id] = {
-                    achieved_levels: ans.achieved_levels || [],
-                    evidence_files: ans.evidence_file_urls || {},
-                    notes: ans.notes || {},
-                };
+
+            if (!this.activeDomain) {
+                this.activeDomain = this.domains[0]?.id ?? null;
             }
         },
         buildPayload() {
-            return Object.entries(this.answers).map(([qid, val]) => ({
-                assessment_question_id: Number(qid),
-                achieved_levels: val.achieved_levels || [],
-                notes: val.notes || {},
+            return this.criterias.map((c) => ({
+                criteria_id: c.id,
+                value: !!this.answers[c.id].value,
+                evidence_path: this.answers[c.id].evidence_path,
+                note: this.answers[c.id].note,
             }));
         },
-        async persistAnswers() {
-            await api.put(`/self-assessments/${this.assessment.self_assessment_id}/answers`, {
+        // Dipakai saveDraft, uploadEvidence, deleteEvidence.
+        async persistDraft() {
+            await api.post(`/assessments/sa/${this.period}/draft`, {
                 answers: this.buildPayload(),
             });
-            await this.refresh();
+            await this.loadAssessment();
         },
         async saveDraft() {
             this.saving = true;
             this.errorMsg = "";
             try {
-                await this.persistAnswers();
+                await this.persistDraft();
                 Swal.fire({
                     position: "center",
                     icon: "success",
@@ -140,7 +146,7 @@ export default {
                 this.saving = false;
             }
         },
-        async uploadEvidence(question, level, event) {
+        async uploadEvidence(criteria, event) {
             const file = event.target.files[0];
             if (!file) return;
             this.errorMsg = "";
@@ -148,21 +154,20 @@ export default {
             formData.append("file", file);
             try {
                 const { data } = await api.post(
-                    `/self-assessments/${this.assessment.self_assessment_id}/questions/${question.assessment_question_id}/evidence/${level}`,
+                    `/assessments/sa/${this.period}/evidence`,
                     formData,
                     { headers: { "Content-Type": "multipart/form-data" } }
                 );
-                this.answers[question.assessment_question_id].evidence_files = data.data.evidence_file_urls || {};
-                if (this.assessment.status === "open") {
-                    this.assessment.status = "draft";
-                }
+                this.answers[criteria.id].evidence_path = data.data.path;
+                this.answers[criteria.id].evidence_url = data.data.url;
+                await this.persistDraft(); // baru benar-benar tersimpan & tertaut setelah ini
             } catch (error) {
                 this.errorMsg = error.response?.data?.message || "Gagal upload file.";
             } finally {
                 event.target.value = "";
             }
         },
-        async deleteEvidence(question, level) {
+        async deleteEvidence(criteria) {
             const result = await Swal.fire({
                 icon: "warning",
                 title: "Hapus evidence?",
@@ -173,22 +178,28 @@ export default {
             });
             if (!result.isConfirmed) return;
             this.errorMsg = "";
+            this.answers[criteria.id].evidence_path = null;
+            this.answers[criteria.id].evidence_url = null;
             try {
-                const { data } = await api.delete(
-                    `/self-assessments/${this.assessment.self_assessment_id}/questions/${question.assessment_question_id}/evidence/${level}`
-                );
-                this.answers[question.assessment_question_id].evidence_files = data.data?.evidence_file_urls || {};
+                await this.persistDraft();
             } catch (error) {
                 this.errorMsg = error.response?.data?.message || "Gagal menghapus file.";
             }
         },
         async submitAssessment() {
-            const errors = this.validateAnswers();
-            if (errors.length) {
+            const incomplete = this.validateAnswers();
+            if (incomplete.length) {
+                const lines = this.incompleteSummaryByDomain(incomplete)
+                    .map((s) => `${s.name} = <strong>${s.count}</strong> Scope/Pertanyaan belum lengkap diisi`)
+                    .join("<br>");
                 Swal.fire({
                     icon: "error",
-                    title: `${errors.length} isian belum lengkap`,
-                    html: errors.slice(0, 10).join("<br>") + (errors.length > 10 ? "<br>…" : ""),
+                    title: "Isian belum lengkap",
+                    html:
+                        lines +
+                        `<hr class="my-2">` +
+                        `<small class="text-muted">Pastikan jika status pemenuhan <strong>Terpenuhi</strong> untuk mengupload evidence, ` +
+                        `dan jika status pemenuhan <strong>Belum Terpenuhi</strong> untuk mengisi catatan.</small>`,
                 });
                 return;
             }
@@ -206,9 +217,9 @@ export default {
             this.saving = true;
             this.errorMsg = "";
             try {
-                await this.persistAnswers();
-                await api.post(`/self-assessments/${this.assessment.self_assessment_id}/submit`);
-                await this.refresh();
+                // submit langsung membawa jawaban dalam satu panggilan, tidak perlu simpan draft dulu
+                await api.post(`/assessments/sa/${this.period}`, { answers: this.buildPayload() });
+                await this.loadAssessment();
                 Swal.fire({
                     position: "center",
                     icon: "success",
@@ -222,44 +233,40 @@ export default {
                 this.saving = false;
             }
         },
-        async refresh() {
-            const { data } = await api.get(`/self-assessments/${this.assessment.self_assessment_id}`);
-            this.assessment = data.data;
-        },
         async reloadForPeriod() {
             this.loading = true;
             this.errorMsg = "";
             try {
-                await this.initAssessment();
+                await this.loadAssessment();
             } catch (error) {
                 this.errorMsg = error.response?.data?.message || "Gagal memuat periode.";
             } finally {
                 this.loading = false;
             }
         },
+        // Kriteria yang belum lengkap: Terpenuhi tanpa evidence, atau Belum Terpenuhi tanpa catatan.
         validateAnswers() {
-            const errors = [];
-            for (const q of this.questions) {
-                const a = this.answers[q.assessment_question_id];
-                for (const level of this.levels) {
-                    const fullfilled = a.achieved_levels.includes(level);
-                    if (fullfilled && !a.evidence_files[level]) {
-                        errors.push(`${q.question} (${level}): Terpenuhi wajib evidence.`);
-                    }
-                    if (!fullfilled && !(a.notes[level] || "").trim()) {
-                        errors.push(`${q.question} (${level}): Belum terpenuhi wajib catatan.`);
-                    }
-                }
+            return this.criterias.filter((c) => {
+                const a = this.answers[c.id];
+                return (a.value && !a.evidence_path) || (!a.value && !(a.note || "").trim());
+            });
+        },
+        // Ringkas kriteria yang belum lengkap jadi jumlah SOAL (bukan kriteria) per domain,
+        // urut mengikuti urutan tab domain.
+        incompleteSummaryByDomain(incompleteCriterias) {
+            const questionIdsByDomain = {};
+            for (const c of incompleteCriterias) {
+                (questionIdsByDomain[c.domain_id] = questionIdsByDomain[c.domain_id] || new Set()).add(c.question_id);
             }
-            return errors;
-        }
+            return this.domains
+                .filter((d) => questionIdsByDomain[d.id])
+                .map((d) => ({ name: d.name, count: questionIdsByDomain[d.id].size }));
+        },
     },
     async mounted() {
         this.loading = true;
         try {
-            await this.fetchQuestions();
-            this.activeDomain = this.domains[0] || null;
-            await this.initAssessment();
+            await this.loadAssessment();
         } catch (error) {
             this.errorMsg = error.response?.data?.message || "Gagal memuat self assessment.";
             this.forbidden = error.response?.status === 403;
@@ -314,16 +321,16 @@ export default {
 
                 <template v-else-if="assessment">
                   <ul class="nav nav-pills flex-nowrap overflow-auto mb-3 domain-tabs">
-                      <li class="nav-item" v-for="domain in domains" :key="domain">
+                      <li class="nav-item" v-for="domain in domains" :key="domain.id">
                           <a
                               href="#"
                               class="nav-link d-flex align-items-center gap-2 text-nowrap"
-                              :class="{ active: activeDomain === domain }"
-                              @click.prevent="activeDomain = domain"
+                              :class="{ active: activeDomain === domain.id }"
+                              @click.prevent="activeDomain = domain.id"
                           >
-                              <span>{{ domain }}</span>
-                              <span class="badge flex-shrink-0" :class="domainAnswered(domain).answered === domainAnswered(domain).total ? 'bg-light-success' : 'bg-light-secondary'">
-                                  {{ domainAnswered(domain).answered }}/{{ domainAnswered(domain).total }}
+                              <span>{{ domain.name }}</span>
+                              <span class="badge flex-shrink-0" :class="domainAnswered(domain.id).answered === domainAnswered(domain.id).total ? 'bg-light-success' : 'bg-light-secondary'">
+                                  {{ domainAnswered(domain.id).answered }}/{{ domainAnswered(domain.id).total }}
                               </span>
                           </a>
                       </li>
@@ -331,18 +338,18 @@ export default {
 
                   <div class="card mb-3">
                         <div class="card-body">
-                          <div v-for="domain in domains" :key="domain" v-show="activeDomain === domain">
-                            <h5 class="mb-4">{{ domain }}</h5>
-                            <div class="mb-4" v-for="(qs, practiceArea) in groupedQuestions[domain]" :key="practiceArea">
-                                <h6 class="text-primary mb-3">{{ practiceArea }}</h6>
+                          <div v-for="domain in domains" :key="domain.id" v-show="activeDomain === domain.id">
+                            <h5 class="mb-4">{{ domain.name }}</h5>
+                            <div class="mb-4" v-for="pa in practiceAreasByDomain[domain.id]" :key="pa.id">
+                                <h6 class="text-primary mb-3">{{ pa.name }}</h6>
 
-                                <div class="mb-4" v-for="q in qs" :key="q.assessment_question_id">
+                                <div class="mb-4" v-for="q in questionsByPracticeArea[pa.id]" :key="q.id">
                                     <div class="d-flex align-items-start mb-2 gap-2">
                                         <p class="fw-semibold mb-0">
                                             <span v-if="q.scope" class="text-muted">{{ q.scope }} — </span>{{ q.question }}
                                         </p>
                                         <span class="badge bg-light-primary ms-auto flex-shrink-0">
-                                            Skor: {{ questionScore(q.assessment_question_id) }}/{{ levels.length }}
+                                            Skor: {{ achievedCount(q.id) }}/{{ criteriasByQuestion[q.id].length }}
                                         </span>
                                     </div>
 
@@ -350,66 +357,80 @@ export default {
                                         <table class="table table-bordered align-middle mb-0 assessment-table">
                                             <thead>
                                                 <tr>
-                                                    <th style="width:42%">Kriteria</th>
-                                                    <th style="width:16%">Status Pemenuhan</th>
-                                                    <th style="width:20%">Evidence</th>
-                                                    <th style="width:22%">Catatan District</th>
+                                                    <th class="align-top" style="width:42%">Kriteria</th>
+                                                    <th class="align-top" style="width:16%">Status Pemenuhan</th>
+                                                    <th class="align-top" style="width:20%">
+                                                        Evidence
+                                                        <br>
+                                                        <small class="text-danger fw-normal">
+                                                            <i class="ph-duotone ph-warning-circle"></i>
+                                                            Wajib diisi jika Terpenuhi
+                                                        </small>
+                                                    </th>
+                                                    <th class="align-top" style="width:22%">
+                                                        Catatan District
+                                                        <br>
+                                                        <small class="text-danger fw-normal">
+                                                            <i class="ph-duotone ph-warning-circle"></i>
+                                                            Wajib diisi jika Belum Terpenuhi
+                                                        </small>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="level in levels" :key="level">
-                                                    <td><strong>{{ level }}.</strong> {{ criteriaText(q, level) }}</td>
+                                                <tr v-for="criteria in criteriasByQuestion[q.id]" :key="criteria.id">
+                                                    <td><strong>{{ criteria.code }}.</strong> {{ criteria.title }}</td>
 
                                                     <td>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio"
-                                                                :name="'fulfil_' + q.assessment_question_id + '_' + level"
-                                                                :id="'yes_' + q.assessment_question_id + '_' + level"
-                                                                :checked="isFulfilled(q.assessment_question_id, level)"
+                                                                :name="'fulfil_' + criteria.id"
+                                                                :id="'yes_' + criteria.id"
+                                                                :checked="answers[criteria.id].value === true"
                                                                 :disabled="isReadOnly"
-                                                                @change="setFulfilled(q.assessment_question_id, level, true)">
-                                                            <label class="form-check-label" :for="'yes_' + q.assessment_question_id + '_' + level">Terpenuhi</label>
+                                                                @change="answers[criteria.id].value = true">
+                                                            <label class="form-check-label" :for="'yes_' + criteria.id">Terpenuhi</label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio"
-                                                                :name="'fulfil_' + q.assessment_question_id + '_' + level"
-                                                                :id="'no_' + q.assessment_question_id + '_' + level"
-                                                                :checked="!isFulfilled(q.assessment_question_id, level)"
+                                                                :name="'fulfil_' + criteria.id"
+                                                                :id="'no_' + criteria.id"
+                                                                :checked="answers[criteria.id].value !== true"
                                                                 :disabled="isReadOnly"
-                                                                @change="setFulfilled(q.assessment_question_id, level, false)">
-                                                            <label class="form-check-label" :for="'no_' + q.assessment_question_id + '_' + level">Belum Terpenuhi</label>
+                                                                @change="answers[criteria.id].value = false">
+                                                            <label class="form-check-label" :for="'no_' + criteria.id">Belum Terpenuhi</label>
                                                         </div>
                                                     </td>
 
                                                     <td>
                                                         <div
-                                                            v-if="isFulfilled(q.assessment_question_id, level)"
+                                                            v-if="answers[criteria.id].value"
                                                             class="d-flex align-items-center gap-2 flex-wrap"
                                                         >
                                                             <label class="btn btn-sm btn-outline-primary mb-0" :class="{ disabled: isReadOnly }">
                                                                 <i class="ph-duotone ph-upload-simple me-1"></i>
-                                                                {{ answers[q.assessment_question_id].evidence_files[level] ? "Change Evidence" : "Upload Evidence" }}
+                                                                {{ answers[criteria.id].evidence_path ? "Change Evidence" : "Upload Evidence" }}
                                                                 <input
                                                                     type="file"
                                                                     hidden
                                                                     accept=".jpg,.jpeg,.png,.pdf"
                                                                     :disabled="isReadOnly"
-                                                                    @change="uploadEvidence(q, level, $event)"
+                                                                    @change="uploadEvidence(criteria, $event)"
                                                                 >
                                                             </label>
                                                             <a
-                                                                v-if="answers[q.assessment_question_id].evidence_files[level]"
-                                                                :href="answers[q.assessment_question_id].evidence_files[level]"
+                                                                v-if="answers[criteria.id].evidence_url"
+                                                                :href="answers[criteria.id].evidence_url"
                                                                 target="_blank"
                                                                 class="text-nowrap"
                                                             >
                                                                 <i class="ph-duotone ph-file-text me-1"></i>View file
                                                             </a>
                                                             <button
-                                                                v-if="answers[q.assessment_question_id].evidence_files[level] && !isReadOnly"
+                                                                v-if="answers[criteria.id].evidence_path && !isReadOnly"
                                                                 type="button"
                                                                 class="btn btn-sm btn-outline-danger text-nowrap"
-                                                                @click="deleteEvidence(q, level)"
+                                                                @click="deleteEvidence(criteria)"
                                                             >
                                                                 <i class="ph-duotone ph-trash me-1"></i>Delete
                                                             </button>
@@ -420,7 +441,7 @@ export default {
                                                     <td>
                                                         <textarea class="form-control form-control-sm" rows="2"
                                                             placeholder="Tuliskan catatan self assessment..."
-                                                            v-model="answers[q.assessment_question_id].notes[level]"
+                                                            v-model="answers[criteria.id].note"
                                                             :disabled="isReadOnly"></textarea>
                                                     </td>
                                                 </tr>
