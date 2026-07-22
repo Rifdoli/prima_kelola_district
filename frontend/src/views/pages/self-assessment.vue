@@ -43,6 +43,17 @@ export default {
                 submitted: "bg-light-success",
             }[this.assessment?.status] || "bg-light-secondary";
         },
+        // Gradasi warna badge kategori: DASAR (danger) -> PRIMA (primary), pakai warna tema aktif.
+        categoryBadgeStyle() {
+            const order = ["DASAR", "BERKEMBANG", "TERKELOLA", "TERUKUR", "PRIMA"];
+            const idx = order.indexOf(this.assessment?.category);
+            if (idx === -1) return {};
+            const primaryPct = Math.round((idx / (order.length - 1)) * 100);
+            return {
+                backgroundColor: `color-mix(in srgb, var(--bs-primary) ${primaryPct}%, var(--bs-danger) ${100 - primaryPct}%)`,
+                color: "#fff",
+            };
+        },
         // question_id -> [criteria, ...], urutan ikut sort_order
         criteriasByQuestion() {
             const map = {};
@@ -285,7 +296,12 @@ export default {
 
         <BRow class="mb-3" v-if="!forbidden">
             <div class="col-sm-12">
-                <div class="card">
+                <div class="card position-relative">
+                    <span
+                        v-if="assessment && assessment.category"
+                        class="badge fs-6 px-3 py-2 position-absolute top-0 end-0 m-3"
+                        :style="categoryBadgeStyle"
+                    >{{ assessment.category }}</span>
                     <div class="card-body d-flex flex-wrap align-items-end gap-3">
                         <div style="width: 120px">
                             <label class="form-label mb-1">Tahun</label>
