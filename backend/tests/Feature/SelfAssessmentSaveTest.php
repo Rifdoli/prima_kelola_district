@@ -79,7 +79,8 @@ class SelfAssessmentSaveTest extends TestCase
 
         $this->assertSame(1, AssessmentAnswer::where('assessment_id', $this->assessment->id)->count());
         $this->assertSame(2, AssessmentCriteria::count());
-        $this->assertEquals(1, $this->assessment->fresh()->total_score);
+        $this->assertEquals(50.0, $this->assessment->fresh()->total_score);
+        $this->assertNotNull($this->assessment->fresh()->category);
     }
 
     public function test_submit_menyalin_jawaban_ke_assessment_oda(): void
