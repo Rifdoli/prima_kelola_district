@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\VerificationController;
 
 use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\AssessmentSelfController;
+use App\Http\Controllers\Api\AssessmentOnDeskController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -48,7 +49,18 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/{period}/draft', 'storeDraft')->name('draft.store');
             Route::post('/{period}/evidence', 'storeEvidence')->name('evidence.store');
             // Route::delete('/{period}/evidence', 'destroyEvidence')->name('evidence.destroy');
-            // Route::get('/{period}/example', 'showExampleAnswersBody')->name('example.show');
+            Route::get('/{period}/example', 'showExampleAnswersBody')->name('example.show')->middleware('devonly:dev,debug');
+        });
+
+    Route::prefix('assessments/oda')
+        ->name('assessments.oda.')
+        ->controller(AssessmentOnDeskController::class)
+        ->group(function () {
+            Route::get('/{period}/{orgId}', 'index')->name('index')->whereNumber('orgId');
+            Route::post('/{period}/{orgId}', 'store')->name('store')->whereNumber('orgId');
+            Route::post('/{period}/{orgId}/draft', 'storeDraft')->name('draft.store')->whereNumber('orgId');
+            Route::post('/{period}/{orgId}/evidence', 'storeEvidence')->name('evidence.store')->whereNumber('orgId');
+            Route::get('/{period}/{orgId}/example', 'showExampleAnswersBody')->name('example.show')->whereNumber('orgId')->middleware('devonly:dev,debug');
         });
 
     /** @deprecated */

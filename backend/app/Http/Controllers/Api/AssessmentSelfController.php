@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Question;
-// use App\Models\QuestionCriteria;
+use App\Models\QuestionCriteria;
 use App\Models\Assessment;
 use App\Models\AssessmentAnswer;
 use App\Models\AssessmentCriteria;
@@ -56,8 +56,10 @@ class AssessmentSelfController extends Controller
         /** @var ?array */
         $criteriaAnswersMap = null;
         $checkedQuestionIds = null;
+        $isNewAssessmentCreated = false;
         if (!$assessment) {
 
+            $isNewAssessmentCreated = true;
             $assessment = Assessment::create([
                 'organization_id' => $orgId,
                 'period' => $period,
@@ -215,7 +217,9 @@ class AssessmentSelfController extends Controller
         $status = 201;
         if ($assessment->status == Assessment::STATUS_SUBMITTED) {
             $message = 'Self Assessment telah diisi.';
-            $status = 201;
+            $status = 200;
+        } elseif (!$isNewAssessmentCreated) {
+            $status = 200;
         }
 
         return $this->success(
@@ -238,9 +242,9 @@ class AssessmentSelfController extends Controller
             ['period' => $period],
             ['period' => AssessmentPeriod::requiredRules()]
         )->validate();
-        $body = $request->validated();
         $newCriterias = array_column($request->validated('answers'), null, 'criteria_id');
 
+        $isNewAssessmentCreated = false;
         $orgId = auth()->user()->organization_id;
         $assessment = Assessment::with('answers')
             ->where('organization_id', $orgId)
@@ -248,6 +252,7 @@ class AssessmentSelfController extends Controller
             ->where('type', Assessment::TYPE_SA)
             ->first();
         if (!$assessment) {
+            $isNewAssessmentCreated = true;
             $assessment = Assessment::create([
                 'organization_id' => $orgId,
                 'period' => $period,
@@ -280,7 +285,7 @@ class AssessmentSelfController extends Controller
 
         return $this->success(
             message: 'Self Assessment berhasil di-submit.',
-            status: 201
+            status: $isNewAssessmentCreated ? 201 : 200
         );
     }
 
@@ -290,9 +295,9 @@ class AssessmentSelfController extends Controller
             ['period' => $period],
             ['period' => AssessmentPeriod::requiredRules()]
         )->validate();
-        $body = $request->validated();
         $newCriterias = array_column($request->validated('answers'), null, 'criteria_id');
 
+        $isNewAssessmentCreated = false;
         $orgId = auth()->user()->organization_id;
         $assessment = Assessment::with('answers')
             ->where('organization_id', $orgId)
@@ -300,6 +305,7 @@ class AssessmentSelfController extends Controller
             ->where('type', Assessment::TYPE_SA)
             ->first();
         if (!$assessment) {
+            $isNewAssessmentCreated = true;
             $assessment = Assessment::create([
                 'organization_id' => $orgId,
                 'period' => $period,
@@ -332,10 +338,14 @@ class AssessmentSelfController extends Controller
 
         return $this->success(
             message: 'Self Assessment berhasil disimpan sebagai draft.',
-            status: 201
+            status: $isNewAssessmentCreated ? 201 : 200
         );
     }
 
+    /**
+     * AssessmentEvidence service membutuhkan queue worker untuk
+     * menjalankan `CleanupUnusedEvidenceJob`.
+     */
     public function storeEvidence(StoreAssessmentEvidenceRequest $request, string $period)
     {
         Validator::make(
@@ -343,6 +353,17 @@ class AssessmentSelfController extends Controller
             ['period' => AssessmentPeriod::requiredRules()]
         )->validate();
         $body = $request->validated();
+
+        $orgId = auth()->user()->organization_id;
+        $assessment = Assessment::where('organization_id', $orgId)
+            ->where('period', $period)
+            ->where('type', Assessment::TYPE_SA)
+            ->first();
+        if (!$assessment) {
+            return $this->error('Target Assessment tidak ditemukan.', 404);
+        } elseif ($assessment->status === Assessment::STATUS_SUBMITTED) {
+            return $this->error('Upload evidence telah ditutup untuk Assessment ini.', 403);
+        }
 
         $year = (int) substr($period, 0, 4);
         $quarter = (int) substr($period, -1);
@@ -535,34 +556,34 @@ class AssessmentSelfController extends Controller
         });
     }
 
-    // public function showExampleAnswersBody(string $period)
-    // {
-    //     Validator::make(
-    //         ['period' => $period],
-    //         ['period' => AssessmentPeriod::requiredRules()]
-    //     )->validate();
+    public function showExampleAnswersBody(string $period)
+    {
+        Validator::make(
+            ['period' => $period],
+            ['period' => AssessmentPeriod::requiredRules()]
+        )->validate();
 
-    //     $year = (int) substr($period, 0, 4);
-    //     $quarter = (int) substr($period, -1);
-    //     $evidencePath = 'images/placeholder.jpg';
+        $year = (int) substr($period, 0, 4);
+        $quarter = (int) substr($period, -1);
+        $evidencePath = 'images/placeholder.jpg';
 
-    //     $exampleAnswers = QuestionCriteria::whereHas('question')
-    //         ->get()
-    //         ->map(function (QuestionCriteria $criteria) use ($evidencePath) {
-    //             $value = $criteria->id % 3 === 1;
-    //             return [
-    //                 'criteria_id' => $criteria->id,
-    //                 'value' => $value,
-    //                 'evidence_path' => $value ? $evidencePath : null,
-    //                 'note' => null,
-    //             ];
-    //         });
+        $exampleAnswers = QuestionCriteria::whereHas('question')
+            ->get()
+            ->map(function (QuestionCriteria $criteria) use ($evidencePath) {
+                $value = $criteria->id % 3 === 1;
+                return [
+                    'criteria_id' => $criteria->id,
+                    'value' => $value,
+                    'evidence_path' => $value ? $evidencePath : null,
+                    'note' => $value ? null : 'Test tidak diisi.',
+                ];
+            });
 
-    //     return $this->success(
-    //         message: 'Self Assessment:example store body generated successfully.',
-    //         data: [
-    //             'answers' => $exampleAnswers,
-    //         ]
-    //     );
-    // }
+        return $this->success(
+            message: 'Self Assessment:example store body generated successfully.',
+            data: [
+                'answers' => $exampleAnswers,
+            ]
+        );
+    }
 }
