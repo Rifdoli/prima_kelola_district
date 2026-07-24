@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\VerificationController;
 use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\AssessmentSelfController;
 use App\Http\Controllers\Api\AssessmentOnDeskController;
+use App\Http\Controllers\Api\AssessmentOnSiteController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -58,6 +59,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('assessments/oda')
         ->name('assessments.oda.')
         ->controller(AssessmentOnDeskController::class)
+        ->group(function () {
+            Route::get('/{period}/{orgId}', 'index')->name('index')->whereNumber('orgId');
+            Route::post('/{period}/{orgId}', 'store')->name('store')->whereNumber('orgId');
+            Route::post('/{period}/{orgId}/draft', 'storeDraft')->name('draft.store')->whereNumber('orgId');
+            Route::post('/{period}/{orgId}/evidence', 'storeEvidence')->name('evidence.store')->whereNumber('orgId');
+            Route::get('/{period}/{orgId}/example', 'showExampleAnswersBody')->name('example.show')->whereNumber('orgId')->middleware('devonly:dev,debug');
+        });
+
+    Route::prefix('assessments/osa')
+        ->name('assessments.osa.')
+        ->controller(AssessmentOnSiteController::class)
         ->group(function () {
             Route::get('/{period}/{orgId}', 'index')->name('index')->whereNumber('orgId');
             Route::post('/{period}/{orgId}', 'store')->name('store')->whereNumber('orgId');
