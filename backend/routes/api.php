@@ -40,6 +40,9 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::delete('/trash', 'cleanTrashes')->name('trash.destroy')->middleware('admin');
         });
 
+    Route::get('/assessments/tracking', [AssessmentTrackingController::class, 'index'])
+        ->name('assessments.tracking');
+
     Route::prefix('assessments/sa')
         ->name('assessments.sa.')
         ->controller(AssessmentSelfController::class)
@@ -82,7 +85,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::delete('/{id}', 'destroy')->name('destroy')->middleware('admin')->whereNumber('id');
         });
 
-    Route::get('assessment-tracking', [AssessmentTrackingController::class, 'index']);
+    Route::get('assessment-tracking', [AssessmentTrackingController::class, 'backupIndex']);
 
     Route::get('self-assessments', [SelfAssessmentController::class, 'index']);
     Route::post('self-assessments', [SelfAssessmentController::class, 'store']);
